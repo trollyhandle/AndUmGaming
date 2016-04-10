@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">G370</string>
 
-    <string name="dummy_button">Dummy Button</string>
+    <string name="PLAY_MENU">Play</string>
+    <string name="SETTINGS">Settings</string>
+    <string name="TUT_RULES">Tutorial\n and Rules</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="ABOUT">About</string>
+    <string name="STATS">Comming Soon</string>
 </resources>
