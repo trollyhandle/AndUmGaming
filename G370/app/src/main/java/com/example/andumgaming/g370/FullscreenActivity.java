@@ -24,6 +24,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private Button tutorialButton;
     private Button aboutButton;
     private Button soonButton;
+    private SettingsFragment settingsFragment;
 
     /* initialize background music */
     private boolean mIsBound = false;
@@ -52,6 +53,15 @@ public class FullscreenActivity extends AppCompatActivity {
             unbindService(Scon);
             mIsBound = false;
         }
+    }
+
+    public void PlayMusic()
+    {
+        mServ.resumeMusic();
+    }
+    public void PauseMusic()
+    {
+        mServ.pauseMusic();
     }
 
     /**
@@ -119,6 +129,7 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // do something to switch to the settings fragment
+                settingsFragment = SettingsFragment.newInstance();
             }
         });
         tutorialButton.setOnClickListener(new View.OnClickListener() {
