@@ -7,13 +7,52 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.content.ServiceConnection;
+import android.content.ComponentName;
+import android.os.IBinder;
+import android.content.Intent;
+import android.content.Context;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
+    private Button playButton;
+    private Button settingsButton;
+    private Button tutorialButton;
+    private Button aboutButton;
+    private Button soonButton;
 
+/*    *//* initialize background music *//*
+    private boolean mIsBound = false;
+    private MusicService mServ;
+    private ServiceConnection Scon =new ServiceConnection(){
+
+        public void onServiceConnected(ComponentName name, IBinder
+                binder) {
+            mServ = ((MusicService.ServiceBinder)binder).getService();        }
+
+        public void onServiceDisconnected(ComponentName name) {
+            mServ = null;
+        }
+    };
+
+    void doBindService(){
+        bindService(new Intent(this,MusicService.class),
+                Scon,Context.BIND_AUTO_CREATE);
+        mIsBound = true;
+    }
+
+    void doUnbindService()
+    {
+        if(mIsBound)
+        {
+            unbindService(Scon);
+            mIsBound = false;
+        }
+    }*/
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -62,7 +101,50 @@ public class FullscreenActivity extends AppCompatActivity {
 
 
         mContentView = findViewById(R.id.fullscreen_content);
-        }
+
+        /*initialize buttons*/
+        playButton = (Button)findViewById(R.id.playButton);
+        settingsButton = (Button)findViewById(R.id.settingsButton);
+        tutorialButton = (Button)findViewById(R.id.tutorialButton);
+        aboutButton = (Button)findViewById(R.id.aboutButton);
+        soonButton = (Button)findViewById(R.id.soonButton);
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something to switch to the play activity
+            }
+        });
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something to switch to the settings fragment
+            }
+        });
+        tutorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something to switch to the tutorial fragment
+            }
+        });
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something to switch to the about-us fragment
+            }
+        });
+        soonButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something to switch to the coming-soon fragment
+            }
+        });
+
+        /*start the music*/
+/*        Intent music = new Intent();
+        music.setClass(this,MusicService.class);
+        startService(music);*/
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

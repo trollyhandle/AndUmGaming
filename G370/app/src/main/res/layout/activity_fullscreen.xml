@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#0099cc"
+    android:background="@drawable/dice"
     android:orientation="vertical"
     android:padding="20dip"
 
@@ -25,6 +25,7 @@
         android:textStyle="bold" />
 
     <Button
+        android:id="@+id/playButton"
         android:text="@string/PLAY_MENU"
         android:textAllCaps="false"
         android:textSize="20sp"
@@ -32,6 +33,7 @@
         android:layout_height="0dip"
         android:layout_width="match_parent" />
     <Button
+        android:id="@+id/settingsButton"
         android:text="@string/SETTINGS"
         android:textAllCaps="false"
         android:textSize="20sp"
@@ -39,6 +41,7 @@
         android:layout_height="0dip"
         android:layout_weight="20" />
     <Button
+        android:id="@+id/tutorialButton"
         android:text="@string/TUT_RULES"
         android:textAllCaps="false"
         android:textSize="20sp"
@@ -46,6 +49,7 @@
         android:layout_height="0dip"
         android:layout_weight="20" />
     <Button
+        android:id="@+id/aboutButton"
         android:text="@string/ABOUT"
         android:textAllCaps="false"
         android:textSize="20sp"
@@ -53,6 +57,7 @@
         android:layout_height="0dip"
         android:layout_weight="20" />
     <Button
+        android:id="@+id/soonButton"
         android:text="@string/STATS"
         android:textAllCaps="false"
         android:textSize="20sp"
