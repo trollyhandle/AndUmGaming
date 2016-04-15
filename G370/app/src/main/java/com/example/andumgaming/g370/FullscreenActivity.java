@@ -24,8 +24,9 @@ public class FullscreenActivity extends AppCompatActivity {
     private Button tutorialButton;
     private Button aboutButton;
     private Button soonButton;
+    private SettingsFragment settingsFragment;
 
-/*    *//* initialize background music *//*
+    /* initialize background music */
     private boolean mIsBound = false;
     private MusicService mServ;
     private ServiceConnection Scon =new ServiceConnection(){
@@ -52,7 +53,16 @@ public class FullscreenActivity extends AppCompatActivity {
             unbindService(Scon);
             mIsBound = false;
         }
-    }*/
+    }
+
+    public void PlayMusic()
+    {
+        mServ.resumeMusic();
+    }
+    public void PauseMusic()
+    {
+        mServ.pauseMusic();
+    }
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -119,6 +129,7 @@ public class FullscreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // do something to switch to the settings fragment
+                settingsFragment = SettingsFragment.newInstance();
             }
         });
         tutorialButton.setOnClickListener(new View.OnClickListener() {
@@ -141,9 +152,9 @@ public class FullscreenActivity extends AppCompatActivity {
         });
 
         /*start the music*/
-/*        Intent music = new Intent();
+        Intent music = new Intent();
         music.setClass(this,MusicService.class);
-        startService(music);*/
+        startService(music);
     }
 
     @Override
