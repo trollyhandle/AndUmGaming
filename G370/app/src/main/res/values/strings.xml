@@ -4,7 +4,7 @@
     <string name="PLAY_MENU">Play</string>
     <string name="SETTINGS">Settings</string>
     <string name="TUT_RULES">Tutorial</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="dummy_content">G370</string>
     <string name="ABOUT">About</string>
     <string name="STATS">Coming Soon</string>
 </resources>
