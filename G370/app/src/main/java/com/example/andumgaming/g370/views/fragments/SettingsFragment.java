@@ -1,31 +1,13 @@
-package com.example.andumgaming.g370;
-import android.annotation.SuppressLint;
-import android.drm.DrmManagerClient;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+package com.example.andumgaming.g370.views.fragments;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.content.ServiceConnection;
-import android.content.ComponentName;
-import android.os.IBinder;
-import android.content.Intent;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.widget.CheckBox;
 import android.view.LayoutInflater;
-import android.database.DataSetObserver;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.SimpleAdapter;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutCompat;
-import com.example.andumgaming.g370.FullscreenActivity;
 
-
+import com.example.andumgaming.g370.R;
 
 
 /**
