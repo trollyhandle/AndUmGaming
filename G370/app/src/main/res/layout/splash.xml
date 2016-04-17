@@ -3,14 +3,16 @@
     android:layout_height="match_parent" android:paddingLeft="60dip"
     android:paddingRight="60dip"
     android:paddingTop="60dip"
-    android:paddingBottom="60dip" tools:context=".Splash">
+    android:paddingBottom="60dip" tools:context=".Splash"
+    android:background="#31fa49">
 
     <TextView android:text="loading" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
         android:textSize="45sp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView" />
+        android:id="@+id/textView"
+        android:textColor="#000000"/>
 
     <ImageView
         android:layout_width="wrap_content"
