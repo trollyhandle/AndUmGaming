@@ -19,12 +19,7 @@ import android.content.Context;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
-    private Button playButton;
-    private Button settingsButton;
-    private Button tutorialButton;
-    private Button aboutButton;
-    private Button soonButton;
-    private SettingsFragment settingsFragment;
+    private MenuFragment menuFragment;
 
     /* initialize background music */
     private boolean mIsBound = false;
@@ -106,50 +101,18 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_fullscreen);
 
 
-        mContentView = findViewById(R.id.fullscreen_content);
+        menuFragment = MenuFragment.newInstance();
+        mContentView = findViewById(R.id.container);
+
+        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
+
+
 
         /*initialize buttons*/
-        playButton = (Button)findViewById(R.id.playButton);
-        settingsButton = (Button)findViewById(R.id.settingsButton);
-        tutorialButton = (Button)findViewById(R.id.tutorialButton);
-        aboutButton = (Button)findViewById(R.id.aboutButton);
-        soonButton = (Button)findViewById(R.id.soonButton);
 
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // do something to switch to the play activity
-            }
-        });
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // do something to switch to the settings fragment
-                settingsFragment = SettingsFragment.newInstance();
-            }
-        });
-        tutorialButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // do something to switch to the tutorial fragment
-            }
-        });
-        aboutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // do something to switch to the about-us fragment
-            }
-        });
-        soonButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // do something to switch to the coming-soon fragment
-            }
-        });
 
         /*start the music*/
         Intent music = new Intent();

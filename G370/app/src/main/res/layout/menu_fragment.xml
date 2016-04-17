@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dip"
+    tools:context=".MenuFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="40"
+            android:gravity="center"
+            android:text="@string/dummy_content"
+            android:textColor="#33b5e5"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/PlayButton"
+            android:text="@string/PLAY_MENU"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_weight="20"
+            android:layout_height="0dip"
+            android:layout_width="match_parent" />
+        <Button
+            android:id="@+id/SettingsButton"
+            android:text="@string/SETTINGS"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="20" />
+        <Button
+            android:id="@+id/TutorialButton"
+            android:text="@string/TUT_RULES"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="20" />
+        <Button
+            android:id="@+id/AboutButton"
+            android:text="@string/ABOUT"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="20" />
+        <Button
+            android:id="@+id/SoonButton"
+            android:text="@string/STATS"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="20" />
+        </LinearLayout>
+
+</LinearLayout>
