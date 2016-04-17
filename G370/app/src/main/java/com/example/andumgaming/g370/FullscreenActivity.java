@@ -109,7 +109,7 @@ public class FullscreenActivity extends AppCompatActivity {
         menuFragment = MenuFragment.newInstance();
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).commit();
 
 
 

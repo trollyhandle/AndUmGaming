@@ -1,5 +1,7 @@
 package com.example.andumgaming.g370.views.fragments;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
+import com.example.andumgaming.g370.views.fragments.SettingsFragment;
 import com.example.andumgaming.g370.R;
 
 /**
@@ -19,7 +21,8 @@ public class MenuFragment extends Fragment{
     private Button tutorialButton;
     private Button leaderButton;
     private Button aboutButton;
-    private OnFragmentEvent onFragmentEvent;
+
+
 
     public MenuFragment(){
 
@@ -51,9 +54,16 @@ public class MenuFragment extends Fragment{
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onFragmentEvent !=null){
-                   // onFragmentEvent.onEvent(item);
-                }
+
+                SettingsFragment newFragment = new SettingsFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.container, newFragment)
+                        .addToBackStack(null)
+                        .commit();
+
+
+
 
             }
         });
@@ -70,9 +80,6 @@ public class MenuFragment extends Fragment{
         super.onDetach();
     }
 
-    public interface OnFragmentEvent{
-        //
-    }
 
     }
 
