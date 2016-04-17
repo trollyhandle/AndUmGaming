@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c56aeba3-19ea-4a49-b1a2-06ec388d46a1" name="Default" comment="" />
+    <list default="true" id="c56aeba3-19ea-4a49-b1a2-06ec388d46a1" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Board.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CatanApr17.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/GameTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Hexagon.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Point.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Shape.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Vertex.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Catan.py" afterPath="$PROJECT_DIR$/Catan.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/.idea/gradle.xml" afterPath="$PROJECT_DIR$/../G370/.idea/gradle.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/.idea/misc.xml" afterPath="$PROJECT_DIR$/../G370/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/.idea/vcs.xml" afterPath="$PROJECT_DIR$/../G370/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="Catan.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,19 +38,22 @@
       <file leaf-file-name="Catan.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Catan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.5709939">
-              <caret line="70" column="89" selection-start-line="70" selection-start-column="89" selection-end-line="70" selection-end-column="89" />
+            <state vertical-scroll-proportion="0.20771514">
+              <caret line="174" column="23" selection-start-line="174" selection-start-column="23" selection-end-line="174" selection-end-column="23" />
               <folding>
-                <element signature="e#0#22#0" expanded="true" />
-                <element signature="e#3638#3943#0" expanded="false" />
-                <element signature="e#5586#6335#0" expanded="false" />
-                <element signature="e#8421#10962#0" expanded="false" />
-                <element signature="e#10996#11204#0" expanded="false" />
-                <element signature="e#11251#11522#0" expanded="false" />
-                <element signature="e#11561#11830#0" expanded="false" />
-                <element signature="e#11875#12227#0" expanded="false" />
-                <element signature="e#12274#12625#0" expanded="false" />
-                <element signature="e#12669#12772#0" expanded="false" />
+                <element signature="e#2449#2556#0" expanded="false" />
+                <element signature="e#2603#2714#0" expanded="false" />
+                <element signature="e#2770#2891#0" expanded="false" />
+                <element signature="e#2944#3064#0" expanded="false" />
+                <element signature="e#4087#4473#0" expanded="false" />
+                <element signature="e#6342#6562#0" expanded="false" />
+                <element signature="e#6611#6758#0" expanded="false" />
+                <element signature="e#6796#6843#0" expanded="false" />
+                <element signature="e#8642#8781#0" expanded="false" />
+                <element signature="e#8825#9052#0" expanded="false" />
+                <element signature="e#9100#9162#0" expanded="false" />
+                <element signature="e#9200#9247#0" expanded="false" />
+                <element signature="e#9288#9389#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -51,6 +68,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -64,12 +84,12 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="826" />
+    <option name="x" value="778" />
     <option name="y" value="22" />
     <option name="width" value="1086" />
-    <option name="height" value="1083" />
+    <option name="height" value="1033" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -93,6 +113,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -107,19 +128,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Catan" />
+              <option name="myItemId" value="Python" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="/Volumes/tholland-2/cs115/tutor/spring16/proj02" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
@@ -285,28 +305,48 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="826" y="22" width="1086" height="1083" extended-state="0" />
-    <editor active="true" />
+    <frame x="778" y="22" width="1086" height="1033" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17771639" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17771639" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.27599612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1022" y="651" width="893" height="575" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.27599612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="819" y="617" width="1055" height="499" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17771639" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-    </layout>
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.27599612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="968" y="996" width="893" height="359" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -320,10 +360,34 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Catan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#2449#2556#0" expanded="false" />
+            <element signature="e#2603#2714#0" expanded="false" />
+            <element signature="e#2770#2891#0" expanded="false" />
+            <element signature="e#2944#3064#0" expanded="false" />
+            <element signature="e#4087#4473#0" expanded="false" />
+            <element signature="e#6342#6562#0" expanded="false" />
+            <element signature="e#6611#6758#0" expanded="false" />
+            <element signature="e#6796#6843#0" expanded="false" />
+            <element signature="e#8642#8781#0" expanded="false" />
+            <element signature="e#8825#9052#0" expanded="false" />
+            <element signature="e#9100#9162#0" expanded="false" />
+            <element signature="e#9200#9247#0" expanded="false" />
+            <element signature="e#9288#9389#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file:///Library/Frameworks/Python.framework/Versions/3.4/lib/python3.4/tkinter/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3328823">
@@ -332,19 +396,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/graphics.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.5317998">
-          <caret line="174" column="26" selection-start-line="174" selection-start-column="26" selection-end-line="174" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/old_bits.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="27" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -369,26 +424,156 @@
         <state vertical-scroll-proportion="-1.7342799">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/graphics.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="589" column="0" selection-start-line="589" selection-start-column="0" selection-end-line="589" selection-end-column="0" />
+          <folding>
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="&quot;&quot;&quot;Simple object oriented graphics library...&quot;&quot;&quot;" />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1460774112000" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Catan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5709939">
-          <caret line="70" column="89" selection-start-line="70" selection-start-column="89" selection-end-line="70" selection-end-column="89" />
+        <state vertical-scroll-proportion="0.20771514">
+          <caret line="174" column="23" selection-start-line="174" selection-start-column="23" selection-end-line="174" selection-end-column="23" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-            <element signature="e#3638#3943#0" expanded="false" />
-            <element signature="e#5586#6335#0" expanded="false" />
-            <element signature="e#8421#10962#0" expanded="false" />
-            <element signature="e#10996#11204#0" expanded="false" />
-            <element signature="e#11251#11522#0" expanded="false" />
-            <element signature="e#11561#11830#0" expanded="false" />
-            <element signature="e#11875#12227#0" expanded="false" />
-            <element signature="e#12274#12625#0" expanded="false" />
-            <element signature="e#12669#12772#0" expanded="false" />
+            <element signature="e#2449#2556#0" expanded="false" />
+            <element signature="e#2603#2714#0" expanded="false" />
+            <element signature="e#2770#2891#0" expanded="false" />
+            <element signature="e#2944#3064#0" expanded="false" />
+            <element signature="e#4087#4473#0" expanded="false" />
+            <element signature="e#6342#6562#0" expanded="false" />
+            <element signature="e#6611#6758#0" expanded="false" />
+            <element signature="e#6796#6843#0" expanded="false" />
+            <element signature="e#8642#8781#0" expanded="false" />
+            <element signature="e#8825#9052#0" expanded="false" />
+            <element signature="e#9100#9162#0" expanded="false" />
+            <element signature="e#9200#9247#0" expanded="false" />
+            <element signature="e#9288#9389#0" expanded="false" />
           </folding>
         </state>
       </provider>
