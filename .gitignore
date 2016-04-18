@@ -1,7 +1,10 @@
-*.class
+# Ignore unnecessary to project
+.ideas/
+documentation/
+schematics/
 
-Documentation/
-Schematics/
+# class files
+*.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
