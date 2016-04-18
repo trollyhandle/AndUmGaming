@@ -13,5 +13,5 @@
 hs_err_pid*
 
 # Ignore unnecessary to project (also OS files) 
-/Documentation/
-/Schematics/
+*
+!G370/*
