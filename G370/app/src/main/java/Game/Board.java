@@ -15,8 +15,8 @@ public class Board {
 
     public Board(int rings)
     {
-        this.rings = rings;
         rings *= 2;  // vertices take more rings
+        this.rings = rings;
         arraySize = rings*2+1;
         vertices = new Shape[arraySize][arraySize];
         int num = 0;
@@ -25,7 +25,7 @@ public class Board {
                 int q_index = q < 0? q + arraySize: q;
                 int r_index = r < 0? r + arraySize: r;
                 if (Math.abs(q-r) % 3 == 0) {  // should be a full Hexagon
-                    int hx_q = q_index, hx_r = r_index;  // TODO change this? somehow?
+                    int hx_q = q_index, hx_r = r_index;  // TODO change this? somehow? (for use in a separate hexagon array)
                     System.out.println(String.format("Hex %1$2d at %2$2d, %3$2d -> %4$2d, %5$2d", num, q, r, hx_q, hx_r)); // DEBUG
                     vertices[q_index][r_index] = new Hexagon(q, r);
                     num += 1;
@@ -41,9 +41,6 @@ public class Board {
 
 
 
-
-
-
     public String toString()
     {
         String prt = "";
@@ -55,9 +52,6 @@ public class Board {
             }
             prt += '\n';
         }
-
         return prt;
-
     }
-
 }
