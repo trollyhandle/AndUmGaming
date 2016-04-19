@@ -4,16 +4,16 @@ import math
 
 colors = ["black", "red", "blue", "green", "orange", "darkblue", "yellow"]
 
-WIN_SIZE = 800
-# WIN_SIZE = 1100
+# WIN_SIZE = 800
+WIN_SIZE = 1100
 
 
 def main():
 
     win_center = Point(WIN_SIZE//2, WIN_SIZE//2)
     # hex_size = 40
-    hex_size = 80
-    # hex_size = 120
+    # hex_size = 80
+    hex_size = 120
     # hex_size_short = hex_size * math.sqrt(3) / 2
 
     scale = Line(Point(WIN_SIZE//2-hex_size/2, 40), Point(WIN_SIZE//2+hex_size/2, 40))
@@ -28,7 +28,7 @@ def main():
     board = Board()
     board.place(win_center, hex_size)
     print()
-    # print(board)
+    print(board)
 
     win = GraphWin("prototype", WIN_SIZE, WIN_SIZE, autoflush=False)
     done.draw(win)
@@ -45,7 +45,6 @@ def main():
     click = win.getMouse()
     while not in_shape(done, click):
         board.get_vertex_click(click, win)
-        # board.get_hex_click(click)
         click = win.getMouse()
 
     win.close()
@@ -130,11 +129,20 @@ class Board:
         #     return
 
         line = Line(self.center, jump_hex(self.center, self.hex_size, q, r))
+        line2 = Line(self.center, click)
+        line3 = Line(click, jump_hex(self.center, self.hex_size, q, r))
+        line.setWidth(4)
         line.setOutline("green")
-        line.setWidth(3)
+        line2.setOutline("red")
+        line3.setOutline("red")
         line.draw(win)
+        line2.draw(win)
+        line3.draw(win)
         time.sleep(.2)
         line.undraw()
+        line2.undraw()
+        line3.undraw()
+
         if self.vertices[q][r] is not None:
             self.vertices[q][r].setColor("Green")
 
@@ -142,6 +150,14 @@ class Board:
         prt = ""
         for q in range(-len(self.vertices)//2+1, len(self.vertices)//2+1):
             for r in range(-len(self.vertices[q])//2+1, len(self.vertices[q])//2+1):
+                if self.vertices[q][r] is not None:
+                    prt += self.vertices[q][r].__str__() + " "
+                else:
+                    prt += "   ..   "
+            prt += '\n'
+        prt += '\n'
+        for q in range(len(self.vertices)):
+            for r in range(len(self.vertices[q])):
                 if self.vertices[q][r] is not None:
                     prt += self.vertices[q][r].__str__() + " "
                 else:
@@ -167,7 +183,7 @@ class Hex:
         self.vertex_size_short = self.vertex_size * math.sqrt(3) / 2
         poly_size = size * math.sqrt(3)/ 3
 
-        self.center = vertex_to_pixel(grid_center, self.size, self.q, self.r)
+        self.center = hex_to_pixel(grid_center, self.size, self.q, self.r)
         self.poly = Polygon(jump_linear(self.center, 0, self.size),  # size
                             jump_linear(self.center, 60, self.size),
                             jump_linear(self.center, 120, self.size),
@@ -231,8 +247,8 @@ class Vertex:
         self.vertex_size_short = self.vertex_size * math.sqrt(3) / 2
         poly_size = size * math.sqrt(3)/ 3
 
-        # self.center = vertex_to_pixel(grid_center, self.size_short*2//3, self.q, self.r)
-        self.center = vertex_to_pixel(grid_center, self.size, self.q, self.r)
+        # self.center = hex_to_pixel(grid_center, self.size_short*2//3, self.q, self.r)
+        self.center = hex_to_pixel(grid_center, self.size, self.q, self.r)
         # print(str(self) + ", distance = {:3}".format(distance(grid_center, self.center)))  # DEBUG
         self.poly = Polygon(jump_linear(self.center, 30, self.vertex_size),  # vertex_size
                             jump_linear(self.center, 90, self.vertex_size),
@@ -298,7 +314,7 @@ def jump_hex(point, size, q, r):
     return Point(x + qr_x, y + qr_y)
 
 
-def vertex_to_pixel(center, size, q, r):
+def hex_to_pixel(center, size, q, r):
     x = size * (r + q/2)
     y = q * size * math.sqrt(3) / 2
     return Point(x + center.x, y + center.y)

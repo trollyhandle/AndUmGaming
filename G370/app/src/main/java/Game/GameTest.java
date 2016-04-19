@@ -11,7 +11,7 @@ public class GameTest {
         System.out.println("tests begin");
         System.out.println("creating board...");
 
-        Board testBoard = new Board(3);
+        Board testBoard = new Board();
 
         System.out.println("printing board:\n" + testBoard);
 

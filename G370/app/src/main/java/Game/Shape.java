@@ -8,6 +8,7 @@ package Game;
 public class Shape {
 
     protected int q, r;
+    protected Point center;
 
     private static int[][] directions = {
             { 1, 0}, { 1, -1}, {0, -1},
@@ -17,6 +18,7 @@ public class Shape {
     {
         this.q = q;
         this.r = r;
+        center = new Point(0, 0);
     }
 
     public Point getNeighbor(int dir)
