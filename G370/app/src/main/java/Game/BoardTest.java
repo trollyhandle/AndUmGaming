@@ -4,7 +4,7 @@ package Game;
  * Test class for Game classes.
  * Author: Tyler Holland
  */
-public class GameTest {
+public class BoardTest {
 
     public static void main(String args[])
     {
