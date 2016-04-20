@@ -12,8 +12,5 @@ public class Vertex extends Shape {
         super(q, r);
     }
 
-    public String toString()
-    {
-        return String.format("(%1$2d,%2$2d)", q, r);
-    }
+    public String type() { return "Vertex"; }
 }

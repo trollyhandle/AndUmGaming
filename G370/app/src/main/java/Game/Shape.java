@@ -5,10 +5,11 @@ package Game;
  * Author: Tyler Holland
  * Abstract class. Parent to Vertex and Hexagon
  */
-public class Shape {
+public abstract class Shape {
 
-    protected int q, r;
-    protected Point center;
+    protected Point_QR coord;
+    protected Point_XY center;
+    protected int size;
 
     private static int[][] directions = {
             { 1, 0}, { 1, -1}, {0, -1},
@@ -16,20 +17,36 @@ public class Shape {
 
     public Shape(int q, int r)
     {
-        this.q = q;
-        this.r = r;
-        center = new Point(0, 0);
+        coord = new Point_QR(q, r);
+        center = new Point_XY(0, 0);
+        size = 1;
     }
 
-    public Point getNeighbor(int dir)
+
+    public Point_QR getNeighbor(int dir)
     {
-        int neighbor_q = q + directions[dir][0];
-        int neighbor_r = r + directions[dir][1];
-        return new Point(neighbor_q, neighbor_r);
+        int neighbor_q = coord.q() + directions[dir][0];
+        int neighbor_r = coord.r() + directions[dir][1];
+        return new Point_QR(neighbor_q, neighbor_r);
     }
 
+    public int getSize() { return size; }
+    public void setSize(int size) { this.size = size; }
+    
+    public Point_XY getCenter() { return center; }
+    public void setCenter(Point_XY newCenter) { center = newCenter; }
+
+
+    public abstract String type();
     public String toString()
     {
-        return String.format("(%1$2d,%2$2d)", q, r);
+//        return String.format("(%1$2d,%2$2d)", coord.q(), coord.r());
+        return "" + coord;
     }
+//    public String toString()
+//    {
+//        String str = this.type();
+//        str += "(" + coord + "), size " + size;
+//        return str;
+//    }
 }

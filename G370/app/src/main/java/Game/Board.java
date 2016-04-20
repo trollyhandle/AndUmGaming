@@ -1,7 +1,5 @@
 package Game;
 
-import java.util.ArrayList;
-
 
 /**
  * Board.java
@@ -12,23 +10,23 @@ public class Board {
     private int rings, arraySize;
     private Shape[][] vertices;
 
-    private Point center;
+    private Point_XY center;
     private int hex_size;
 
     public Board()
     {
-        this.rings = 2*2;  // Two rings of full hexes, but vertices take more rings
+        this.rings = 4;  // Two rings of full hexes, but vertices take more rings
         arraySize = rings*2+1;
         vertices = new Shape[arraySize][arraySize];
         initBoard();
-        center = new Point(0, 0);
+        center = new Point_XY(0, 0);
         hex_size = 1;
     }
 
     public void move(int dx, int dy) {
-        int new_x = center.getX() + dx;
-        int new_y = center.getY() + dy;
-        center = new Point(new_x, new_y);
+        int new_x = center.x() + dx;
+        int new_y = center.y() + dy;
+        center = new Point_XY(new_x, new_y);
     }
     public void resize(int ds) { hex_size += ds; }
 
@@ -47,7 +45,7 @@ public class Board {
         }
         return prt;
     }
-    public Point getCenter() { return center; }
+    public Point_XY getCenter() { return center; }
     public int getHexSize() { return hex_size; }
 
 // *********** PRIVATE FUNCTIONS ***********
@@ -74,17 +72,16 @@ public class Board {
         // Here they come.
         int[][] extra_vertices = {{rings/2, rings/2+1}, {-(rings/2), 2*(rings/2)+1}, {-(rings/2)-1, 2*(rings/2)+1}};
         for (int[] pair : extra_vertices) {
-            vertices[ (pair[0]+arraySize)%arraySize][ (pair[1]+arraySize)%arraySize] =
-                    new Vertex( (pair[0]+arraySize)%arraySize, (pair[1]+arraySize)%arraySize); // normal
-            vertices[ (pair[1]+arraySize)%arraySize][ (pair[0]+arraySize)%arraySize] =
-                    new Vertex( (pair[1]+arraySize)%arraySize, (pair[0]+arraySize)%arraySize); // reversed
-            vertices[-(pair[0]+arraySize)%arraySize][-(pair[1]+arraySize)%arraySize] =
-                    new Vertex(-(pair[0]+arraySize)%arraySize,-(pair[1]+arraySize)%arraySize); // negative
-            vertices[-(pair[1]+arraySize)%arraySize][-(pair[0]+arraySize)%arraySize] =
-                    new Vertex(-(pair[1]+arraySize)%arraySize,-(pair[0]+arraySize)%arraySize); // negative reversed
+            vertices[( pair[0]+arraySize)%arraySize][( pair[1]+arraySize)%arraySize] =  // normal
+                    new Vertex( (pair[0]+arraySize)%arraySize, ( pair[1]+arraySize)%arraySize);
+            vertices[( pair[1]+arraySize)%arraySize][( pair[0]+arraySize)%arraySize] =  // reversed
+                    new Vertex( (pair[1]+arraySize)%arraySize, ( pair[0]+arraySize)%arraySize);
+            vertices[(-pair[0]+arraySize)%arraySize][(-pair[1]+arraySize)%arraySize] =  // negative
+                    new Vertex((-pair[0]+arraySize)%arraySize, (-pair[1]+arraySize)%arraySize);
+            vertices[(-pair[1]+arraySize)%arraySize][(-pair[0]+arraySize)%arraySize] =  // negative reversed
+                    new Vertex((-pair[1]+arraySize)%arraySize, (-pair[0]+arraySize)%arraySize);
         }
-        
-        System.out.println("\n");  // DEBUG
+//        System.out.println("\n");  // DEBUG
     }
 
 }

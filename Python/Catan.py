@@ -4,22 +4,21 @@ import math
 
 colors = ["black", "red", "blue", "green", "orange", "darkblue", "yellow"]
 
+# WIN_SIZE = 500
 # WIN_SIZE = 800
 WIN_SIZE = 1100
 
 
 def main():
 
-    win_center = Point(WIN_SIZE//2, WIN_SIZE//2)
-    # hex_size = 40
-    # hex_size = 80
-    hex_size = 120
+    win_center = Point(WIN_SIZE * math.sqrt(3)//4, WIN_SIZE//2)
+    hex_size = WIN_SIZE // 10
     # hex_size_short = hex_size * math.sqrt(3) / 2
 
-    scale = Line(Point(WIN_SIZE//2-hex_size/2, 40), Point(WIN_SIZE//2+hex_size/2, 40))
+    scale = Line(Point(win_center.x-hex_size/2, 40), Point(win_center.x+hex_size/2, 40))
     scale.setWidth(2)
     scale.setOutline("red")
-    scale_text = Text(Point(WIN_SIZE//2, 46), "scale")
+    scale_text = Text(Point(win_center.x, 46), "scale")
     scale_text.setTextColor("red")
 
     done = Circle(Point(20, 20), 15)
@@ -30,7 +29,7 @@ def main():
     print()
     print(board)
 
-    win = GraphWin("prototype", WIN_SIZE, WIN_SIZE, autoflush=False)
+    win = GraphWin("prototype", WIN_SIZE * math.sqrt(3)//2, WIN_SIZE, autoflush=False)
     done.draw(win)
     scale.draw(win)
     scale_text.draw(win)
@@ -123,7 +122,9 @@ class Board:
         # TODO grid bounds check
         poly_size = self.hex_size * math.sqrt(3) / 3
         where = pixel_to_hex(self.center, poly_size, click.x, click.y)
+        # where = point_to_hex(self.center, poly_size, click.x, click.y)
         q, r = where.x, where.y
+        # r, q = where.x, where.y
         # if not ((-self.rings <= q <= self.rings) and (-self.rings <= r <= self.rings)):
         #     print("out of grid")
         #     return
@@ -341,14 +342,14 @@ def hex_round(q, r):
 def cube_to_hex(x, y, z):  # axial
     r = x
     q = z
-    return (q, r)
+    return q, r
 
 
 def hex_to_cube(q, r):  # axial
     x = r
     z = q
     y = -x-z
-    return (x, y, z)
+    return x, y, z
 
 
 def cube_round(x, y, z):
@@ -367,7 +368,7 @@ def cube_round(x, y, z):
     else:
         rz = -rx-ry
 
-    return (rx, ry, rz)
+    return rx, ry, rz
 
 
 # sorcery of some sort (deep magic)
