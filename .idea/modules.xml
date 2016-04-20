@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AndUmGaming.iml" filepath="$PROJECT_DIR$/.idea/AndUmGaming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/G370.iml" filepath="$PROJECT_DIR$/G370.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
