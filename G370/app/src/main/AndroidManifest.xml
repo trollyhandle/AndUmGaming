@@ -10,7 +10,9 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <!-- Initialize music -->
-        <service android:name="MusicService" android:enabled="true"></service>
+        <service
+            android:name=".MusicService"
+            android:enabled="true" />
 
         <activity
             android:name=".FullscreenActivity"
@@ -23,22 +25,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity android:name=".Splash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
-
-
-
         </activity>
-
-
+        <activity android:name=".GameTest"></activity>
     </application>
 
 </manifest>

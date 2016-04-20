@@ -13,4 +13,9 @@ public class Hexagon extends Shape {
     }
 
     public String type() { return "Hexagon"; }
+
+
+    
+
+
 }

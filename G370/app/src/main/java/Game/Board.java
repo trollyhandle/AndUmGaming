@@ -1,5 +1,7 @@
 package Game;
 
+import android.graphics.drawable.ShapeDrawable;
+
 
 /**
  * Board.java
@@ -13,6 +15,8 @@ public class Board {
     private Point_XY center;
     private int hex_size;
 
+    private ShapeDrawable display;
+
     public Board()
     {
         this.rings = 4;  // Two rings of full hexes, but vertices take more rings
@@ -23,14 +27,30 @@ public class Board {
         hex_size = 1;
     }
 
-    public void move(int dx, int dy) {
+    public ShapeDrawable getDrawable() { return display; }
+    public void updateDrawable()
+    {
+//        return new BoardView();
+    }
+
+
+
+
+
+
+
+
+    public void move(int dx, int dy)
+    {
         int new_x = center.x() + dx;
         int new_y = center.y() + dy;
         center = new Point_XY(new_x, new_y);
     }
     public void resize(int ds) { hex_size += ds; }
-
-
+    public Point_XY getCenter() { return center; }
+    public void setCenter(int x, int y) { center = new Point_XY(x, y); }
+    public int getHexSize() { return hex_size; }
+    public void setHexSize(int size) { hex_size = size; }
 
     public String toString()
     {
@@ -45,8 +65,7 @@ public class Board {
         }
         return prt;
     }
-    public Point_XY getCenter() { return center; }
-    public int getHexSize() { return hex_size; }
+
 
 // *********** PRIVATE FUNCTIONS ***********
 
