@@ -1,20 +1,20 @@
-package com.example.andumgaming.g370;
+package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.content.ServiceConnection;
 import android.content.ComponentName;
 import android.os.IBinder;
 import android.content.Intent;
 import android.content.Context;
 
+import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
+import com.example.andumgaming.g370.views.fragments.SettingsFragment;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -22,6 +22,7 @@ import com.example.andumgaming.g370.views.fragments.MenuFragment;
  */
 public class FullscreenActivity extends AppCompatActivity {
     private MenuFragment menuFragment;
+    private SettingsFragment settingsFragment;
 
     /* initialize background music */
     private boolean mIsBound = false;
@@ -105,11 +106,13 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
-
         menuFragment = MenuFragment.newInstance();
+
+        //menuFragment.setOnFr
+
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
 
 
 
