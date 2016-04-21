@@ -27,10 +27,11 @@ public class Board {
         hex_size = 1;
     }
 
-    public ShapeDrawable getDrawable() { return display; }
-    public void updateDrawable()
+    public ShapeDrawable getDrawable() { System.out.println("BOARD Getting drawable");return display; }
+    public void update()
     {
-//        return new BoardView();
+        System.out.println("BOARD Updating central hex drawable...");
+        display = vertices[0][0].getDrawable();
     }
 
 
@@ -48,7 +49,17 @@ public class Board {
     }
     public void resize(int ds) { hex_size += ds; }
     public Point_XY getCenter() { return center; }
-    public void setCenter(int x, int y) { center = new Point_XY(x, y); }
+    public void setCenter(int x, int y)
+    {
+        center = new Point_XY(x, y);
+        Shape s;
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                s = vertices[q][r];
+                if (s != null) s.setBoardCenter(center);
+            }
+        }
+    }
     public int getHexSize() { return hex_size; }
     public void setHexSize(int size) { hex_size = size; }
 
@@ -56,9 +67,10 @@ public class Board {
     {
         String prt = "";
 
-        for (int q = -arraySize/2; q <= arraySize/2; q++) {
-            for (int r = -arraySize/2; r <= arraySize/2; r++) {
-                Shape s = vertices[q<0? q+arraySize: q][r<0? r+arraySize: r];
+        Shape s;
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                s = vertices[q][r];
                 prt += (s == null? "   ..   ": s + " ");
             }
             prt += '\n';
@@ -92,13 +104,16 @@ public class Board {
         int[][] extra_vertices = {{rings/2, rings/2+1}, {-(rings/2), 2*(rings/2)+1}, {-(rings/2)-1, 2*(rings/2)+1}};
         for (int[] pair : extra_vertices) {
             vertices[( pair[0]+arraySize)%arraySize][( pair[1]+arraySize)%arraySize] =  // normal
-                    new Vertex( (pair[0]+arraySize)%arraySize, ( pair[1]+arraySize)%arraySize);
+                    new Vertex( pair[0], pair[1]);
+
             vertices[( pair[1]+arraySize)%arraySize][( pair[0]+arraySize)%arraySize] =  // reversed
-                    new Vertex( (pair[1]+arraySize)%arraySize, ( pair[0]+arraySize)%arraySize);
+                    new Vertex( pair[1], pair[0]);
+
             vertices[(-pair[0]+arraySize)%arraySize][(-pair[1]+arraySize)%arraySize] =  // negative
-                    new Vertex((-pair[0]+arraySize)%arraySize, (-pair[1]+arraySize)%arraySize);
+                    new Vertex(-pair[0], -pair[1]);
+
             vertices[(-pair[1]+arraySize)%arraySize][(-pair[0]+arraySize)%arraySize] =  // negative reversed
-                    new Vertex((-pair[1]+arraySize)%arraySize, (-pair[0]+arraySize)%arraySize);
+                    new Vertex(-pair[1], -pair[0]);
         }
 //        System.out.println("\n");  // DEBUG
     }

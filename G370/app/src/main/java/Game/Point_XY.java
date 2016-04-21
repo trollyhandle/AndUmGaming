@@ -78,7 +78,7 @@ public class Point_XY {
 
     public String toString()
     {
-        return String.format("(%1$2d,%2$2d", x, y);
+        return String.format("(%1$2d,%2$2d)", x, y);
 
     }
 }

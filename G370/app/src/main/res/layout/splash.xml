@@ -3,7 +3,7 @@
     android:layout_height="match_parent" android:paddingLeft="60dip"
     android:paddingRight="60dip"
     android:paddingTop="60dip"
-    android:paddingBottom="60dip" tools:context=".Splash"
+    android:paddingBottom="60dip" tools:context=".views.Splash"
     android:background="#31fa49">
 
     <TextView android:text="loading" android:layout_width="wrap_content"

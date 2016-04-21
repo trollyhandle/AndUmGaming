@@ -1,4 +1,4 @@
-package com.example.andumgaming.g370;
+package com.example.andumgaming.g370.views;
 
 import android.app.Activity;
 import android.app.Application;
@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.example.andumgaming.g370.R;
 
 
 /**
