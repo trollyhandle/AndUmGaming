@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import com.example.andumgaming.g370.views.fragments.SettingsFragment;
 import com.example.andumgaming.g370.R;
 
 /**
@@ -29,6 +28,8 @@ public class MenuFragment extends Fragment{
     }
 
 
+
+
     public static MenuFragment newInstance(){
         MenuFragment fragment = new MenuFragment();
         Bundle args = new Bundle();
@@ -41,6 +42,8 @@ public class MenuFragment extends Fragment{
         super.onCreate(savedInstance);
     }
 
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
 
         View view = inflater.inflate(R.layout.menu_fragment,container, false);
@@ -51,6 +54,8 @@ public class MenuFragment extends Fragment{
         aboutButton = (Button)view.findViewById(R.id.AboutButton);
         leaderButton = (Button)view.findViewById(R.id.SoonButton);
 
+
+
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,15 +63,37 @@ public class MenuFragment extends Fragment{
                 SettingsFragment newFragment = new SettingsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                transaction.replace(R.id.container, newFragment)
-                        .addToBackStack(null)
-                        .commit();
+                transaction.replace(R.id.container, newFragment).addToBackStack(null).commit();
 
 
 
 
             }
         });
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlayFragment newFragment = new PlayFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.container, newFragment).addToBackStack(null).commit();
+            }
+        });
+
+        tutorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TutorialFragment newFragment = new TutorialFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.container, newFragment).addToBackStack(null).commit();
+
+            }
+        });
+
+
+
         return view;
         }
 
