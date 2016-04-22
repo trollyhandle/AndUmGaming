@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c56aeba3-19ea-4a49-b1a2-06ec388d46a1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Point_QR.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Point.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Point_XY.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Board.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Board.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Catan.py" afterPath="$PROJECT_DIR$/Catan.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Shape.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Shape.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Catan.iws" />
@@ -31,24 +27,32 @@
       <file leaf-file-name="Catan.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Catan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.18131869">
-              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.32019705">
+              <caret line="296" column="38" selection-start-line="296" selection-start-column="38" selection-end-line="296" selection-end-column="38" />
               <folding>
-                <element signature="e#182#1204#0" expanded="false" />
-                <element signature="e#1224#5589#0" expanded="false" />
-                <element signature="e#1261#2694#0" expanded="false" />
-                <element signature="e#2743#3106#0" expanded="false" />
-                <element signature="e#3149#3256#0" expanded="false" />
-                <element signature="e#3303#3414#0" expanded="false" />
-                <element signature="e#3475#3596#0" expanded="false" />
-                <element signature="e#3654#3774#0" expanded="false" />
-                <element signature="e#3828#4831#0" expanded="false" />
-                <element signature="e#4889#5589#0" expanded="false" />
-                <element signature="e#5607#8008#0" expanded="false" />
-                <element signature="e#8029#10297#0" expanded="false" />
-                <element signature="e#10330#10538#0" expanded="false" />
-                <element signature="e#10586#10857#0" expanded="false" />
-                <element signature="e#10897#11201#0" expanded="false" />
+                <element signature="e#0#22#0" expanded="true" />
+                <element signature="e#3057#3164#0" expanded="false" />
+                <element signature="e#3211#3322#0" expanded="false" />
+                <element signature="e#3383#3504#0" expanded="false" />
+                <element signature="e#3562#3682#0" expanded="false" />
+                <element signature="e#3736#4739#0" expanded="false" />
+                <element signature="e#4797#5497#0" expanded="false" />
+                <element signature="e#5515#7960#0" expanded="false" />
+                <element signature="e#8219#8262#0" expanded="false" />
+                <element signature="e#10393#10472#0" expanded="false" />
+                <element signature="e#10512#10753#0" expanded="false" />
+                <element signature="e#10866#10913#0" expanded="false" />
+                <element signature="e#10954#11055#0" expanded="false" />
+                <element signature="e#11088#11296#0" expanded="false" />
+                <element signature="e#11344#11615#0" expanded="false" />
+                <element signature="e#11655#11959#0" expanded="false" />
+                <element signature="e#12004#12105#0" expanded="false" />
+                <element signature="e#12150#12378#0" expanded="false" />
+                <element signature="e#12406#12565#0" expanded="false" />
+                <element signature="e#12607#12638#0" expanded="false" />
+                <element signature="e#12677#12724#0" expanded="false" />
+                <element signature="e#12756#13045#0" expanded="false" />
+                <element signature="e#13173#13455#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -79,10 +83,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="986" />
-    <option name="y" value="56" />
-    <option name="width" value="897" />
-    <option name="height" value="1007" />
+    <option name="x" value="966" />
+    <option name="y" value="22" />
+    <option name="width" value="943" />
+    <option name="height" value="1112" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -95,7 +99,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -106,30 +110,7 @@
       <autoscrollFromSource />
       <sortByType />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Catan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Catan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Python" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -302,7 +283,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="986" y="56" width="897" height="1007" extended-state="0" />
+    <frame x="966" y="22" width="943" height="1112" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -312,9 +293,9 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17771639" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39978677" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.27599612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1360" y="851" width="523" height="277" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.27599612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="983" y="986" width="946" height="155" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298077" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -366,47 +347,31 @@
     <entry file="file://$PROJECT_DIR$/Catan.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#182#1204#0" expanded="false" />
-            <element signature="e#1224#5589#0" expanded="false" />
-            <element signature="e#1261#2694#0" expanded="false" />
-            <element signature="e#2743#3106#0" expanded="false" />
-            <element signature="e#3149#3256#0" expanded="false" />
-            <element signature="e#3303#3414#0" expanded="false" />
-            <element signature="e#3475#3596#0" expanded="false" />
-            <element signature="e#3654#3774#0" expanded="false" />
-            <element signature="e#3828#4831#0" expanded="false" />
-            <element signature="e#4889#5589#0" expanded="false" />
-            <element signature="e#5607#8008#0" expanded="false" />
-            <element signature="e#8029#10297#0" expanded="false" />
-            <element signature="e#10330#10538#0" expanded="false" />
-            <element signature="e#10586#10857#0" expanded="false" />
-            <element signature="e#10897#11201#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Catan.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="175" column="16" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="16" />
-          <folding>
-            <element signature="e#182#1204#0" expanded="false" />
-            <element signature="e#1224#5589#0" expanded="false" />
-            <element signature="e#1261#2694#0" expanded="false" />
-            <element signature="e#2743#3106#0" expanded="false" />
-            <element signature="e#3149#3256#0" expanded="false" />
-            <element signature="e#3303#3414#0" expanded="false" />
-            <element signature="e#3475#3596#0" expanded="false" />
-            <element signature="e#3654#3774#0" expanded="false" />
-            <element signature="e#3828#4831#0" expanded="false" />
-            <element signature="e#4889#5589#0" expanded="false" />
-            <element signature="e#5607#8008#0" expanded="false" />
-            <element signature="e#8029#10297#0" expanded="false" />
-            <element signature="e#10330#10538#0" expanded="false" />
-            <element signature="e#10586#10857#0" expanded="false" />
-            <element signature="e#10897#11201#0" expanded="false" />
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#3057#3164#0" expanded="false" />
+            <element signature="e#3211#3322#0" expanded="false" />
+            <element signature="e#3383#3504#0" expanded="false" />
+            <element signature="e#3562#3682#0" expanded="false" />
+            <element signature="e#3736#4739#0" expanded="false" />
+            <element signature="e#4797#5497#0" expanded="false" />
+            <element signature="e#5515#7960#0" expanded="false" />
+            <element signature="e#8219#8262#0" expanded="false" />
+            <element signature="e#10393#10472#0" expanded="false" />
+            <element signature="e#10512#10753#0" expanded="false" />
+            <element signature="e#10866#10913#0" expanded="false" />
+            <element signature="e#10954#11055#0" expanded="false" />
+            <element signature="e#11088#11296#0" expanded="false" />
+            <element signature="e#11344#11615#0" expanded="false" />
+            <element signature="e#11655#11959#0" expanded="false" />
+            <element signature="e#12004#12105#0" expanded="false" />
+            <element signature="e#12150#12378#0" expanded="false" />
+            <element signature="e#12406#12565#0" expanded="false" />
+            <element signature="e#12607#12638#0" expanded="false" />
+            <element signature="e#12677#12724#0" expanded="false" />
+            <element signature="e#12756#13045#0" expanded="false" />
+            <element signature="e#13173#13455#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -416,21 +381,125 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#182#1204#0" expanded="false" />
-            <element signature="e#1224#5589#0" expanded="false" />
-            <element signature="e#1261#2694#0" expanded="false" />
-            <element signature="e#2743#3106#0" expanded="false" />
-            <element signature="e#3149#3256#0" expanded="false" />
-            <element signature="e#3303#3414#0" expanded="false" />
-            <element signature="e#3475#3596#0" expanded="false" />
-            <element signature="e#3654#3774#0" expanded="false" />
-            <element signature="e#3828#4831#0" expanded="false" />
-            <element signature="e#4889#5589#0" expanded="false" />
-            <element signature="e#5607#8008#0" expanded="false" />
-            <element signature="e#8029#10297#0" expanded="false" />
-            <element signature="e#10330#10538#0" expanded="false" />
-            <element signature="e#10586#10857#0" expanded="false" />
-            <element signature="e#10897#11201#0" expanded="false" />
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#3057#3164#0" expanded="false" />
+            <element signature="e#3211#3322#0" expanded="false" />
+            <element signature="e#3383#3504#0" expanded="false" />
+            <element signature="e#3562#3682#0" expanded="false" />
+            <element signature="e#3736#4739#0" expanded="false" />
+            <element signature="e#4797#5497#0" expanded="false" />
+            <element signature="e#5515#7960#0" expanded="false" />
+            <element signature="e#8219#8262#0" expanded="false" />
+            <element signature="e#10393#10472#0" expanded="false" />
+            <element signature="e#10512#10753#0" expanded="false" />
+            <element signature="e#10866#10913#0" expanded="false" />
+            <element signature="e#10954#11055#0" expanded="false" />
+            <element signature="e#11088#11296#0" expanded="false" />
+            <element signature="e#11344#11615#0" expanded="false" />
+            <element signature="e#11655#11959#0" expanded="false" />
+            <element signature="e#12004#12105#0" expanded="false" />
+            <element signature="e#12150#12378#0" expanded="false" />
+            <element signature="e#12406#12565#0" expanded="false" />
+            <element signature="e#12607#12638#0" expanded="false" />
+            <element signature="e#12677#12724#0" expanded="false" />
+            <element signature="e#12756#13045#0" expanded="false" />
+            <element signature="e#13173#13455#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Catan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#3057#3164#0" expanded="false" />
+            <element signature="e#3211#3322#0" expanded="false" />
+            <element signature="e#3383#3504#0" expanded="false" />
+            <element signature="e#3562#3682#0" expanded="false" />
+            <element signature="e#3736#4739#0" expanded="false" />
+            <element signature="e#4797#5497#0" expanded="false" />
+            <element signature="e#5515#7960#0" expanded="false" />
+            <element signature="e#8219#8262#0" expanded="false" />
+            <element signature="e#10393#10472#0" expanded="false" />
+            <element signature="e#10512#10753#0" expanded="false" />
+            <element signature="e#10866#10913#0" expanded="false" />
+            <element signature="e#10954#11055#0" expanded="false" />
+            <element signature="e#11088#11296#0" expanded="false" />
+            <element signature="e#11344#11615#0" expanded="false" />
+            <element signature="e#11655#11959#0" expanded="false" />
+            <element signature="e#12004#12105#0" expanded="false" />
+            <element signature="e#12150#12378#0" expanded="false" />
+            <element signature="e#12406#12565#0" expanded="false" />
+            <element signature="e#12607#12638#0" expanded="false" />
+            <element signature="e#12677#12724#0" expanded="false" />
+            <element signature="e#12756#13045#0" expanded="false" />
+            <element signature="e#13173#13455#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Catan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="175" column="16" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#3057#3164#0" expanded="false" />
+            <element signature="e#3211#3322#0" expanded="false" />
+            <element signature="e#3383#3504#0" expanded="false" />
+            <element signature="e#3562#3682#0" expanded="false" />
+            <element signature="e#3736#4739#0" expanded="false" />
+            <element signature="e#4797#5497#0" expanded="false" />
+            <element signature="e#5515#7960#0" expanded="false" />
+            <element signature="e#8219#8262#0" expanded="false" />
+            <element signature="e#10393#10472#0" expanded="false" />
+            <element signature="e#10512#10753#0" expanded="false" />
+            <element signature="e#10866#10913#0" expanded="false" />
+            <element signature="e#10954#11055#0" expanded="false" />
+            <element signature="e#11088#11296#0" expanded="false" />
+            <element signature="e#11344#11615#0" expanded="false" />
+            <element signature="e#11655#11959#0" expanded="false" />
+            <element signature="e#12004#12105#0" expanded="false" />
+            <element signature="e#12150#12378#0" expanded="false" />
+            <element signature="e#12406#12565#0" expanded="false" />
+            <element signature="e#12607#12638#0" expanded="false" />
+            <element signature="e#12677#12724#0" expanded="false" />
+            <element signature="e#12756#13045#0" expanded="false" />
+            <element signature="e#13173#13455#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Catan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#3057#3164#0" expanded="false" />
+            <element signature="e#3211#3322#0" expanded="false" />
+            <element signature="e#3383#3504#0" expanded="false" />
+            <element signature="e#3562#3682#0" expanded="false" />
+            <element signature="e#3736#4739#0" expanded="false" />
+            <element signature="e#4797#5497#0" expanded="false" />
+            <element signature="e#5515#7960#0" expanded="false" />
+            <element signature="e#8219#8262#0" expanded="false" />
+            <element signature="e#10393#10472#0" expanded="false" />
+            <element signature="e#10512#10753#0" expanded="false" />
+            <element signature="e#10866#10913#0" expanded="false" />
+            <element signature="e#10954#11055#0" expanded="false" />
+            <element signature="e#11088#11296#0" expanded="false" />
+            <element signature="e#11344#11615#0" expanded="false" />
+            <element signature="e#11655#11959#0" expanded="false" />
+            <element signature="e#12004#12105#0" expanded="false" />
+            <element signature="e#12150#12378#0" expanded="false" />
+            <element signature="e#12406#12565#0" expanded="false" />
+            <element signature="e#12607#12638#0" expanded="false" />
+            <element signature="e#12677#12724#0" expanded="false" />
+            <element signature="e#12756#13045#0" expanded="false" />
+            <element signature="e#13173#13455#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -480,24 +549,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Catan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.18131869">
-          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.32019705">
+          <caret line="296" column="38" selection-start-line="296" selection-start-column="38" selection-end-line="296" selection-end-column="38" />
           <folding>
-            <element signature="e#182#1204#0" expanded="false" />
-            <element signature="e#1224#5589#0" expanded="false" />
-            <element signature="e#1261#2694#0" expanded="false" />
-            <element signature="e#2743#3106#0" expanded="false" />
-            <element signature="e#3149#3256#0" expanded="false" />
-            <element signature="e#3303#3414#0" expanded="false" />
-            <element signature="e#3475#3596#0" expanded="false" />
-            <element signature="e#3654#3774#0" expanded="false" />
-            <element signature="e#3828#4831#0" expanded="false" />
-            <element signature="e#4889#5589#0" expanded="false" />
-            <element signature="e#5607#8008#0" expanded="false" />
-            <element signature="e#8029#10297#0" expanded="false" />
-            <element signature="e#10330#10538#0" expanded="false" />
-            <element signature="e#10586#10857#0" expanded="false" />
-            <element signature="e#10897#11201#0" expanded="false" />
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#3057#3164#0" expanded="false" />
+            <element signature="e#3211#3322#0" expanded="false" />
+            <element signature="e#3383#3504#0" expanded="false" />
+            <element signature="e#3562#3682#0" expanded="false" />
+            <element signature="e#3736#4739#0" expanded="false" />
+            <element signature="e#4797#5497#0" expanded="false" />
+            <element signature="e#5515#7960#0" expanded="false" />
+            <element signature="e#8219#8262#0" expanded="false" />
+            <element signature="e#10393#10472#0" expanded="false" />
+            <element signature="e#10512#10753#0" expanded="false" />
+            <element signature="e#10866#10913#0" expanded="false" />
+            <element signature="e#10954#11055#0" expanded="false" />
+            <element signature="e#11088#11296#0" expanded="false" />
+            <element signature="e#11344#11615#0" expanded="false" />
+            <element signature="e#11655#11959#0" expanded="false" />
+            <element signature="e#12004#12105#0" expanded="false" />
+            <element signature="e#12150#12378#0" expanded="false" />
+            <element signature="e#12406#12565#0" expanded="false" />
+            <element signature="e#12607#12638#0" expanded="false" />
+            <element signature="e#12677#12724#0" expanded="false" />
+            <element signature="e#12756#13045#0" expanded="false" />
+            <element signature="e#13173#13455#0" expanded="false" />
           </folding>
         </state>
       </provider>

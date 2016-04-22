@@ -1,8 +1,9 @@
 from graphics import *
 import math
+import random
 
 
-colors = ["black", "red", "blue", "green", "orange", "darkblue", "yellow"]
+resources = ["gold", "orangered", "seagreen", "orchid", "turquoise"]
 
 # WIN_SIZE = 500
 # WIN_SIZE = 800
@@ -34,10 +35,6 @@ def main():
     scale.draw(win)
     scale_text.draw(win)
     board.draw(win)
-    ln = Line(win_center, jump_hex(win_center, hex_size, 1, 1))
-    ln.setOutline("purple")
-    ln.setWidth(2)
-    ln.draw(win)
     win.update()
     win.autoflush = True
 
@@ -47,6 +44,8 @@ def main():
         click = win.getMouse()
 
     win.close()
+
+
 
 
 class Board:
@@ -71,7 +70,7 @@ class Board:
                 if abs(q-r) % 3 == 0:  # if |q-r| is a multiple of 3
                     hx_q, hx_r = q, r  # CONVERT THIS PROPERLY if want to use separate Hex array
                     # print("hex {:2} at {:2}, {:2}  ->  {:2}, {:2}".format(num, q, r, hx_q, hx_r))  # DEBUG
-                    vertices[q][r] = Hex(q, r)
+                    vertices[q][r] = Hex(q, r, random.choice(resources))
 
                     num += 1
         rings //= 2
@@ -197,6 +196,7 @@ class Hex:
                              jump_linear(self.center, 210, poly_size),
                              jump_linear(self.center, 270, poly_size),
                              jump_linear(self.center, 330, poly_size))
+        self.vpoly.setFill(self.resource)
 
         self.cir_center = Circle(self.center, 3)
         self.txt = Text(self.center, self.text)
@@ -204,7 +204,7 @@ class Hex:
 
     def draw(self, win):
         if self.center is not None:
-            self.poly.draw(win)
+            # self.poly.draw(win)
             self.vpoly.draw(win)
             self.txt.draw(win)
 
@@ -234,7 +234,7 @@ class Hex:
 class Vertex:
     def __init__(self, q, r):
         self.q, self.r = q, r
-        self.text = str(q) + ", " + str(r)
+        self.text = str( q - r  )
         self.directions = [ (+1,  0), (+1, -1), ( 0, -1),
                             (-1,  0), (-1, +1), ( 0, +1)]
 
@@ -243,10 +243,10 @@ class Vertex:
 
     def place(self, grid_center, size):
         self.size = size
-        self.size_short = size * math.sqrt(3) / 2
+        # self.size_short = size * math.sqrt(3) / 2
         self.vertex_size = size//4
         self.vertex_size_short = self.vertex_size * math.sqrt(3) / 2
-        poly_size = size * math.sqrt(3)/ 3
+        # poly_size = size * math.sqrt(3)/ 3
 
         # self.center = hex_to_pixel(grid_center, self.size_short*2//3, self.q, self.r)
         self.center = hex_to_pixel(grid_center, self.size, self.q, self.r)
@@ -260,22 +260,39 @@ class Vertex:
         self.cir_center = Circle(self.center, 3)
         self.txt = Text(self.center, self.text)
         self.txt.setSize(int(max(min(self.vertex_size//2, 32), 5)))
+
+        if ((self.q - self.r) + 1) % 3 == 0:
+            self.color = "green"
+            ofs = 0
+        elif ((self.q - self.r) - 1) % 3 == 0:
+            self.color = "red"
+            ofs = 60
+        self.lines = [Line(jump_linear(self.center, ofs, self.vertex_size_short), jump_linear(self.center, ofs, self.size//2)),
+                      Line(jump_linear(self.center, ofs+120, self.vertex_size_short), jump_linear(self.center, ofs+120, self.size//2)),
+                      Line(jump_linear(self.center, ofs+240, self.vertex_size_short), jump_linear(self.center, ofs+240, self.size//2))]
+        # self.poly.setFill(self.color)
+        for line in self.lines:
+            # line.setOutline(self.color)
+            line.setWidth(4)
+
         
     def draw(self, win):
         self.poly.draw(win)
-        # self.txt.draw(win)
-        self.cir_center.draw(win)
+        for line in self.lines:
+            line.draw(win)
+        self.txt.draw(win)
+        # self.cir_center.draw(win)
     def undraw(self, ):
         self.poly.undraw()
         self.txt.undraw()
         # self.cir_center.undraw()
 
     def is_click_in(self, point):
-        x, y = point.getX(), point.getY()
-        cx, cy = self.center.getX(), self.center.getY()
-        # if radius < distance
-        if self.vertex_size_short**2 > (cx-x)**2 + (cy-y)**2:
-            return True
+    #     x, y = point.getX(), point.getY()
+    #     cx, cy = self.center.getX(), self.center.getY()
+    #     # if radius < distance
+    #     if self.vertex_size_short**2 > (cx-x)**2 + (cy-y)**2:
+    #         return True
         return False
     def setColor(self, color="black"):
         self.poly.setOutline(color)
