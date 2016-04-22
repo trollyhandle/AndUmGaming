@@ -21,7 +21,8 @@ public class Point_XY {
     public Point_XY jump_linear(int degrees, int distance)
     {
         int new_x = x + (int)(distance * Math.cos(Math.toRadians(degrees)));
-        int new_y = x + (int)(distance * Math.cos(Math.toRadians(degrees)));
+        int new_y = y + (int)(distance * Math.sin(Math.toRadians(degrees)));
+        System.out.printf("POINT Jumping from %1$2d,%2$2d to %3$2d,%4$2d: %5$3d* for %6$3ds\n", x, y ,new_x, new_y, degrees, distance);
         return new Point_XY(new_x, new_y);
     }
 

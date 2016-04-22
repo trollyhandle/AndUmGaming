@@ -1,8 +1,6 @@
 package Game;
 
 import android.graphics.Path;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.PathShape;
 
 
 /**
@@ -17,7 +15,6 @@ public class Board {
     private Point_XY center;
     private int hex_size;
 
-//    private PathShape display;
     private Path display;
 
     public Board()
@@ -30,8 +27,6 @@ public class Board {
         hex_size = 1;
     }
 
-//    public ShapeDrawable getDrawable() { System.out.println("BOARD Getting drawable");return display; }
-//    public PathShape getPathShape() { System.out.println("BOARD Getting drawable");return display; }
     public Path getPath() { System.out.println("BOARD Getting drawable");return display; }
     public void update()
     {

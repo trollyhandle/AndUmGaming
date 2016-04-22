@@ -30,7 +30,7 @@ public abstract class Shape {
     {
         coord = new Point_QR(q, r);
         boardCenter = new Point_XY(0, 0);
-        hex_size = 80;
+        hex_size = 180;
     }
 
 
@@ -55,7 +55,6 @@ public abstract class Shape {
         System.out.println("SHAPE Setting color");
         return display;
     }
-    public PathShape getPathShape() { return polygon; }
     public Path getPath() { return path; }
 
     public PathShape makeDrawable()
@@ -63,7 +62,7 @@ public abstract class Shape {
         System.out.println("SHAPE Making path...");
         System.out.println("SHAPE polygon size: " + poly_size + " (" + type() + ")");
         Point_XY shape_center = boardCenter;//.jump_hex(coord.q(), coord.r(), hex_size);  // TODO
-        Point_XY pt = shape_center.jump_linear(0, poly_size);
+        Point_XY pt = shape_center.jump_linear(330, poly_size);
         System.out.println("SHAPE Center at " + shape_center);
         System.out.println("SHAPE jump to" + pt);
 
@@ -75,14 +74,17 @@ public abstract class Shape {
             pt = shape_center.jump_linear(i, poly_size);
             System.out.println("SHAPE jump to" + pt);
             path.lineTo(pt.x(), pt.y());
+//            path.addCircle(pt.x(), pt.y(), 4, Path.Direction.CCW);
         }
         path.close();
         System.out.println("SHAPE Path created");
         polygon = new PathShape(path, poly_size*2, 2*poly_size);
 
         return polygon;
-//        return new OvalShape();
     }
+
+
+
     
     
     public abstract String type();
