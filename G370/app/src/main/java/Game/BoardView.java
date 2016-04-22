@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Rect;
 import android.view.View;
 
 /**
@@ -16,27 +15,16 @@ import android.view.View;
 public class BoardView extends View {
     private Path mDrawable;
     private Paint paint;
-    private Rect bounds;
 
     public BoardView(Context context) {
         super(context);
-
-        bounds = new Rect(10, 10, 300, 50);
-
-        System.out.println("VIEW Creating OVAL drawable");
         mDrawable = new Path();
         paint = new Paint();
         paint.setColor(0xffffffff);
     }
 
-    public void setBounds(int x, int y, int width, int height)
-    {
-        bounds = new Rect(x, y, x+width, y+height);
-    }
-
     public void setDrawable(Path display)
     {
-        System.out.println("VIEW setting drawable");
         mDrawable = display;
     }
 
@@ -45,7 +33,5 @@ public class BoardView extends View {
         System.out.println("VIEW drawing");
         canvas.drawPath(mDrawable, paint);
     }
-
-
 
 }

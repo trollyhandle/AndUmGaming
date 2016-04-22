@@ -2,7 +2,6 @@ package Game;
 
 import android.graphics.Path;
 
-
 /**
  * Board.java
  * Author: Tyler Holland
@@ -19,27 +18,32 @@ public class Board {
 
     public Board()
     {
-        this.rings = 4;  // Two rings of full hexes, but vertices take more rings
+        rings = 4;  // Two rings of full hexes, but vertices take more rings
         arraySize = rings*2+1;
         vertices = new Shape[arraySize][arraySize];
-        initBoard();
         center = new Point_XY(0, 0);
         hex_size = 1;
+        display = new Path();
+        initBoard();
     }
 
-    public Path getPath() { System.out.println("BOARD Getting drawable");return display; }
+    public Path getPath() { return display; }
     public void update()
     {
-        System.out.println("BOARD Updating central hex drawable...");
+        System.out.println("BOARD Updating path...");
         vertices[0][0].makeDrawable();
-        display = vertices[0][0].getPath();
+        display.rewind();
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                if (vertices[q][r] != null) {
+                    // update shape's board_center
+                    // update shape's hexagon size
+                    vertices[q][r].makeDrawable();
+                    display.addPath(vertices[q][r].getPath());
+                }
+            }
+        }
     }
-
-
-
-
-
-
 
 
     public void move(int dx, int dy)
@@ -78,7 +82,6 @@ public class Board {
         }
         return prt;
     }
-
 
 // *********** PRIVATE FUNCTIONS ***********
 

@@ -3,7 +3,6 @@ package com.example.andumgaming.g370.views;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Display;
 
 import com.example.andumgaming.g370.R;
 
@@ -32,7 +31,6 @@ public class GameTest extends AppCompatActivity {
 
         System.out.println("TEST creating BoardView");
         boardView = new BoardView(this);
-        boardView.setBounds(10, 10, width - 20, height - 100);
         boardView.setDrawable(board.getPath());
 
         setContentView(boardView);
@@ -40,11 +38,10 @@ public class GameTest extends AppCompatActivity {
 
     private void findSize()
     {
-        System.out.println("TEST finding size");
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
         width = size.x;
         height = size.y;
-        System.out.println("TEST Size: " + width + " * " + height);
+        System.out.println("TEST Window size: " + width + " by " + height);
     }
 }
