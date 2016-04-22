@@ -1,6 +1,8 @@
 package Game;
 
+import android.graphics.Path;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.PathShape;
 
 
 /**
@@ -15,7 +17,8 @@ public class Board {
     private Point_XY center;
     private int hex_size;
 
-    private ShapeDrawable display;
+//    private PathShape display;
+    private Path display;
 
     public Board()
     {
@@ -27,11 +30,14 @@ public class Board {
         hex_size = 1;
     }
 
-    public ShapeDrawable getDrawable() { System.out.println("BOARD Getting drawable");return display; }
+//    public ShapeDrawable getDrawable() { System.out.println("BOARD Getting drawable");return display; }
+//    public PathShape getPathShape() { System.out.println("BOARD Getting drawable");return display; }
+    public Path getPath() { System.out.println("BOARD Getting drawable");return display; }
     public void update()
     {
         System.out.println("BOARD Updating central hex drawable...");
-        display = vertices[0][0].getDrawable();
+        vertices[0][0].makeDrawable();
+        display = vertices[0][0].getPath();
     }
 
 
@@ -105,13 +111,10 @@ public class Board {
         for (int[] pair : extra_vertices) {
             vertices[( pair[0]+arraySize)%arraySize][( pair[1]+arraySize)%arraySize] =  // normal
                     new Vertex( pair[0], pair[1]);
-
             vertices[( pair[1]+arraySize)%arraySize][( pair[0]+arraySize)%arraySize] =  // reversed
                     new Vertex( pair[1], pair[0]);
-
             vertices[(-pair[0]+arraySize)%arraySize][(-pair[1]+arraySize)%arraySize] =  // negative
                     new Vertex(-pair[0], -pair[1]);
-
             vertices[(-pair[1]+arraySize)%arraySize][(-pair[0]+arraySize)%arraySize] =  // negative reversed
                     new Vertex(-pair[1], -pair[0]);
         }

@@ -33,7 +33,7 @@ public class GameTest extends AppCompatActivity {
         System.out.println("TEST creating BoardView");
         boardView = new BoardView(this);
         boardView.setBounds(10, 10, width - 20, height - 100);
-        boardView.setDrawable(board.getDrawable());
+        boardView.setDrawable(board.getPath());
 
         setContentView(boardView);
     }

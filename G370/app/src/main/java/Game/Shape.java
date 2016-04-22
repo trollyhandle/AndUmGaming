@@ -4,7 +4,6 @@ import android.graphics.Path;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.PathShape;
-import android.graphics.drawable.shapes.RectShape;
 
 /**
  * Shape.java
@@ -18,6 +17,7 @@ public abstract class Shape {
     protected int hex_size;
     protected int poly_size;
 
+    private Path path;
     private PathShape polygon;
     private ShapeDrawable display;
 
@@ -30,7 +30,7 @@ public abstract class Shape {
     {
         coord = new Point_QR(q, r);
         boardCenter = new Point_XY(0, 0);
-        hex_size = 1;
+        hex_size = 80;
     }
 
 
@@ -49,14 +49,16 @@ public abstract class Shape {
     public ShapeDrawable getDrawable()
     {
         System.out.println("SHAPE Getting drawable..");
-//        display = new ShapeDrawable(makeDrawable());
+        display = new ShapeDrawable(makeDrawable());
         display = new ShapeDrawable(new OvalShape());
         display.getPaint().setColor(0xffffffff);
         System.out.println("SHAPE Setting color");
         return display;
     }
+    public PathShape getPathShape() { return polygon; }
+    public Path getPath() { return path; }
 
-    private PathShape makeDrawable()
+    public PathShape makeDrawable()
     {
         System.out.println("SHAPE Making path...");
         System.out.println("SHAPE polygon size: " + poly_size + " (" + type() + ")");
@@ -65,34 +67,22 @@ public abstract class Shape {
         System.out.println("SHAPE Center at " + shape_center);
         System.out.println("SHAPE jump to" + pt);
 
-        Path path = new Path();
-        path.addCircle(shape_center.x(), shape_center.y(), 40, Path.Direction.CCW);
-//        path.moveTo(pt.x(), pt.y());
-//
-//        for (int i = 30; i <= 360; i += 60) {
-//            pt = shape_center.jump_linear(i, poly_size);
-//            System.out.println("SHAPE jump to" + pt);
-//            path.lineTo(pt.x(), pt.y());
-//        }
-//        path.close();
+        path = new Path();
+        path.addCircle(shape_center.x(), shape_center.y(), 10, Path.Direction.CCW);
+        path.moveTo(pt.x(), pt.y());
+
+        for (int i = 30; i <= 360; i += 60) {
+            pt = shape_center.jump_linear(i, poly_size);
+            System.out.println("SHAPE jump to" + pt);
+            path.lineTo(pt.x(), pt.y());
+        }
+        path.close();
         System.out.println("SHAPE Path created");
-        return new PathShape(path, poly_size, poly_size);
+        polygon = new PathShape(path, poly_size*2, 2*poly_size);
+
+        return polygon;
 //        return new OvalShape();
     }
-//  def place():
-//    
-//    self.center = hex_to_pixel(grid_center, self.size, self.q, self.r)
-//    # print(str(self) + ", distance = {:3}".format(distance(grid_center, self.center)))  # DEBUG
-//    self.poly = Polygon(jump_linear(self.center, 30, self.vertex_size),  // vertex_size
-//                        jump_linear(self.center, 90, self.vertex_size),
-//                        jump_linear(self.center, 150, self.vertex_size),
-//                        jump_linear(self.center, 210, self.vertex_size),
-//                        jump_linear(self.center, 270, self.vertex_size),
-//                        jump_linear(self.center, 330, self.vertex_size))
-//    self.cir_center = Circle(self.center, 3)
-//    self.txt = Text(self.center, self.text)
-//    self.txt.setSize(int(max(min(self.vertex_size//2, 32), 5)))
-//
     
     
     public abstract String type();
