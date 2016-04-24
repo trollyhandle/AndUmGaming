@@ -56,6 +56,7 @@ public class MenuFragment extends Fragment{
 
 
 
+
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +64,9 @@ public class MenuFragment extends Fragment{
                 SettingsFragment newFragment = new SettingsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                transaction.replace(R.id.container, newFragment).addToBackStack(null).commit();
+                transaction.replace(R.id.container, newFragment)
+                        .addToBackStack(SettingsFragment.class
+                                .getSimpleName()).commit();
 
 
 
@@ -77,7 +80,9 @@ public class MenuFragment extends Fragment{
                 PlayFragment newFragment = new PlayFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                transaction.replace(R.id.container, newFragment).addToBackStack(null).commit();
+                transaction.replace(R.id.container, newFragment)
+                        .addToBackStack(PlayFragment.class
+                                .getSimpleName()).commit();
             }
         });
 
@@ -87,8 +92,22 @@ public class MenuFragment extends Fragment{
                 TutorialFragment newFragment = new TutorialFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                transaction.replace(R.id.container, newFragment).addToBackStack(null).commit();
+                transaction.replace(R.id.container, newFragment)
+                        .addToBackStack(TutorialFragment.class
+                                .getSimpleName()).commit();
 
+            }
+        });
+
+        aboutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AboutFragment newFragment = new AboutFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.container, newFragment)
+                        .addToBackStack(AboutFragment.class
+                                .getSimpleName()).commit();
             }
         });
 

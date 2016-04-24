@@ -24,6 +24,20 @@ import com.example.andumgaming.g370.views.fragments.SplashFragment;
 public class FullscreenActivity extends AppCompatActivity {
     private SplashFragment splashFragment;
 
+    @Override
+    public void onBackPressed() {
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 1) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
+    }
+
     /* initialize background music */
     private boolean mIsBound = false;
     private MusicService mServ;
@@ -114,7 +128,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(null).commit();
 
 
         /*initialize buttons*/
