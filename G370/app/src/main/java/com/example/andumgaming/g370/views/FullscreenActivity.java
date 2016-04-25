@@ -14,15 +14,29 @@ import android.content.Context;
 
 import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
-import com.example.andumgaming.g370.views.fragments.SettingsFragment;
+
+import com.example.andumgaming.g370.views.fragments.SplashFragment;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
-    private MenuFragment menuFragment;
-    private SettingsFragment settingsFragment;
+    private SplashFragment splashFragment;
+
+    @Override
+    public void onBackPressed() {
+
+        int count = getFragmentManager().getBackStackEntryCount();
+
+        if (count == 1) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getFragmentManager().popBackStack();
+        }
+
+    }
 
     /* initialize background music */
     private boolean mIsBound = false;
@@ -101,19 +115,20 @@ public class FullscreenActivity extends AppCompatActivity {
      * while interacting with activity UI.
      */
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
-        menuFragment = MenuFragment.newInstance();
+        splashFragment = SplashFragment.newInstance();
 
         //menuFragment.setOnFr
 
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
-
+        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(null).commit();
 
 
         /*initialize buttons*/
