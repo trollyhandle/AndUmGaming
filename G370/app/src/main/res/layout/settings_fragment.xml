@@ -1,12 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="40dp">
 
-    <CheckBox android:id="@+id/checkbox_music"
-        android:layout_width="wrap_content"
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Background Music Enabled"
-        android:onClick="onCheckboxClicked"
-        android:checked="true" />
+        android:text="@string/back"
+        android:id="@+id/back"
+        android:textAllCaps="false"
+        android:textSize="20sp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="140"
+    android:layout_gravity="center"
+    android:gravity="center_vertical|center_horizontal">
+
+    <Switch
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:text="@string/settings_switch"
+        android:id="@+id/switch1"
+        android:layout_weight="20"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center" />
+
+</LinearLayout>
+
+
+
 </LinearLayout>
