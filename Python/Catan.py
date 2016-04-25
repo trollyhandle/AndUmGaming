@@ -86,7 +86,6 @@ class Board:
         self.hex_size = hex_size
         self.center = center
         self.hex_size_short = hex_size * math.sqrt(3) / 2
-        # self.vertex_size = (hex_size-hex_size_short)*2 # 3
 
         for v_row in self.vertices:  # TODO use algorithm as in place()
             for v in v_row:
@@ -206,20 +205,12 @@ class Hex:
         if self.center is not None:
             # self.poly.draw(win)
             self.vpoly.draw(win)
-            self.txt.draw(win)
+            # self.txt.draw(win)
 
     def undraw(self):
         if self.center is not None:
             self.poly.undraw()
             self.txt.undraw()
-
-    def is_click_in(self, point):
-        x, y = point.getX(), point.getY()
-        cx, cy = self.center.getX(), self.center.getY()
-        # if radius < distance
-        if self.size_short**2 > (cx-x)**2 + (cy-y)**2:
-            return True
-        return False
 
     def setColor(self, color="black"):
         if self.center is not None:
@@ -234,9 +225,16 @@ class Hex:
 class Vertex:
     def __init__(self, q, r):
         self.q, self.r = q, r
-        self.text = str( q - r  )
+        self.text = str(q)+','+str(r)
         self.directions = [ (+1,  0), (+1, -1), ( 0, -1),
                             (-1,  0), (-1, +1), ( 0, +1)]
+        self.edges = [None, None, None]
+        if ((self.q - self.r) + 1) % 3 == 0:
+            self.color = "green"
+            self.edges = [Edge(Point(q,r), self.neighbor(1)),
+                          Edge(Point(q,r), self.neighbor(3)),
+                          Edge(Point(q,r), self.neighbor(5))]
+
 
     def __str__(self):
         return "({:2},{:2})".format(self.q, self.r)
@@ -248,7 +246,6 @@ class Vertex:
         self.vertex_size_short = self.vertex_size * math.sqrt(3) / 2
         # poly_size = size * math.sqrt(3)/ 3
 
-        # self.center = hex_to_pixel(grid_center, self.size_short*2//3, self.q, self.r)
         self.center = hex_to_pixel(grid_center, self.size, self.q, self.r)
         # print(str(self) + ", distance = {:3}".format(distance(grid_center, self.center)))  # DEBUG
         self.poly = Polygon(jump_linear(self.center, 30, self.vertex_size),  # vertex_size
@@ -261,39 +258,26 @@ class Vertex:
         self.txt = Text(self.center, self.text)
         self.txt.setSize(int(max(min(self.vertex_size//2, 32), 5)))
 
+        ofs = 0
         if ((self.q - self.r) + 1) % 3 == 0:
             self.color = "green"
-            ofs = 0
-        elif ((self.q - self.r) - 1) % 3 == 0:
-            self.color = "red"
-            ofs = 60
-        self.lines = [Line(jump_linear(self.center, ofs, self.vertex_size_short), jump_linear(self.center, ofs, self.size//2)),
-                      Line(jump_linear(self.center, ofs+120, self.vertex_size_short), jump_linear(self.center, ofs+120, self.size//2)),
-                      Line(jump_linear(self.center, ofs+240, self.vertex_size_short), jump_linear(self.center, ofs+240, self.size//2))]
+            for edge in self.edges:
+                edge.place(grid_center, size)
         # self.poly.setFill(self.color)
-        for line in self.lines:
-            # line.setOutline(self.color)
-            line.setWidth(4)
 
-        
     def draw(self, win):
         self.poly.draw(win)
-        for line in self.lines:
-            line.draw(win)
-        self.txt.draw(win)
+        if ((self.q - self.r) + 1) % 3 == 0:
+            for edge in self.edges:
+                edge.draw(win)
+        # self.txt.draw(win)
         # self.cir_center.draw(win)
+
     def undraw(self, ):
         self.poly.undraw()
         self.txt.undraw()
         # self.cir_center.undraw()
 
-    def is_click_in(self, point):
-    #     x, y = point.getX(), point.getY()
-    #     cx, cy = self.center.getX(), self.center.getY()
-    #     # if radius < distance
-    #     if self.vertex_size_short**2 > (cx-x)**2 + (cy-y)**2:
-    #         return True
-        return False
     def setColor(self, color="black"):
         self.poly.setOutline(color)
     def setText(self, text):
@@ -303,6 +287,25 @@ class Vertex:
     def neighbor(self, dir=0):
         return Point(self.q + self.directions[dir][0],
                      self.r + self.directions[dir][1])
+
+
+class Edge:
+    def __init__(self, source, destination):
+        self.source = source
+        self.dest = destination
+        self.has_road = False
+        self.player = None
+    def place(self, grid_center, size):
+        src_pt = jump_hex(grid_center, size, self.source.x, self.source.y)
+        dst_pt = jump_hex(grid_center, size, self.dest.x, self.dest.y)
+        self.line = Line(src_pt, dst_pt)
+        self.line.setWidth(4)
+    def draw(self, win):
+        self.line.draw(win)
+    def placeRoad(self, road_owner):
+        if not self.has_road:
+            self.has_road = True
+            self.player = road_owner
 
 
 def in_shape(cir, point):
@@ -386,21 +389,6 @@ def cube_round(x, y, z):
         rz = -rx-ry
 
     return rx, ry, rz
-
-
-# sorcery of some sort (deep magic)
-# doesn't work: doesn't use same axes for q, r
-def point_to_hex(center, size, x, y):
-    x -= center.x
-    y -= center.y
-
-    x /= size * math.sqrt(3)
-    y /= size * math.sqrt(3)
-
-    temp = math.floor(x + math.sqrt(3) * y + 1)
-    q = math.floor((math.floor(2*x+1) + temp) / 3)
-    r = math.floor((temp + math.floor(-x + math.sqrt(3) * y + 1))/3)
-    return Point(q, r)
 
 
 main()
