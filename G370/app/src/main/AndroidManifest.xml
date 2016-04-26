@@ -10,7 +10,9 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <!-- Initialize music -->
-        <service android:name=".views.MusicService" android:enabled="true"></service>
+        <service
+            android:name=".views.MusicService"
+            android:enabled="true" />
 
         <activity
             android:name=".views.FullscreenActivity"
@@ -23,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".views.GameTest"></activity>
     </application>
 
 </manifest>

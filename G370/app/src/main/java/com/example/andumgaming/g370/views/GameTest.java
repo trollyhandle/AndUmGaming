@@ -1,13 +1,14 @@
+
 package com.example.andumgaming.g370.views;
 
-import android.graphics.Point;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+        import android.graphics.Point;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
 
-import com.example.andumgaming.g370.R;
+        import com.example.andumgaming.g370.R;
 
-import Game.Board;
-import Game.BoardView;
+        import Game.Board;
+        import Game.BoardView;
 
 public class GameTest extends AppCompatActivity {
 
