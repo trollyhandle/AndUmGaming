@@ -50,7 +50,7 @@ public abstract class Shape {
         System.out.println("SHAPE Center at " + shape_center);
 
         path = new Path();
-        path.addCircle(shape_center.x(), shape_center.y(), 4, Path.Direction.CCW);
+        path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
         System.out.println("SHAPE path complete");
     }
 

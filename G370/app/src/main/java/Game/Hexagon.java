@@ -9,11 +9,11 @@ import android.graphics.Path;
  */
 public class Hexagon extends Shape {
 //    NOTE: inherited member variables:
-//    protected Point_QR coord;
-//    protected Point_XY boardCenter;
-//    protected int hex_size;
-//    protected int poly_size;
-//    protected Path path;
+//    Point_QR coord;
+//    Point_XY boardCenter;
+//    int hex_size;
+//    int poly_size;
+//    Path path;
 
     public Hexagon(int q, int r)
     {

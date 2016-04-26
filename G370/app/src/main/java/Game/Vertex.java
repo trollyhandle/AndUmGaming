@@ -1,6 +1,7 @@
 package Game;
 
 import android.graphics.Path;
+import java.util.ArrayList;
 
 /**
  * Vertex.java
@@ -9,11 +10,11 @@ import android.graphics.Path;
  */
 public class Vertex extends Shape {
 //    NOTE: inherited member variables:
-//    protected Point_QR coord;
-//    protected Point_XY boardCenter;
-//    protected int hex_size;
-//    protected int poly_size;
-//    protected Path path;
+//    Point_QR coord;
+//    Point_XY boardCenter;
+//    int hex_size;
+//    int poly_size;
+//    Path path;
 
     public Vertex(int q, int r)
     {
@@ -38,4 +39,16 @@ public class Vertex extends Shape {
         }
         path.close();
     }
+
+    public Edge[] generateEdges()
+    {
+        if (((coord.q() - coord.r()) + 1) % 3 == 0) {
+            return new Edge[] {
+                    new Edge(coord, getNeighbor(1)),
+                    new Edge(coord, getNeighbor(1)),
+                    new Edge(coord, getNeighbor(1))};
+        }
+        return null;
+    }
+
 }

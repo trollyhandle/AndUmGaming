@@ -10,6 +10,7 @@ import android.graphics.Path;
 public class Board {
     private int rings, arraySize;
     private Shape[][] vertices;
+    private Edge[][] edges;
 
     private Point_XY center;
     private int hex_size;
