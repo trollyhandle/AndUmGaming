@@ -61,9 +61,11 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Creating an inline concrete implementation of the listener to handle callback on the main thread
-                MusicService musicService = new MusicService();
+                //MusicService musicService = new MusicService();
 
-                musicService.stopMusic();
+                //musicService.stopMusic();
+
+                MusicService.mPlayer.stop();
             }
         });
 
