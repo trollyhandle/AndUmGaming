@@ -3,6 +3,7 @@ package com.example.andumgaming.g370.views;
 /**
  * Created by student on 4/10/16.
  */
+import android.app.Activity;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -12,11 +13,12 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.fragments.SettingsFragment;
 
 public class MusicService extends Service  implements MediaPlayer.OnErrorListener {
 
     private final IBinder mBinder = new ServiceBinder();
-    MediaPlayer mPlayer;
+    static MediaPlayer mPlayer;
     private int length = 0;
 
     public MusicService() {
@@ -76,6 +78,22 @@ public class MusicService extends Service  implements MediaPlayer.OnErrorListene
             mPlayer.seekTo(length);
             mPlayer.start();
         }
+    }
+
+    public void toggleMusic(){
+        if (mPlayer.isPlaying() == true) {
+            mPlayer.stop();
+            mPlayer.release();
+
+            //mPlayer = null;
+        }
+        else {
+            mPlayer.start();
+        }
+    }
+
+    public MusicService(MediaPlayer mPlayer) {
+        this.mPlayer = mPlayer;
     }
 
     public void stopMusic() {

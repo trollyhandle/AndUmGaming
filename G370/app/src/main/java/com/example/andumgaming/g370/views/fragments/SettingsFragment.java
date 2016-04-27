@@ -1,4 +1,6 @@
 package com.example.andumgaming.g370.views.fragments;
+import android.app.Service;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Context;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Switch;
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.MusicService;
 
 
 /**
@@ -18,6 +21,10 @@ import com.example.andumgaming.g370.R;
 public class SettingsFragment extends Fragment {
     private Button backButton;
     private Switch bgMusic;
+
+
+
+
 
 
     public SettingsFragment() {
@@ -37,7 +44,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -46,14 +52,18 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.settings_fragment, container, false);
         // Assigning layout file instances of these UI elements to their java counterparts
-        bgMusic = (Switch)view.findViewById(R.id.switch1);
+        bgMusic = (Switch) view.findViewById(R.id.switch1);
         backButton = (Button)view.findViewById(R.id.back);
 
         // A click listener is defined to handle the callback from the RecipeAsyncTask
         bgMusic.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 // Creating an inline concrete implementation of the listener to handle callback on the main thread
+                MusicService musicService = new MusicService();
+
+                musicService.stopMusic();
             }
         });
 
