@@ -1,5 +1,6 @@
 package com.example.andumgaming.g370.views.fragments;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
@@ -28,8 +29,6 @@ public class MenuFragment extends Fragment{
     }
 
 
-
-
     public static MenuFragment newInstance(){
         MenuFragment fragment = new MenuFragment();
         Bundle args = new Bundle();
@@ -43,7 +42,6 @@ public class MenuFragment extends Fragment{
     }
 
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
 
         View view = inflater.inflate(R.layout.menu_fragment,container, false);
@@ -53,9 +51,6 @@ public class MenuFragment extends Fragment{
         tutorialButton = (Button)view.findViewById(R.id.TutorialButton);
         aboutButton = (Button)view.findViewById(R.id.AboutButton);
         leaderButton = (Button)view.findViewById(R.id.SoonButton);
-
-
-
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,12 +84,9 @@ public class MenuFragment extends Fragment{
         tutorialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TutorialFragment newFragment = new TutorialFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-                transaction.replace(R.id.container, newFragment)
-                        .addToBackStack(TutorialFragment.class
-                                .getSimpleName()).commit();
+                TutorialActivity newFragment = new TutorialActivity();
+                Intent i = new Intent(getActivity().getApplicationContext(), TutorialActivity.class);
+                getActivity().startActivity(i);
 
             }
         });
