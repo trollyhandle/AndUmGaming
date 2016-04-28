@@ -21,16 +21,26 @@ public class Vertex extends Shape {
         super(q, r);
         poly_size = hex_size / 4;
     }
+    public Vertex(int q, int r, int hex_size, Point_XY board_center)
+    {
+        super(q, r, hex_size, board_center);
+        poly_size = hex_size / 4;
+    }
 
     public String type() { return "Vertex"; }
 
+    public void setHexSize(int hex_size)
+    {
+        super.setHexSize(hex_size);
+        poly_size = hex_size / 4;
+    }
     public void makeDrawable()
     {
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(330, poly_size);
 
         path = new Path();
-        path.addCircle(shape_center.x(), shape_center.y(), 8, Path.Direction.CCW);
+        path.addCircle(shape_center.x(), shape_center.y(), 4, Path.Direction.CCW);
         path.moveTo(pt.x(), pt.y());
 
         for (int i = 30; i <= 360; i += 60) {

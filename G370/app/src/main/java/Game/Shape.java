@@ -15,6 +15,8 @@ public abstract class Shape {
     protected int poly_size;
     protected Path path;
 
+    private boolean debug = false;
+
     private static int[][] directions = {
             { 1, 0}, { 1, -1}, {0, -1},
             {-1, 0}, {-1,  1}, {0,  1}  };
@@ -24,7 +26,13 @@ public abstract class Shape {
     {
         coord = new Point_QR(q, r);
         boardCenter = new Point_XY(0, 0);
-        hex_size = 125;
+        hex_size = 30;
+    }
+    public Shape(int q, int r, int hex_size, Point_XY board_center)
+    {
+        coord = new Point_QR(q, r);
+        boardCenter = board_center;
+        this.hex_size = hex_size;
     }
 
 
@@ -35,8 +43,8 @@ public abstract class Shape {
         return new Point_QR(neighbor_q, neighbor_r);
     }
 
-    public int getSize() { return hex_size; }
-    public void setSize(int hexSize) { this.hex_size = hexSize; }
+    public int getHexSize() { return hex_size; }
+    public void setHexSize(int hexSize) { this.hex_size = hexSize; }
     
     public void setBoardCenter(Point_XY newCenter) { boardCenter = newCenter; }
 
@@ -44,14 +52,14 @@ public abstract class Shape {
 
     public void makeDrawable()
     {
-        System.out.println("SHAPE Making path...");
-        System.out.println("SHAPE polygon size: " + poly_size + " (" + type() + ")");
+        if(debug)System.out.println("SHAPE Making path...");
+        if(debug)System.out.println("SHAPE polygon size: " + poly_size + " (" + type() + ")");
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
-        System.out.println("SHAPE Center at " + shape_center);
+        if(debug)System.out.println("SHAPE Center at " + shape_center);
 
         path = new Path();
         path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
-        System.out.println("SHAPE path complete");
+        if(debug)System.out.println("SHAPE path complete");
     }
 
     public abstract String type();

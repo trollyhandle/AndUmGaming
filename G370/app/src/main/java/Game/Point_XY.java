@@ -14,6 +14,11 @@ public class Point_XY {
         this.x = x;
         this.y = y;
     }
+    public Point_XY(double x, double y)
+    {
+        this.x = (int)x;
+        this.y = (int)y;
+    }
 
     public int x() { return x; }
     public int y() { return y; }
@@ -38,8 +43,8 @@ public class Point_XY {
         int cx = x - center.x();
         int cy = y - center.y();
 
-        double _q = (y * 2./3) / size;
-        double _r = (x * Math.sqrt(3)/3 - y / 3.) / size;
+        double _q = (cy * 2./3) / size;
+        double _r = (cx * Math.sqrt(3)/3 - cy / 3.) / size;
 
         return hex_round(_q, _r);
     }
@@ -78,7 +83,11 @@ public class Point_XY {
 
     public String toString()
     {
-        return String.format("(%1$2d,%2$2d)", x, y);
+        return String.format("(%1$3d,%2$3d)", x, y);
 
+    }
+
+    public static String point_format(int x, int y) {
+        return String.format("(%1$3d,%2$3d)", x, y);
     }
 }
