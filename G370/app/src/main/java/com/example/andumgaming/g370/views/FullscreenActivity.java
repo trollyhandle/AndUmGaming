@@ -164,8 +164,6 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
-
-
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
@@ -174,4 +172,16 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mServ.pauseMusic();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mServ.resumeMusic();
+        }
 }
