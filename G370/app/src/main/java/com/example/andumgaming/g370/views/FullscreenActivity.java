@@ -136,7 +136,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         /*start the music*/
         Intent music = new Intent();
-        music.setClass(this,MusicService.class);
+        music.setClass(this, MusicService.class);
         startService(music);
     }
 
@@ -164,8 +164,6 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
-
-
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
@@ -173,5 +171,28 @@ public class FullscreenActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (MusicService.mPlayer.isPlaying() == true) {
+            MusicService.mPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (MusicService.mPlayer != null && MusicService.mPlayer.isPlaying() == false) {
+            MusicService.mPlayer.start();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MusicService.mPlayer.stop();
+        MusicService.mPlayer.release();
     }
 }

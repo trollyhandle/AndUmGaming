@@ -22,11 +22,6 @@ public class SettingsFragment extends Fragment {
     private Button backButton;
     private CheckBox bgMusic;
 
-
-
-
-
-
     public SettingsFragment() {
         // Required empty public constructor
     }
