@@ -8,7 +8,8 @@ import android.graphics.Path;
  * The board controller. Holds hexagons, vertices(, other things).
  */
 public class Board {
-    private static final int MIN_SIZE = 10;
+    private static final int MIN_SIZE = 20;
+    private static final int MAX_SIZE = 440;
 
     private int rings, arraySize;
     private Shape[][] vertices;
@@ -78,8 +79,10 @@ public class Board {
     public void resize(int ds)
     {
         // if increasing size, or (if decreasing) not too small...
-        if (ds > 0 || hex_size > MIN_SIZE) {
-            hex_size += ds;
+        if ((ds > 0 && hex_size < MAX_SIZE)
+                || (ds < 0 && hex_size > MIN_SIZE)) {
+            // enforce min/max boundaries
+            hex_size = Math.min(Math.max(hex_size+ds, MIN_SIZE), MAX_SIZE);
             update = true;
         }
     }

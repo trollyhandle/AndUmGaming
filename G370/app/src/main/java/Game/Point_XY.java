@@ -23,6 +23,11 @@ public class Point_XY {
     public int x() { return _x; }
     public int y() { return _y; }
 
+    public int distance(Point_XY other)
+    {
+        return (int)Math.sqrt(Math.pow(_x-other.x(), 2) + Math.pow(_y-other.y(),2));
+    }
+
     public Point_XY jump_linear(int degrees, int distance)
     {
         int new_x = _x + (int)(distance * Math.cos(Math.toRadians(degrees)));
