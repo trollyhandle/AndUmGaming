@@ -61,7 +61,7 @@ public class GameTest extends AppCompatActivity {
         else if(debug)System.out.println("VIEW ERROR dynamic add-to-layout failed");
 
         // bring buttons to foreground
-        LinearLayout button_layout = (LinearLayout)findViewById(R.id.board_button_layout);
+        LinearLayout button_layout = (LinearLayout)findViewById(R.id.zoom_control_layout);
         if (button_layout != null) // calms Android Studios: should not be null, I think...
             button_layout.bringToFront();
         else if(debug)System.out.println("VIEW ERROR buttons move to foreground failed");
@@ -89,7 +89,7 @@ public class GameTest extends AppCompatActivity {
         zoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)if(debug)System.out.println("BUTTON zoom in");
+                if(debug)System.out.println("BUTTON zoom in");
                 board.resize(10);
                 boardView.invalidate();  // force a redraw
             }
@@ -97,7 +97,7 @@ public class GameTest extends AppCompatActivity {
         zoomOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)if(debug)System.out.println("BUTTON zoom out");
+                if(debug)System.out.println("BUTTON zoom out");
                 board.resize(-10);
                 boardView.invalidate();  // force a redraw
             }
@@ -105,7 +105,7 @@ public class GameTest extends AppCompatActivity {
         zoomLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)if(debug)System.out.println("BUTTON move left");
+                if(debug)System.out.println("BUTTON move left");
                 board.move(-10, 0);
                 boardView.invalidate();  // force a redraw
             }
@@ -113,7 +113,7 @@ public class GameTest extends AppCompatActivity {
         zoomRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)if(debug)System.out.println("BUTTON move right");
+                if(debug)System.out.println("BUTTON move right");
                 board.move(10, 0);
                 boardView.invalidate();  // force a redraw
             }
@@ -121,7 +121,7 @@ public class GameTest extends AppCompatActivity {
         zoomUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)if(debug)System.out.println("BUTTON move up");
+                if(debug)System.out.println("BUTTON move up");
                 board.move(0, -10);
                 boardView.invalidate();  // force a redraw
             }
@@ -129,7 +129,7 @@ public class GameTest extends AppCompatActivity {
         zoomDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)if(debug)System.out.println("BUTTON move down");
+                if(debug)System.out.println("BUTTON move down");
                 board.move(0, 10);
                 boardView.invalidate();  // force a redraw
             }
@@ -137,10 +137,10 @@ public class GameTest extends AppCompatActivity {
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)if(debug)System.out.println("BUTTON reset zoom");
+                if(debug)System.out.println("BUTTON reset zoom");
                 board.setHexSize(default_hex_size);
                 board.setCenter(default_center);
-                boardView.invalidate();
+                boardView.invalidate();  // force a redraw
             }
         });
     }

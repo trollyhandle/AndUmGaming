@@ -8,6 +8,8 @@ import android.graphics.Path;
  * The board controller. Holds hexagons, vertices(, other things).
  */
 public class Board {
+    private static final int MIN_SIZE = 10;
+
     private int rings, arraySize;
     private Shape[][] vertices;
     private Edge[][] edges;
@@ -73,7 +75,14 @@ public class Board {
         center = new Point_XY(new_x, new_y);
         update = true;
     }
-    public void resize(int ds) { hex_size += ds; update = true; }
+    public void resize(int ds)
+    {
+        // if increasing size, or (if decreasing) not too small...
+        if (ds > 0 || hex_size > MIN_SIZE) {
+            hex_size += ds;
+            update = true;
+        }
+    }
     public Point_XY getCenter() { return center; }
     public void setCenter(int x, int y) { center = new Point_XY(x, y); update = true; }
     public void setCenter(Point_XY new_center) { center = new_center; update = true; }

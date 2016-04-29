@@ -18,6 +18,7 @@ public class BoardView extends View {
     private Paint paint;
     private Board board;
 
+    private int touch_x, touch_y;
     private boolean debug = true;
 
     public BoardView(Context context) {
@@ -45,23 +46,18 @@ public class BoardView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             Point_XY click = new Point_XY(event.getX(), event.getY());
-            Point_XY offset = new Point_XY(event.getX() - board.getCenter().x(),
-                                           event.getY() - board.getCenter().y());
             if(debug)System.out.println("CLICK: Hex    coordinates: " +
                     click.toHex(board.getCenter(), board.getClickableSize()));
+            touch_x = click.x(); touch_y = click.y();
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (event.getHistorySize() > 0) {
-                Point_XY start = new Point_XY(event.getHistoricalAxisValue(MotionEvent.AXIS_X, 0),
-                        event.getHistoricalAxisValue(MotionEvent.AXIS_Y, 0));
-                Point_XY end = new Point_XY(event.getX(), event.getY());
-
-                board.move(end.x()-start.x(), end.y()-start.y());
-                invalidate();
-                if(debug)System.out.printf("DRAG : start - end - delta: %1s, %2s, (%3$3d, %4$3d)\n",
-                        start, end, end.x() - start.x(), end.y() - start.y());
-            }
-            // else the "click" hasn't moved since last event
+            int drag_x = (int)event.getRawX(), drag_y = (int)event.getRawY();
+            board.move(drag_x - touch_x, drag_y - touch_y);
+            invalidate();
+            if(debug)System.out.printf("DRAG : start - end - delta: " +
+                            "(%1$4d, %2$4d), (%3$4d, %4$4d), (%5$3d, %6$3d)\n",
+                    touch_x, touch_y, drag_x, drag_y, drag_x - touch_x, drag_y - touch_y);
+            touch_x = drag_x; touch_y = drag_y;
         }
         // the boolean return value indicates whether the click event has been "consumed" or not
         // a false will let the event continue to trigger any other listeners it can
