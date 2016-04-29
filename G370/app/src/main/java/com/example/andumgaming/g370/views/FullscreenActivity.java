@@ -191,8 +191,8 @@ public class FullscreenActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         MusicService.mPlayer.stop();
         MusicService.mPlayer.release();
+        super.onDestroy();
     }
 }

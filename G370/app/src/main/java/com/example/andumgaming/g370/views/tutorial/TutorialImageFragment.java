@@ -25,8 +25,7 @@ public class TutorialImageFragment extends Fragment {
         // The last two arguments ensure LayoutParams are inflated
         // properly.
         rootView = inflater.inflate(R.layout.tutorial_images, container, false);
-        image = (ImageView) rootView.findViewById(R.id.page_zero);
-
+        image = (ImageView) rootView.findViewById(getArguments().getInt("imageID"));
         backButton = (Button)rootView.findViewById(R.id.back);
 
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -39,8 +38,17 @@ public class TutorialImageFragment extends Fragment {
     }
 
 
-    public void setTutorialImage(int imageid)
+    /*public TutorialImageFragment setTutorialImage(int imageid)
     {
         image = (ImageView) rootView.findViewById(imageid);
+        return this;
+    }*/
+
+    public TutorialImageFragment newInstance(int imageid) {
+        TutorialImageFragment tif = new TutorialImageFragment();
+        Bundle b = new Bundle();
+        b.putInt("imageID",imageid);
+        tif.setArguments(b);
+        return tif;
     }
 }
