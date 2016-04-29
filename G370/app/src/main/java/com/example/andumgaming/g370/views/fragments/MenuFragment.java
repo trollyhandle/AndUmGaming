@@ -22,8 +22,6 @@ public class MenuFragment extends Fragment{
     private Button leaderButton;
     private Button aboutButton;
 
-
-
     public MenuFragment(){
 
     }
@@ -87,7 +85,6 @@ public class MenuFragment extends Fragment{
                 TutorialActivity newFragment = new TutorialActivity();
                 Intent i = new Intent(getActivity().getApplicationContext(), TutorialActivity.class);
                 getActivity().startActivity(i);
-
             }
         });
 

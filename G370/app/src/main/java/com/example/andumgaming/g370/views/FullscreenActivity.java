@@ -136,7 +136,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         /*start the music*/
         Intent music = new Intent();
-        music.setClass(this,MusicService.class);
+        music.setClass(this, MusicService.class);
         startService(music);
     }
 
@@ -176,12 +176,23 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mServ.pauseMusic();
+        if (MusicService.mPlayer.isPlaying() == true) {
+            MusicService.mPlayer.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mServ.resumeMusic();
+        if (MusicService.mPlayer != null && MusicService.mPlayer.isPlaying() == false) {
+            MusicService.mPlayer.start();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MusicService.mPlayer.stop();
+        MusicService.mPlayer.release();
+    }
 }
