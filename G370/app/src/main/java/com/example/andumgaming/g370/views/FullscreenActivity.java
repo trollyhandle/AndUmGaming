@@ -1,6 +1,8 @@
 package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
+
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,26 +19,41 @@ import com.example.andumgaming.g370.views.fragments.MenuFragment;
 
 import com.example.andumgaming.g370.views.fragments.SplashFragment;
 
+import java.util.List;
+
+import Interface.BackStackLisnter;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
     private SplashFragment splashFragment;
+    private BackStackLisnter backStackLisnter;
 
     @Override
     public void onBackPressed() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
-        int count = getFragmentManager().getBackStackEntryCount();
+        for (Fragment f : fragments)
+        {
+            if (f instanceof BackStackLisnter){
+                backStackLisnter = (BackStackLisnter) f;
+            }
+        }
 
-        if (count == 1) {
+        if (backStackLisnter !=null){
+            backStackLisnter.onBackButtonPressed();
+
+        }
+        else
+        {
             super.onBackPressed();
-            //additional code
-        } else {
             getFragmentManager().popBackStack();
         }
 
     }
+
 
     /* initialize background music */
     private boolean mIsBound = false;
