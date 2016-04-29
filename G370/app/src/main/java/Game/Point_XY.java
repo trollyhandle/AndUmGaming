@@ -7,41 +7,41 @@ package Game;
  */
 public class Point_XY {
 
-    private int x ,y;
+    private int _x, _y;
 
     public Point_XY(int x, int y)
     {
-        this.x = x;
-        this.y = y;
+        _x = x;
+        _y = y;
     }
     public Point_XY(double x, double y)
     {
-        this.x = (int)x;
-        this.y = (int)y;
+        _x = (int)x;
+        _y = (int)y;
     }
 
-    public int x() { return x; }
-    public int y() { return y; }
+    public int x() { return _x; }
+    public int y() { return _y; }
 
     public Point_XY jump_linear(int degrees, int distance)
     {
-        int new_x = x + (int)(distance * Math.cos(Math.toRadians(degrees)));
-        int new_y = y + (int)(distance * Math.sin(Math.toRadians(degrees)));
+        int new_x = _x + (int)(distance * Math.cos(Math.toRadians(degrees)));
+        int new_y = _y + (int)(distance * Math.sin(Math.toRadians(degrees)));
         return new Point_XY(new_x, new_y);
     }
 
     public Point_XY jump_hex(int q, int r, int hex_size)
     {
-        int qr_x = (r * hex_size) + (q * hex_size / 2);  // q * sin(30)
+        int qr_x = (r * hex_size) + (q * hex_size / 2);   // q * sin(30)
         int qr_y = (int)(q * hex_size * Math.sqrt(3)/2);  // q * cos(30)
-        return new Point_XY(x + qr_x, y + qr_y);
+        return new Point_XY(_x + qr_x, _y + qr_y);
     }
 
 
     public Point_QR toHex(Point_XY center, int size)
     {
-        int cx = x - center.x();
-        int cy = y - center.y();
+        int cx = _x - center.x();
+        int cy = _y - center.y();
 
         double _q = (cy * 2./3) / size;
         double _r = (cx * Math.sqrt(3)/3 - cy / 3.) / size;
@@ -51,10 +51,10 @@ public class Point_XY {
     private Point_QR hex_round(double q, double r)
     {
         // cube_x, cube_y, cube_z = hex_to_cube(q, r)
-        double _x = r,_z = q, _y = -_x-_z;  // convert to cubic coordinates
+        double x = r, z = q, y = -x-z;  // convert to cubic coordinates
 
         // return cube_to_hex(cube_round(cube_x, cube_y, cube_z))
-        return cube_round(_x, _y, _z);  // round it to nearest hex
+        return cube_round(x, y, z);  // round it to nearest hex
 
     }
     private Point_QR cube_round(double x, double y, double z)
@@ -83,11 +83,11 @@ public class Point_XY {
 
     public String toString()
     {
-        return String.format("(%1$3d,%2$3d)", x, y);
+        return String.format("(%1$4d,%2$4d)", _x, _y);
 
     }
 
     public static String point_format(int x, int y) {
-        return String.format("(%1$3d,%2$3d)", x, y);
+        return String.format("(%1$4d,%2$4d)", x, y);
     }
 }
