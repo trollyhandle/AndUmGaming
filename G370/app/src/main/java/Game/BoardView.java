@@ -18,7 +18,7 @@ public class BoardView extends View {
     private Paint paint;
     private Board board;
 
-    private final int dist_to_begin_move = 6;
+    private final int dist_to_begin_move = 8;
 
     private int touch_x, touch_y, pinch_distance;
     private boolean moving, zooming;

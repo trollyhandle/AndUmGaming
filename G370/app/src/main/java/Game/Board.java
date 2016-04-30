@@ -8,7 +8,7 @@ import android.graphics.Path;
  * The board controller. Holds hexagons, vertices(, other things).
  */
 public class Board {
-    private static final int MIN_SIZE = 20;
+    private static final int MIN_SIZE = 80;
     private static final int MAX_SIZE = 440;
 
     private int rings, arraySize;
@@ -21,7 +21,7 @@ public class Board {
     private Path path;
 
     private boolean update;
-    private boolean debug = false;
+    private boolean debug = true;
 
     public Board()
     {

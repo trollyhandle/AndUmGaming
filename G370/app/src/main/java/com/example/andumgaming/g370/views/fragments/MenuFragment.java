@@ -61,6 +61,8 @@ public class MenuFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
+                System.out.println("MENU : pre-add " + getFragmentManager().getBackStackEntryCount());
+
                 SettingsFragment newFragment = new SettingsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -68,8 +70,7 @@ public class MenuFragment extends Fragment{
                         .addToBackStack(SettingsFragment.class
                                 .getSimpleName()).commit();
 
-
-
+                System.out.println("MENU : postadd " + getFragmentManager().getBackStackEntryCount());
 
             }
         });
