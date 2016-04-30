@@ -24,7 +24,7 @@ public class TutorialImageFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         // The last two arguments ensure LayoutParams are inflated
         // properly.
-        rootView = inflater.inflate(R.layout.tutorial_images, container, false);
+        rootView = inflater.inflate(getArguments().getInt("viewID"), container, false);
         image = (ImageView) rootView.findViewById(getArguments().getInt("imageID"));
         backButton = (Button)rootView.findViewById(R.id.back);
 
@@ -44,9 +44,10 @@ public class TutorialImageFragment extends Fragment {
         return this;
     }*/
 
-    public TutorialImageFragment newInstance(int imageid) {
+    public TutorialImageFragment newInstance(int viewid,int imageid) {
         TutorialImageFragment tif = new TutorialImageFragment();
         Bundle b = new Bundle();
+        b.putInt("viewID", viewid);
         b.putInt("imageID",imageid);
         tif.setArguments(b);
         return tif;
