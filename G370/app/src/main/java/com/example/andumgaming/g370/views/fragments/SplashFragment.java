@@ -59,7 +59,6 @@ public class SplashFragment extends Fragment {
 
                 transaction.replace(R.id.container, newFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
 
-
             }
 
             @Override

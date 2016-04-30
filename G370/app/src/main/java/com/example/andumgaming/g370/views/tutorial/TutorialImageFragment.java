@@ -1,7 +1,9 @@
 package com.example.andumgaming.g370.views.tutorial;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.Button;
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.FullscreenActivity;
+import com.example.andumgaming.g370.views.fragments.MenuFragment;
 
 // Instances of this class are fragments representing a single
 // object in our collection.
@@ -31,7 +35,8 @@ public class TutorialImageFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                Intent i = new Intent(getActivity().getApplicationContext(), FullscreenActivity.class);
+                getActivity().startActivity(i);
             }
         });
         return rootView;
