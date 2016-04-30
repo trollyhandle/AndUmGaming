@@ -1,6 +1,7 @@
 package com.example.andumgaming.g370.views.fragments;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.andumgaming.g370.views.MusicService;
 import com.example.andumgaming.g370.views.tutorial.TutorialPagerAdapter;
 
 import com.example.andumgaming.g370.R;
@@ -91,6 +93,10 @@ public class TutorialActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mTutorialPagerAdapter);
 
+        Intent music = new Intent();
+        music.setClass(this, MusicService.class);
+        startService(music);
+
     }
 
     @Override
@@ -119,4 +125,27 @@ public class TutorialActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (MusicService.mPlayer.isPlaying() == true) {
+            MusicService.mPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (MusicService.mPlayer != null && MusicService.mPlayer.isPlaying() == false) {
+            MusicService.mPlayer.start();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        MusicService.mPlayer.stop();
+        MusicService.mPlayer.release();
+        super.onDestroy();
+    }
+
 }
