@@ -26,7 +26,7 @@
     <!--
     Strings for settings_fragment
     -->
-    <string name="settings_switch">Background Music</string>
+    <string name="settings_checkbox">Background Music</string>
 
 
     <!--

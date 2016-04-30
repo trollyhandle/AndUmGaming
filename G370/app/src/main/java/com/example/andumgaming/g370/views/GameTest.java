@@ -1,4 +1,6 @@
+
 package com.example.andumgaming.g370.views;
+
 
 import com.example.andumgaming.g370.R;
 
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 import Game.Board;
 import Game.BoardView;
 import Game.Point_XY;
+
 
 public class GameTest extends AppCompatActivity {
 
