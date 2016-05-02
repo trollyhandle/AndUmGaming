@@ -48,5 +48,6 @@
     <string name="zoom_down">D</string>
     <string name="zoom_right">R</string>
     <string name="zoom_reset">*</string>
+    <string name="buy">Buy</string>
 
 </resources>

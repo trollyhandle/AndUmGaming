@@ -1,11 +1,14 @@
 package com.example.andumgaming.g370.views.fragments;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.support.v4.app.Fragment;
+import android.widget.HorizontalScrollView;
 
 
 import com.example.andumgaming.g370.R;
@@ -15,7 +18,7 @@ import com.example.andumgaming.g370.R;
  */
 public class ActionPanelFragment extends Fragment {
 
-    private Button closeButton;
+    private Button BuySubpanelButton;
 
     public static ActionPanelFragment newInstance () {
         ActionPanelFragment fragment = new ActionPanelFragment();
@@ -38,14 +41,31 @@ public class ActionPanelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
         View view = inflater.inflate(R.layout.actionpanel_fragment, container, false);
-        closeButton = (Button)view.findViewById(R.id.close);
 
-        closeButton.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+        BuySubpanelButton = (Button)view.findViewById(R.id.BuySubpanel);
+
+        BuySubpanelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                BuySubpanelFragment newFragment = new BuySubpanelFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                transaction.replace(R.id.container, newFragment)
+                        .addToBackStack(PlayFragment.class
+                                .getSimpleName()).commit();
             }
         });
+
+
+
+
+
+
+
 
         return view;
     }

@@ -12,12 +12,26 @@
     <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
     <!--android:paddingTop="@dimen/activity_vertical_margin"-->
 
+    <fragment
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:name="com.example.andumgaming.g370.views.fragments.ActionPanelFragment"
+        android:id="@+id/actionpanel"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        class="com.example.andumgaming.g370.views.fragments.ActionPanelFragment" />
+
     <LinearLayout
         android:id="@+id/zoom_control_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="center_horizontal|bottom">
+        android:gravity="center_horizontal|bottom"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
         <Button
             android:id="@+id/zoomIn"
             android:layout_width="200dp"
@@ -26,6 +40,7 @@
             android:textAllCaps="false"
             android:textSize="20sp"
             android:layout_weight="20"/>
+
         <Button
             android:id="@+id/zoomLeft"
             android:layout_width="200dp"
@@ -49,7 +64,9 @@
             android:text="@string/zoom_reset"
             android:textAllCaps="false"
             android:textSize="20sp"
-            android:layout_weight="20"/>
+            android:layout_weight="20"
+            android:layout_gravity="bottom" />
+
         <Button
             android:id="@+id/zoomDown"
             android:layout_width="200dp"
@@ -65,7 +82,8 @@
             android:text="@string/zoom_right"
             android:textAllCaps="false"
             android:textSize="20sp"
-            android:layout_weight="20"/>
+            android:layout_weight="20"
+            android:layout_gravity="bottom" />
         <Button
             android:id="@+id/zoomOut"
             android:layout_width="200dp"
@@ -74,6 +92,8 @@
             android:textAllCaps="false"
             android:textSize="20sp"
             android:layout_weight="20"/>
+
     </LinearLayout>
+
 
 </RelativeLayout>

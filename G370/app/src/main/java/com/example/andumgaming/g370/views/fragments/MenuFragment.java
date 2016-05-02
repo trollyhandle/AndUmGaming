@@ -58,10 +58,10 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
         aboutButton = (Button)view.findViewById(R.id.AboutButton);
         leaderButton = (Button)view.findViewById(R.id.SoonButton);
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
+//=======
+//>>>>>>> refs/remotes/origin/master
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

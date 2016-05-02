@@ -3,12 +3,16 @@ package com.example.andumgaming.g370.views;
 
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.fragments.ActionPanelFragment;
 
+import android.content.Intent;
 import android.graphics.Point;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -31,7 +35,10 @@ public class GameTest extends AppCompatActivity {
     private Button zoomDown;
     private Button zoomRight;
     private Button zoomReset;
-    
+
+    private HorizontalScrollView ActionPanelFragment;
+
+
     private int width, height;
     private int default_hex_size;
     private Point_XY default_center;
@@ -146,5 +153,9 @@ public class GameTest extends AppCompatActivity {
                 boardView.invalidate();  // force a redraw
             }
         });
+
     }
+
+
+
 }
