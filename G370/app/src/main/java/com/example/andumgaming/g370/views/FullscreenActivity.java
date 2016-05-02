@@ -24,18 +24,23 @@ import com.example.andumgaming.g370.views.fragments.SplashFragment;
 public class FullscreenActivity extends AppCompatActivity {
     private SplashFragment splashFragment;
 
+
     @Override
     public void onBackPressed() {
 
         int count = getFragmentManager().getBackStackEntryCount();
+        System.out.println("FSA : fragment count: " + count);
 
         if (count == 1) {
+            System.out.println("FSA : count was one!!111!1");
             super.onBackPressed();
             //additional code
         } else {
+            System.out.println("FSA : popping backstack");
             getFragmentManager().popBackStack();
         }
 
+//        if (getFragmentManager().getBackStackEntryAt(0))
     }
 
     /* initialize background music */
