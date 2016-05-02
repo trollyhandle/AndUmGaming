@@ -1,4 +1,4 @@
-package com.example.andumgaming.g370.views.fragments;
+package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
 import android.support.v4.app.FragmentManager;

@@ -1,6 +1,9 @@
 package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
+
+import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +16,13 @@ import android.content.Intent;
 import android.content.Context;
 
 import com.example.andumgaming.g370.R;
-import com.example.andumgaming.g370.views.fragments.MenuFragment;
 
+import com.example.andumgaming.g370.views.fragments.MenuFragment;
 import com.example.andumgaming.g370.views.fragments.SplashFragment;
+
+import java.util.List;
+
+import Interface.BackStackLisnter;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -23,25 +30,29 @@ import com.example.andumgaming.g370.views.fragments.SplashFragment;
  */
 public class FullscreenActivity extends AppCompatActivity {
     private SplashFragment splashFragment;
+    private BackStackLisnter backStackLisnter;
 
 
     @Override
     public void onBackPressed() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
-        int count = getFragmentManager().getBackStackEntryCount();
-        System.out.println("FSA : fragment count: " + count);
-
-        if (count == 1) {
-            System.out.println("FSA : count was one!!111!1");
-            super.onBackPressed();
-            //additional code
-        } else {
-            System.out.println("FSA : popping backstack");
-            getFragmentManager().popBackStack();
+        Fragment cuurentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if(cuurentFragment instanceof MenuFragment || cuurentFragment instanceof SplashFragment) {
+            for (Fragment f:fragments){
+                if (f instanceof BackStackLisnter){
+                    backStackLisnter = (BackStackLisnter)f;
+                }
+            }
         }
 
-//        if (getFragmentManager().getBackStackEntryAt(0))
+        if (backStackLisnter != null) {
+            backStackLisnter.onBackButtonPressed();
+        }else {
+            super.onBackPressed();
+        }
     }
+
 
     /* initialize background music */
     private boolean mIsBound = false;
@@ -133,7 +144,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(SplashFragment.class.getSimpleName()).commit();
 
 
         /*initialize buttons*/
