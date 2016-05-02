@@ -1,4 +1,6 @@
 package com.example.andumgaming.g370.views.fragments;
+import android.app.Service;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.content.Context;
@@ -7,9 +9,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.Switch;
+
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.MusicService;
 
 
 /**
@@ -17,8 +20,7 @@ import com.example.andumgaming.g370.R;
  */
 public class SettingsFragment extends Fragment {
     private Button backButton;
-    private Switch bgMusic;
-
+    private CheckBox bgMusic;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -37,23 +39,36 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.settings_fragment, container, false);
+        final View view = inflater.inflate(R.layout.settings_fragment, container, false);
         // Assigning layout file instances of these UI elements to their java counterparts
-        bgMusic = (Switch)view.findViewById(R.id.switch1);
+        bgMusic = (CheckBox) view.findViewById(R.id.checkBox);
+        //if else statement to set the slider to on or off depending on mPlayer state
+        if (MusicService.mPlayer.isPlaying() == true)
+            bgMusic.setChecked(true);
+        else
+            bgMusic.setChecked(false);
+
         backButton = (Button)view.findViewById(R.id.back);
 
-        // A click listener is defined to handle the callback from the RecipeAsyncTask
         bgMusic.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                // Creating an inline concrete implementation of the listener to handle callback on the main thread
+                //pauses music or resumes music onclick, also changes state of checkbox
+                if (MusicService.mPlayer.isPlaying() == true) {
+                    bgMusic.setChecked(false);
+                    MusicService.mPlayer.pause();
+                }
+                else {
+                    bgMusic.setChecked(true);
+                    MusicService.mPlayer.start();
+                }
             }
         });
 

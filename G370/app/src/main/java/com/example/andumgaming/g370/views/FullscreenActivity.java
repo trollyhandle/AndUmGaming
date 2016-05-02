@@ -2,6 +2,7 @@ package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,8 @@ import android.content.Intent;
 import android.content.Context;
 
 import com.example.andumgaming.g370.R;
-import com.example.andumgaming.g370.views.fragments.MenuFragment;
 
+import com.example.andumgaming.g370.views.fragments.MenuFragment;
 import com.example.andumgaming.g370.views.fragments.SplashFragment;
 
 import java.util.List;
@@ -31,27 +32,25 @@ public class FullscreenActivity extends AppCompatActivity {
     private SplashFragment splashFragment;
     private BackStackLisnter backStackLisnter;
 
+
     @Override
     public void onBackPressed() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
-        for (Fragment f : fragments)
-        {
-            if (f instanceof BackStackLisnter){
-                backStackLisnter = (BackStackLisnter) f;
+        Fragment cuurentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if(cuurentFragment instanceof MenuFragment || cuurentFragment instanceof SplashFragment) {
+            for (Fragment f:fragments){
+                if (f instanceof BackStackLisnter){
+                    backStackLisnter = (BackStackLisnter)f;
+                }
             }
         }
 
-        if (backStackLisnter !=null){
+        if (backStackLisnter != null) {
             backStackLisnter.onBackButtonPressed();
-
-        }
-        else
-        {
+        }else {
             super.onBackPressed();
-            getFragmentManager().popBackStack();
         }
-
     }
 
 
@@ -145,7 +144,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(null).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(SplashFragment.class.getSimpleName()).commit();
 
 
         /*initialize buttons*/
@@ -153,7 +152,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         /*start the music*/
         Intent music = new Intent();
-        music.setClass(this,MusicService.class);
+        music.setClass(this, MusicService.class);
         startService(music);
     }
 
@@ -181,8 +180,6 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
-
-
     /**
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
@@ -190,5 +187,28 @@ public class FullscreenActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (MusicService.mPlayer.isPlaying() == true) {
+            MusicService.mPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (MusicService.mPlayer != null && MusicService.mPlayer.isPlaying() == false) {
+            MusicService.mPlayer.start();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MusicService.mPlayer.stop();
+        MusicService.mPlayer.release();
     }
 }

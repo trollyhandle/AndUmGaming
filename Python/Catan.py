@@ -486,5 +486,5 @@ def cube_round(x, y, z):
     return rx, ry, rz
 
 
-# main()
-test_points()
+main()
+# test_points()

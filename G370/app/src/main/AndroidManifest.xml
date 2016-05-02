@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -25,6 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".views.TutorialActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:parentActivityName=".views.FullscreenActivity">
+        </activity>
+
         <activity android:name=".views.GameTest"></activity>
     </application>
 
