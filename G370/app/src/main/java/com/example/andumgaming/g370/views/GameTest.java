@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -57,10 +58,12 @@ public class GameTest extends AppCompatActivity {
 
         if(debug)System.out.println("TEST creating BoardView");
         boardView = new BoardView(this, board);
+        boardView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
-        if (layout != null) // calms Android Studios: should not be null, I think...
+        if (layout != null) {  // calms Android Studios: should not be null, I think...
             layout.addView(boardView);
+        }
         else if(debug)System.out.println("VIEW ERROR dynamic add-to-layout failed");
 
         // bring buttons to foreground

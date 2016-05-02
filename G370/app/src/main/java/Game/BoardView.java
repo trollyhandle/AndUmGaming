@@ -1,11 +1,17 @@
 package Game;
 
+import com.example.andumgaming.g370.R;
+
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
 import android.view.View;
+import android.widget.ImageView;
 
 /**
  * BoardView.java
@@ -17,19 +23,20 @@ public class BoardView extends View {
 
     private Paint paint;
     private Board board;
+    private ShapeDrawable[] shapes;
 
     private final int dist_to_begin_move = 8;
 
     private int touch_x, touch_y, pinch_distance;
     private boolean moving, zooming;
-    private boolean debug = true;
+    private final boolean debug = true;
 
     public BoardView(Context context) {
         super(context);
         touch_x = touch_y = pinch_distance = 0;
         moving = zooming = false;
         paint = new Paint();
-        paint.setColor(0xffffffff);
+        paint.setColor(0xff0000ff);
     }
     public BoardView(Context context, Board board) {
         this(context);
@@ -42,10 +49,22 @@ public class BoardView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if(debug)System.out.println("VIEW drawing");
-        canvas.drawPath(board.getPath(), paint);
+//        Drawable b = getResources().getDrawable(R.drawable.wheat);
+//        if (b == null)
+//            System.out.println("VIEW null wheat");
+//        else
+//        b.draw(canvas);
+//        canvas.drawPath(board.getPath(), paint);
+        shapes = board.getShapeDrawables();
+        for (ShapeDrawable s : shapes) {
+            if (s != null)
+                s.draw(canvas);
+        }
     }
 
+
     @Override
+
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             Point_XY click = new Point_XY(event.getX(), event.getY());

@@ -1,6 +1,8 @@
 package Game;
 
+import android.graphics.Paint;
 import android.graphics.Path;
+import java.util.Map;
 
 /**
  * Board.java
@@ -10,6 +12,8 @@ import android.graphics.Path;
 public class Board {
     private static final int MIN_SIZE = 80;
     private static final int MAX_SIZE = 440;
+
+    private final int[] colors = {0xffffffff, 0xffff0000, 0xff00ff00, 0xff0000ff};
 
     private int rings, arraySize;
     private Shape[][] vertices;
@@ -23,25 +27,14 @@ public class Board {
     private boolean update;
     private boolean debug = true;
 
-    public Board()
-    {
-        rings = 4;  // Two rings of full hexes, but vertices take more rings
-        arraySize = rings*2+1;
-        vertices = new Shape[arraySize][arraySize];
-        center = new Point_XY(0, 0);
-        hex_size = 1;
-        path = new Path();
-        initBoard();
-        update = false;
-    }
     public Board(int hex_size, Point_XY center)
     {
         rings = 4;  // Two rings of full hexes, but vertices take more rings
         arraySize = rings*2+1;
         vertices = new Shape[arraySize][arraySize];
+        path = new Path();
         this.center = center;
         this.hex_size = hex_size;
-        path = new Path();
         initBoard();
         update = false;
     }
@@ -66,6 +59,27 @@ public class Board {
             }
         }
         update = false;
+    }
+    public ShapeDrawable[] getShapeDrawables() {
+        if(debug)System.out.println("BOARD Updating path...");
+        ShapeDrawable[] shapes = new ShapeDrawable[arraySize*arraySize];
+        int i = 0;
+        Shape s;
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                s = vertices[q][r];
+                if (s != null) {
+                    s.setBoardCenter(center);
+                    s.setHexSize(hex_size);
+                    s.makeDrawable();
+                    Paint p = new Paint();
+                    p.setColor(colors[i%4]);
+                    shapes[i++] = new ShapeDrawable(s.getPath(), p);
+                }
+            }
+        }
+        update = false;
+        return shapes;
     }
 
 
