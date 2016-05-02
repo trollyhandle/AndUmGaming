@@ -55,8 +55,6 @@ public class MenuFragment extends Fragment{
         leaderButton = (Button)view.findViewById(R.id.SoonButton);
 
 
-
-
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
