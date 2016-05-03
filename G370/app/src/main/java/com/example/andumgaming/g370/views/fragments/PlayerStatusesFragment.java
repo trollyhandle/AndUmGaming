@@ -38,6 +38,7 @@ public class PlayerStatusesFragment extends Fragment {
         View view = inflater.inflate(R.layout.actionpanel_fragment, container, false);
 
         //display resources
+
         //need a way for resources to be updated whenever gained, spent, or traded
 
         return view;
