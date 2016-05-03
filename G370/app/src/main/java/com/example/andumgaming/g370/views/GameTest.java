@@ -8,7 +8,6 @@ import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -147,6 +146,8 @@ public class GameTest extends AppCompatActivity {
                 board.setHexSize(default_hex_size);
                 board.setCenter(default_center);
                 boardView.invalidate();  // force a redraw
+                boardView.nextTurn();
+
             }
         });
     }

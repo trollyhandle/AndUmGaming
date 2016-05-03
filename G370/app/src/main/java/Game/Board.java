@@ -1,8 +1,6 @@
 package Game;
 
-import android.graphics.Paint;
-import android.graphics.Path;
-import java.util.Map;
+import java.util.Random;
 
 /**
  * Board.java
@@ -10,59 +8,63 @@ import java.util.Map;
  * The board controller. Holds hexagons, vertices(, other things).
  */
 public class Board {
+    private boolean debug = true;
+
     private static final int MIN_SIZE = 80;
     private static final int MAX_SIZE = 440;
 
-    private final int[] colors = {0xffffffff, 0xffff0000, 0xff00ff00, 0xff0000ff};
+    // RESOURCE PAINT_COLOR LOOKUP
+    private enum RES {
+        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
+        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
+        private int val; RES(int color) {val=color;}
+        static int get(int i) { switch(i) {
+            case 1: return WHEAT.val; case 2: return WOOD.val;
+            case 3: return ORE.val; case 4: return BRICK.val;
+            case 5: return SHEEP.val; } return BLANK.val; }
+        static int index(RES r) { switch(r) {
+            case WHEAT: return 1; case WOOD: return 2;
+            case ORE: return 3; case BRICK: return 4;
+            case SHEEP: return 5; } return 0; }
+    }
+    // PLAYER PAINT_COLOR LOOKUP
+    private enum PLAYERS {
+        NONE (0xffFFFFFF)/*WHITE*/, ONE (0xffFF0800)/*RED*/, TWO(0xff00FF00)/*GREEN*/,
+        THREE(0xff1C1CF0)/*BLUE*/,  FOUR(0xffBF00FF)/*VIOLET*/;
+        private int val; PLAYERS(int value) {val=value;}
+        static int get(int i) { switch(i) {
+            case 1: return ONE.val; case 2: return TWO.val;
+            case 3: return THREE.val; case 4: return FOUR.val;
+        } return NONE.val; }
+    }
 
     private int rings, arraySize;
     private Shape[][] vertices;
     private Edge[][] edges;
+    private ShapeDrawable[] shapes;
 
     private Point_XY center;
     private int hex_size;
 
-    private Path path;
-
     private boolean update;
-    private boolean debug = true;
 
     public Board(int hex_size, Point_XY center)
     {
         rings = 4;  // Two rings of full hexes, but vertices take more rings
         arraySize = rings*2+1;
         vertices = new Shape[arraySize][arraySize];
-        path = new Path();
         this.center = center;
         this.hex_size = hex_size;
+        shapes = new ShapeDrawable[arraySize*arraySize];
         initBoard();
+        fillTiles();
         update = false;
     }
 
-    public Path getPath() { if (update) update(); return path; }
-    public void update()
-    {
+    public ShapeDrawable[] getShapeDrawables() { if (update) update(); return shapes; }
+
+    public void update() {
         if(debug)System.out.println("BOARD Updating path...");
-        vertices[0][0].makeDrawable();
-        path.rewind();
-//        path.addCircle(center.x(), center.y(), hex_size/2, Path.Direction.CCW);
-        Shape s;
-        for (int q = 0; q < arraySize; q++) {
-            for (int r = 0; r < arraySize; r++) {
-                s = vertices[q][r];
-                if (s != null) {
-                    s.setBoardCenter(center);
-                    s.setHexSize(hex_size);
-                    s.makeDrawable();
-                    path.addPath(s.getPath());
-                }
-            }
-        }
-        update = false;
-    }
-    public ShapeDrawable[] getShapeDrawables() {
-        if(debug)System.out.println("BOARD Updating path...");
-        ShapeDrawable[] shapes = new ShapeDrawable[arraySize*arraySize];
         int i = 0;
         Shape s;
         for (int q = 0; q < arraySize; q++) {
@@ -72,14 +74,14 @@ public class Board {
                     s.setBoardCenter(center);
                     s.setHexSize(hex_size);
                     s.makeDrawable();
-                    Paint p = new Paint();
-                    p.setColor(colors[i%4]);
-                    shapes[i++] = new ShapeDrawable(s.getPath(), p);
+
+                    int color = (q-r)%3 == 0? (RES.get(((Hexagon)s).getResource())) :
+                            PLAYERS.get(((Vertex)s).getOwner());
+                    shapes[i++] = new ShapeDrawable(s.getPath(), color);
                 }
             }
         }
         update = false;
-        return shapes;
     }
 
 
@@ -92,13 +94,13 @@ public class Board {
     }
     public void resize(int ds)
     {
-        // if increasing size, or (if decreasing) not too small...
-        if ((ds > 0 && hex_size < MAX_SIZE)
-                || (ds < 0 && hex_size > MIN_SIZE)) {
-            // enforce min/max boundaries
-            hex_size = Math.min(Math.max(hex_size+ds, MIN_SIZE), MAX_SIZE);
-            update = true;
+        if (hex_size != MIN_SIZE && hex_size != MAX_SIZE) {
+            update = true;  // the size is gonna actually change. do update
         }
+        // enforce min/max boundaries
+        hex_size += ds;
+        hex_size = hex_size < MIN_SIZE ? MIN_SIZE : (hex_size > MAX_SIZE ? MAX_SIZE : hex_size);
+
     }
     public Point_XY getCenter() { return center; }
     public void setCenter(int x, int y) { center = new Point_XY(x, y); update = true; }
@@ -106,11 +108,28 @@ public class Board {
 
     /**
      * Gets the polygon size of the region used in locating mouse clicks
-     * @return int size of clickable area
+     * @return int: size of clickable area
      */
     public int getClickableSize() { return (int)(hex_size * Math.sqrt(3)/ 3); }
     public int getHexSize() { return hex_size; }
-    public void setHexSize(int size) { hex_size = size; update = true; }
+    public void setHexSize(int size)
+    {
+        // enforce min/max boundaries
+        hex_size = size < MIN_SIZE ? MIN_SIZE : (size > MAX_SIZE ? MAX_SIZE : size);
+        update = true;
+    }
+
+
+    public boolean setOwner(int q, int r, int player)
+    {
+        Shape s = vertices[(q+arraySize)%arraySize][(r+arraySize)%arraySize];
+        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is owned
+            return false;
+        if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
+        ((Vertex)s).setOwner(player);
+        update = true;
+        return true;
+    }
 
     public String toString()
     {
@@ -130,16 +149,12 @@ public class Board {
 
     private void initBoard()
     {
-        int num = 0;  // for DEBUG
         for (int q = -rings; q <= rings; q++) {
             for (int r = Math.max(-rings, -q - rings); r <= Math.min(rings, -q + rings); r++) {
                 int q_index = (q+arraySize)%arraySize;  // adjust for negative indices
                 int r_index = (r+arraySize)%arraySize;  // adjust for negative indices
-                if (Math.abs(q-r) % 3 == 0) {  // should be a full Hexagon
-//                    int hx_q = q_index, hx_r = r_index;  // TODO change this? somehow? (for use in a separate hexagon array)
-//                    System.out.println(String.format("Hex %1$2d at %2$2d, %3$2d -> %4$2d, %5$2d", num, q, r, hx_q, hx_r)); // DEBUG
+                if (Math.abs(q-r) % 3 == 0) {  // a full Hexagon
                     vertices[q_index][r_index] = new Hexagon(q, r, hex_size, center);
-                    num += 1;
                 }
                 else {  // otherwise a Vertex
                     vertices[q_index][r_index] = new Vertex(q, r, hex_size, center);
@@ -157,15 +172,36 @@ public class Board {
                     new Vertex( pair[1],  pair[0], hex_size, center);
             vertices[(-pair[0]+arraySize)%arraySize][(-pair[1]+arraySize)%arraySize] =  // negative
                     new Vertex(-pair[0], -pair[1], hex_size, center);
-            vertices[(-pair[1]+arraySize)%arraySize][(-pair[0]+arraySize)%arraySize] =  // negative reversed
+            vertices[(-pair[1]+arraySize)%arraySize][(-pair[0]+arraySize)%arraySize] =  // neg reversed
                     new Vertex(-pair[1], -pair[0], hex_size, center);
         }
-//        System.out.println("\n");  // DEBUG
         initEdges();
     }
     private void initEdges()
     {
         // pass for now...
+    }
+
+    private void fillTiles()
+    {
+        RES shuffle[] = { RES.BLANK, // one desert
+                RES.WHEAT,RES.WHEAT,RES.WHEAT,RES.WHEAT,  // 4 wheat
+                RES.WOOD, RES.WOOD, RES.WOOD, RES.WOOD,  // 4 wood
+                RES.SHEEP, RES.SHEEP, RES.SHEEP, RES.SHEEP,  // 4 sheep
+                RES.ORE, RES.ORE, RES.ORE, RES.BRICK, RES.BRICK, RES.BRICK};  // 3 ore and brick
+        int shufsize = shuffle.length;  // 4+4+4+3+3+1 = 19
+        Random rand = new Random();
+        Shape s;
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                s = vertices[q][r];
+                if ((q-r)%3==0 && s != null) {
+                    int which = rand.nextInt(shufsize);
+                    ((Hexagon)s).setResource(RES.index(shuffle[which]));
+                    shuffle[which] = shuffle[--shufsize];
+                }
+            }
+        }
     }
 
 

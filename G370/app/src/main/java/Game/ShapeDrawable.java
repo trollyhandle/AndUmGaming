@@ -19,10 +19,11 @@ public class ShapeDrawable {
         p = new Paint();
         p.setColor(0xffffffff);  // all white
     }
-    public ShapeDrawable(Path shape, Paint color)
+    public ShapeDrawable(Path shape, int color)
     {
         s = shape;
-        p = color;
+        p = new Paint();
+        p.setColor(color);
     }
 
     public void draw(Canvas c)

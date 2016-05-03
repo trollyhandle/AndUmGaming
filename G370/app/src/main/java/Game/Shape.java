@@ -24,9 +24,7 @@ public abstract class Shape {
     
     public Shape(int q, int r)
     {
-        coord = new Point_QR(q, r);
-        boardCenter = new Point_XY(0, 0);
-        hex_size = 30;
+        this(q, r, 30, new Point_XY(0, 0));
     }
     public Shape(int q, int r, int hex_size, Point_XY board_center)
     {
@@ -61,6 +59,7 @@ public abstract class Shape {
         path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
         if(debug)System.out.println("SHAPE path complete");
     }
+
 
     public abstract String type();
     public String toString()

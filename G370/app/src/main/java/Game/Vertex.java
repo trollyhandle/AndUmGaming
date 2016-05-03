@@ -15,16 +15,17 @@ public class Vertex extends Shape {
 //    int hex_size;
 //    int poly_size;
 //    Path path;
+    private int owner;
 
     public Vertex(int q, int r)
     {
-        super(q, r);
-        poly_size = hex_size / 4;
+        this(q, r, 10, new Point_XY(0,0));
     }
     public Vertex(int q, int r, int hex_size, Point_XY board_center)
     {
         super(q, r, hex_size, board_center);
         poly_size = hex_size / 4;
+        owner = 0;
     }
 
     public String type() { return "Vertex"; }
@@ -60,5 +61,9 @@ public class Vertex extends Shape {
         }
         return null;
     }
+
+    public int getOwner() { return owner; }
+    public boolean isOwned() { return owner != 0; }
+    public void setOwner(int player) { owner = player; }
 
 }

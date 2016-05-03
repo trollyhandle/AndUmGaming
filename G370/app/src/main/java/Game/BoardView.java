@@ -1,17 +1,10 @@
 package Game;
 
-import com.example.andumgaming.g370.R;
-
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
 import android.view.View;
-import android.widget.ImageView;
 
 /**
  * BoardView.java
@@ -21,7 +14,6 @@ import android.widget.ImageView;
 
 public class BoardView extends View {
 
-    private Paint paint;
     private Board board;
     private ShapeDrawable[] shapes;
 
@@ -29,14 +21,16 @@ public class BoardView extends View {
 
     private int touch_x, touch_y, pinch_distance;
     private boolean moving, zooming;
+
     private final boolean debug = true;
+
+    private int player_turn;
 
     public BoardView(Context context) {
         super(context);
         touch_x = touch_y = pinch_distance = 0;
         moving = zooming = false;
-        paint = new Paint();
-        paint.setColor(0xff0000ff);
+        player_turn = 1;
     }
     public BoardView(Context context, Board board) {
         this(context);
@@ -54,7 +48,7 @@ public class BoardView extends View {
 //            System.out.println("VIEW null wheat");
 //        else
 //        b.draw(canvas);
-//        canvas.drawPath(board.getPath(), paint);
+//        //canvas.drawPath(board.getPath(), paint);
         shapes = board.getShapeDrawables();
         for (ShapeDrawable s : shapes) {
             if (s != null)
@@ -62,15 +56,28 @@ public class BoardView extends View {
         }
     }
 
+    public void nextTurn()
+    {
+        player_turn += 1;
+        if (player_turn > 4)
+            player_turn = 1;
+    }
 
     @Override
-
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             Point_XY click = new Point_XY(event.getX(), event.getY());
-            if(debug)System.out.println("CLICK: Hex    coordinates: " +
+            Point_QR hex = click.toHex(board.getCenter(), board.getClickableSize());
+            if(debug)
+                if ((hex.q()-hex.r())%3 == 0)System.out.println("CLICK: Hex    coordinates: " +
+                    click.toHex(board.getCenter(), board.getClickableSize()));
+                else System.out.println("CLICK: VERTEX coordinates: " +
                     click.toHex(board.getCenter(), board.getClickableSize()));
             touch_x = click.x(); touch_y = click.y();
+
+            board.setOwner(hex.q(), hex.r(), player_turn);
+            invalidate();
+
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             if (event.getPointerCount() == 2) {
@@ -84,10 +91,10 @@ public class BoardView extends View {
                 if (pinch_distance > 0) {
                     board.resize((distance - pinch_distance) / 2);
                     invalidate();
-
-                    if (debug) System.out.printf("ZOOM : resized board to %1$d\n", board.getHexSize());
-                    if (debug) System.out.printf("ZOOM : %1$3d vs %2$3d : CHANGE: %3$d\n",
+                    if (debug) System.out.printf("ZOOM : %1$3d to %2$3d : CHANGE: %3$d\n",
                             distance, pinch_distance, distance - pinch_distance);
+                    if (debug) System.out.printf("ZOOM : resized board to %1$d\n", board.getHexSize());
+
                 }
                 pinch_distance = distance;
 
