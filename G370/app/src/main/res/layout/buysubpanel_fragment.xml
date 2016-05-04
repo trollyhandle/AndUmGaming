@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
     android:padding="40dp">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="close"
-        android:id="@+id/close"
-        android:textAllCaps="false"
-        android:textSize="20sp" />
+
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:text="Buy Road"
         android:id="@+id/road"
         android:textAllCaps="false"
@@ -24,8 +17,8 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:text="Buy Settlement"
         android:id="@+id/settlement"
         android:textAllCaps="false"
@@ -33,19 +26,11 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:text="Buy Card"
         android:id="@+id/card"
         android:textAllCaps="false"
         android:textSize="20sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="140"
-        android:layout_gravity="center"
-        android:gravity="center_vertical|center_horizontal">
-    </LinearLayout>
 </LinearLayout>

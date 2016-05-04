@@ -39,7 +39,7 @@ public class BuySubpanelFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.buysubpanel_fragment, container, false);
 
-        closeButton = (Button)view.findViewById(R.id.close);
+        //closeButton = (Button)view.findViewById(R.id.close);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

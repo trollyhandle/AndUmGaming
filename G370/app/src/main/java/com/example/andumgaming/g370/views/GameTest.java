@@ -8,11 +8,18 @@ import com.example.andumgaming.g370.views.fragments.ActionPanelFragment;
 import android.content.Intent;
 import android.graphics.Point;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+
+//import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -36,8 +43,7 @@ public class GameTest extends AppCompatActivity {
     private Button zoomRight;
     private Button zoomReset;
 
-    private HorizontalScrollView ActionPanelFragment;
-
+    private Button buybutton;
 
     private int width, height;
     private int default_hex_size;
@@ -74,8 +80,14 @@ public class GameTest extends AppCompatActivity {
         LinearLayout button_layout = (LinearLayout)findViewById(R.id.zoom_control_layout);
         if (button_layout != null) // calms Android Studios: should not be null, I think...
             button_layout.bringToFront();
+
         else if(debug)System.out.println("VIEW ERROR buttons move to foreground failed");
 
+
+
+        loadfragment();
+        FrameLayout fragmentlayout = (FrameLayout)findViewById(R.id.fragmentlayout);
+        fragmentlayout.bringToFront();
     }
 
     private void findSize()
@@ -156,6 +168,20 @@ public class GameTest extends AppCompatActivity {
 
     }
 
+    private void loadfragment() {
+        buybutton = (Button)findViewById(R.id.actionpanel);
+        buybutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ActionPanelFragment newFragment = new ActionPanelFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
+                transaction.replace(R.id.fragmentlayout, newFragment)
+                        .addToBackStack(ActionPanelFragment.class
+                                .getSimpleName()).commit();
+            }
+        });
+
+    }
 
 }

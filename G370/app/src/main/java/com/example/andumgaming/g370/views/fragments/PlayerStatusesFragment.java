@@ -35,7 +35,7 @@ public class PlayerStatusesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 
-        View view = inflater.inflate(R.layout.actionpanel_fragment, container, false);
+        View view = inflater.inflate(R.layout.playerstatuses_fragment, container, false);
 
         //display resources
 
