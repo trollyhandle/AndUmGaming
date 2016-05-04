@@ -6,12 +6,23 @@ import random
 resources = ["gold", "orangered", "seagreen", "orchid", "turquoise"]
 
 # WIN_SIZE = 500
-# WIN_SIZE = 800
-WIN_SIZE = 1100
+WIN_SIZE = 800
+# WIN_SIZE = 1100
 
 # hex_size = WIN_SIZE // 10
 hex_size = 80
 # hex_size_short = hex_size * math.sqrt(3) / 2
+
+
+
+# TODO TODO DO THIS TODO detect out-of-bounds/off-of-board clicks
+
+# TODO TOFUCKINGDO EDGES EDGES EDGESSSSSSS
+
+# TODO orientation lock
+
+# TODO game logic
+
 
 
 def main():
@@ -70,7 +81,6 @@ def test_points():
 
 class Board:
     def __init__(self, hex_size, center, win, rings=2):
-        # TODO remove extra hexes when above rings=2
         if rings < 2:
             print("ERROR: Board size too small!")
             return
@@ -94,12 +104,6 @@ class Board:
 
                     num += 1
         rings //= 2
-        # extra_vertices = [[rings, rings+1], [-rings, 2*rings+1], [-rings-1, 2*rings+1]]
-        # extra_vertices += [[-qr for qr in pair] for pair in extra_vertices]
-        # extra_vertices += [[pair[1], pair[0]] for pair in extra_vertices]
-        #
-        # for pair in extra_vertices:
-        #     vertices[pair[0]][pair[1]] = Vertex(pair[0], pair[1])
         extra_vertices = [(rings, rings+1), (2*rings+1, -rings), (-rings-1, 2*rings+1)]
         for pair in extra_vertices:
             vertices[ pair[0]][ pair[1]] = Vertex( pair[0],  pair[1])
@@ -134,10 +138,11 @@ class Board:
             edges[q][r][1] = Edge(Point(q,r), v.neighbor(2))
             edges[q][r][2] = Edge(Point(q,r), v.neighbor(4))
             v.setColor("green")
-            cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
-            cir.setFill("red")
-            cir.draw(win)
+            # cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
+            # cir.setFill("red")
+            # cir.draw(win)
         self.edges = edges
+
 
     def get(self,which):
         return self.vertices[which.x][which.y]
@@ -161,6 +166,11 @@ class Board:
                 for edge in edge_source:
                     if edge is not None:
                         edge.place(center, hex_size)
+        rings=self.rings
+        for q in range(-rings, rings+1):
+            for r in range(max(-rings, -q-rings), min(rings, -q+rings)+1):
+                if ((q-r)%3!=0):
+                    self.vertices[q][r].setColor("blue")
 
     def move(self, win, center):
         self.center = center
@@ -179,11 +189,11 @@ class Board:
             for v in v_row:
                 if v is not None:
                     v.draw(win)
-        for edge_row in self.edges:
-            for edge_source in edge_row:
-                for edge in edge_source:
-                    if edge is not None:
-                        edge.draw(win)
+        # for edge_row in self.edges:
+        #     for edge_source in edge_row:
+        #         for edge in edge_source:
+        #             if edge is not None:
+        #                 edge.draw(win)
 
     def undraw(self):  # TODO place() algorithm
         for v_row in self.vertices:
@@ -318,7 +328,7 @@ class Vertex:
         #                     (-1,  0), (-1, +1), ( 0, +1)]
         self.directions = [( 0, +1), (-1, +1), (-1,  0),
                            ( 0, -1), (+1, -1), (+1,  0)]
-        self.color = "white"
+        self.color = None
         self.grid_center = Point(0,0)
         self.size = 2
         # self.edges = [None, None, None]
@@ -328,6 +338,7 @@ class Vertex:
         return "({:2},{:2})".format(self.q, self.r)
 
     def place(self, grid_center, size):
+        self.color = "white"
         self.grid_center = grid_center
         self.size = size
         # self.size_short = size * math.sqrt(3) / 2
@@ -347,13 +358,11 @@ class Vertex:
         self.txt = Text(self.center, self.text)
         self.txt.setSize(int(max(min(self.vertex_size//2, 32), 5)))
 
-        ofs = 0
         # if ((self.q - self.r) + 1) % 3 == 0:
         #     self.color = "green"
         #     for edge in self.edges:
         #         edge.place(grid_center, size)
-        # self.poly.setFill(self.color)
-        self.poly.setOutline(self.color)
+
 
     def draw(self, win):
         self.poly.draw(win)
@@ -366,8 +375,11 @@ class Vertex:
         # self.cir_center.undraw()
 
     def setColor(self, color="black"):
-        self.color = color
-        self.update()
+        if (self.color is not None):
+            # self.poly.setFill(self.color)
+            self.poly.setOutline(self.color)
+            self.color = color
+
     def update(self):
         self.place(self.grid_center, self.size)
     def setText(self, text):
