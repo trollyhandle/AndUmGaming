@@ -4,6 +4,7 @@ package com.example.andumgaming.g370.views;
 
 import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.fragments.ActionPanelFragment;
+import com.example.andumgaming.g370.views.fragments.BuySubpanelFragment;
 
 import android.content.Intent;
 import android.graphics.Point;
@@ -173,13 +174,15 @@ public class GameTest extends AppCompatActivity {
         buybutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                ActionPanelFragment newFragment = new ActionPanelFragment();
+                BuySubpanelFragment newFragment = new BuySubpanelFragment();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                 transaction.replace(R.id.fragmentlayout, newFragment)
-                        .addToBackStack(ActionPanelFragment.class
+                        .addToBackStack(BuySubpanelFragment.class
                                 .getSimpleName()).commit();
+                buybutton.setVisibility(View.GONE);
             }
+
         });
 
     }

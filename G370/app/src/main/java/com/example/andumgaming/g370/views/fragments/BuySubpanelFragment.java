@@ -13,7 +13,7 @@ import com.example.andumgaming.g370.R;
  * Created by Andre on 5/1/2016.
  */
 public class BuySubpanelFragment extends Fragment {
-    private Button closeButton;
+    private Button backButton;
     private Button buyRoad;
     private Button buySettlement;
     private Button buyCard;
@@ -39,14 +39,14 @@ public class BuySubpanelFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.buysubpanel_fragment, container, false);
 
-        //closeButton = (Button)view.findViewById(R.id.close);
-        closeButton.setOnClickListener(new View.OnClickListener() {
+        backButton = (Button)view.findViewById(R.id.back);
+/*        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentManager().popBackStack();
             }
         });
-
+*/
         //implement the following buy buttons
 
         buyRoad = (Button)view.findViewById(R.id.road);

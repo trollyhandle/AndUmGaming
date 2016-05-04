@@ -100,13 +100,15 @@
             android:layout_height="40dp"
             android:name="com.example.andumgaming.g370.views.fragments.PlayerStatusesFragment"
             android:id="@+id/playerstatus"
-            tools:layout="@layout/playerstatuses_fragment" />
+            tools:layout="@layout/playerstatuses_fragment"
+            android:layout_gravity="center_horizontal|bottom" />
 
         <Button
+            android:text="Buy"
             android:id="@+id/actionpanel"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_gravity="center_horizontal|bottom" />
+            android:layout_gravity="right|top" />
 
 
     </FrameLayout>
