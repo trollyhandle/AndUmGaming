@@ -1,33 +1,38 @@
 package com.example.andumgaming.g370.views.fragments;
 
-import android.support.v4.app.FragmentManager;
+
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
+
 import android.content.Context;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.TutorialActivity;
+
+import Interface.BackStackLisnter;
 
 /**
  * Created by Jeff on 4/14/16.
  */
-public class MenuFragment extends Fragment{
+public class MenuFragment extends Fragment implements BackStackLisnter {
     private Button playButton;
     private Button settingsButton;
     private Button tutorialButton;
     private Button leaderButton;
     private Button aboutButton;
-
-
+    static final int ZTIME = 1500;
+    private long mBackedPressed;
 
     public MenuFragment(){
 
     }
-
-
 
 
     public static MenuFragment newInstance(){
@@ -43,7 +48,6 @@ public class MenuFragment extends Fragment{
     }
 
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
 
         View view = inflater.inflate(R.layout.menu_fragment,container, false);
@@ -53,9 +57,6 @@ public class MenuFragment extends Fragment{
         tutorialButton = (Button)view.findViewById(R.id.TutorialButton);
         aboutButton = (Button)view.findViewById(R.id.AboutButton);
         leaderButton = (Button)view.findViewById(R.id.SoonButton);
-
-
-
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,13 +91,9 @@ public class MenuFragment extends Fragment{
         tutorialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TutorialFragment newFragment = new TutorialFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-                transaction.replace(R.id.container, newFragment)
-                        .addToBackStack(TutorialFragment.class
-                                .getSimpleName()).commit();
-
+                TutorialActivity newFragment = new TutorialActivity();
+                Intent i = new Intent(getActivity().getApplicationContext(), TutorialActivity.class);
+                getActivity().startActivity(i);
             }
         });
 
@@ -116,6 +113,22 @@ public class MenuFragment extends Fragment{
 
         return view;
         }
+
+    @Override
+    public void onBackButtonPressed(){
+        // this checks for a double back press to close the app from the main menu
+        if (mBackedPressed + ZTIME > System.currentTimeMillis())
+        {
+            getActivity().finish();
+            return;
+        }
+        mBackedPressed = System.currentTimeMillis();
+
+    }
+
+
+
+
 
     @Override
     public void onAttach(Context context){

@@ -50,4 +50,6 @@
     <string name="zoom_reset">*</string>
     <!--<string name="zoom_reset">next turn</string>-->
 
+    <string name="buy">Buy</string>
+
 </resources>
