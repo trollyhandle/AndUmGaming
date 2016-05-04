@@ -44,8 +44,6 @@ public class GameTest extends AppCompatActivity {
     private Button zoomRight;
     private Button zoomReset;
 
-    private Button buybutton;
-
     private int width, height;
     private int default_hex_size;
     private Point_XY default_center;
@@ -170,21 +168,14 @@ public class GameTest extends AppCompatActivity {
     }
 
     private void loadfragment() {
-        buybutton = (Button)findViewById(R.id.actionpanel);
-        buybutton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                BuySubpanelFragment newFragment = new BuySubpanelFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        ActionPanelFragment newFragment = new ActionPanelFragment();
 
-                transaction.replace(R.id.fragmentlayout, newFragment)
+        getSupportFragmentManager().beginTransaction().replace(R.id.game_container,newFragment)
                         .addToBackStack(BuySubpanelFragment.class
                                 .getSimpleName()).commit();
-                buybutton.setVisibility(View.GONE);
-            }
-
-        });
 
     }
+
+
 
 }

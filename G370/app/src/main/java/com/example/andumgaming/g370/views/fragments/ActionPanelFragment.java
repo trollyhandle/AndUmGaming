@@ -54,7 +54,7 @@ public class ActionPanelFragment extends Fragment {
                 BuySubpanelFragment newFragment = new BuySubpanelFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                transaction.replace(R.id.fragmentlayout, newFragment)
+                transaction.replace(R.id.game_container, newFragment)
                         .addToBackStack(BuySubpanelFragment.class
                                 .getSimpleName()).commit();
             }

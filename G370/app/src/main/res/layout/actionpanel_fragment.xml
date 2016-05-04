@@ -10,8 +10,9 @@
         android:id="@+id/BuySubpanel"
         android:text="@string/buy"
         android:textAllCaps="false"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:layout_height="wrap_content"
-        android:layout_width="60dp" />
+        android:layout_width="60dp"
+        android:layout_gravity="right" />
 
 </LinearLayout>

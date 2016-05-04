@@ -40,13 +40,13 @@ public class BuySubpanelFragment extends Fragment {
         View view = inflater.inflate(R.layout.buysubpanel_fragment, container, false);
 
         backButton = (Button)view.findViewById(R.id.back);
-/*        backButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+               getFragmentManager().popBackStack();
             }
         });
-*/
+
         //implement the following buy buttons
 
         buyRoad = (Button)view.findViewById(R.id.road);

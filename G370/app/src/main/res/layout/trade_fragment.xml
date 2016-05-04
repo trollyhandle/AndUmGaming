@@ -2,43 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    android:padding="40dp">
-
-
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="Buy Road"
-        android:id="@+id/road"
-        android:textAllCaps="false"
-        android:textSize="15sp" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="Buy Settlement"
-        android:id="@+id/settlement"
-        android:textAllCaps="false"
-        android:textSize="15sp" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="Buy Card"
-        android:id="@+id/card"
-        android:textAllCaps="false"
+        android:text="player1"
+        android:id="@+id/player1"
         android:textSize="15sp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="@string/back"
-        android:textSize="15dp"
-        android:textAllCaps="false"
-        android:id="@+id/back" />
+        android:text="player2"
+        android:id="@+id/player2"
+        android:textSize="15sp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="player3"
+        android:id="@+id/player3"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="player4"
+        android:id="@+id/player4"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="player5"
+        android:id="@+id/player5"
+        android:layout_gravity="center_horizontal"
+        android:textSize="15sp" />
 </LinearLayout>
