@@ -3,12 +3,24 @@ package com.example.andumgaming.g370.views;
 
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.fragments.ActionPanelFragment;
+import com.example.andumgaming.g370.views.fragments.BuySubpanelFragment;
 
+import android.content.Intent;
 import android.graphics.Point;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+
+//import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -31,7 +43,7 @@ public class GameTest extends AppCompatActivity {
     private Button zoomDown;
     private Button zoomRight;
     private Button zoomReset;
-    
+
     private int width, height;
     private int default_hex_size;
     private Point_XY default_center;
@@ -67,8 +79,14 @@ public class GameTest extends AppCompatActivity {
         LinearLayout button_layout = (LinearLayout)findViewById(R.id.zoom_control_layout);
         if (button_layout != null) // calms Android Studios: should not be null, I think...
             button_layout.bringToFront();
+
         else if(debug)System.out.println("VIEW ERROR buttons move to foreground failed");
 
+
+
+        loadfragment();
+        FrameLayout fragmentlayout = (FrameLayout)findViewById(R.id.fragmentlayout);
+        fragmentlayout.bringToFront();
     }
 
     private void findSize()
@@ -146,5 +164,18 @@ public class GameTest extends AppCompatActivity {
                 boardView.invalidate();  // force a redraw
             }
         });
+
     }
+
+    private void loadfragment() {
+        ActionPanelFragment newFragment = new ActionPanelFragment();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.game_container,newFragment)
+                        .addToBackStack(BuySubpanelFragment.class
+                                .getSimpleName()).commit();
+
+    }
+
+
+
 }

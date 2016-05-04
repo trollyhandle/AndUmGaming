@@ -5,7 +5,7 @@
     android:orientation="vertical"
 
     android:id="@+id/container"
-    tools:context="com.example.andumgaming.g370.FullscreenActivity">
+    tools:context="com.example.andumgaming.g370.views.FullscreenActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
