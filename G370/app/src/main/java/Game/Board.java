@@ -40,6 +40,7 @@ public class Board {
 
     private int rings, arraySize;
     private Shape[][] vertices;
+    private int[][] extra_vertices;
     private Edge[][] edges;
     private ShapeDrawable[] shapes;
 
@@ -56,6 +57,7 @@ public class Board {
         this.center = center;
         this.hex_size = hex_size;
         shapes = new ShapeDrawable[arraySize*arraySize];
+        extra_vertices = new int[12][];
         initBoard();
         fillTiles();
         update = false;
@@ -133,6 +135,16 @@ public class Board {
         return true;
     }
 
+    public boolean isValidHex(Point_QR hex)
+    {
+        int q = hex.q(), r = hex.r();
+        if (Math.max(Math.max(Math.abs(q), Math.abs(r)), Math.abs((-q-r))) <= rings)
+            return true;
+        for (int[] pair: extra_vertices)
+            if (q == pair[0] && r == pair[1])
+                return true;
+        return false;
+    }
     public String toString()
     {
         String prt = "";
@@ -165,17 +177,16 @@ public class Board {
         }
         // The above algorithm misses 12 vertices on the outermost edges of the board.
         // Here they come.
-        int rings = this.rings / 2;
-        int[][] extra_vertices = {{rings, rings+1}, {-rings, 2*rings+1}, {-rings-1, 2*rings+1}};
-        for (int[] pair : extra_vertices) {
-            vertices[( pair[0]+arraySize)%arraySize][( pair[1]+arraySize)%arraySize] =  // normal
-                    new Vertex( pair[0],  pair[1], hex_size, center);
-            vertices[( pair[1]+arraySize)%arraySize][( pair[0]+arraySize)%arraySize] =  // reversed
-                    new Vertex( pair[1],  pair[0], hex_size, center);
-            vertices[(-pair[0]+arraySize)%arraySize][(-pair[1]+arraySize)%arraySize] =  // negative
-                    new Vertex(-pair[0], -pair[1], hex_size, center);
-            vertices[(-pair[1]+arraySize)%arraySize][(-pair[0]+arraySize)%arraySize] =  // neg reversed
-                    new Vertex(-pair[1], -pair[0], hex_size, center);
+        int rings = this.rings / 2, i = 0;
+        int[][] more_coords = {{rings, rings+1}, {-rings, 2*rings+1}, {-rings-1, 2*rings+1}};
+        for (int[] pair : more_coords) {
+            extra_vertices[i++] = new int[]{( pair[0]+arraySize)%arraySize, ( pair[1]+arraySize)%arraySize};
+            extra_vertices[i++] = new int[]{( pair[1]+arraySize)%arraySize, ( pair[0]+arraySize)%arraySize};
+            extra_vertices[i++] = new int[]{(-pair[0]+arraySize)%arraySize, (-pair[1]+arraySize)%arraySize};
+            extra_vertices[i++] = new int[]{(-pair[1]+arraySize)%arraySize, (-pair[0]+arraySize)%arraySize};
+        }
+        for (int[] pair: extra_vertices) {
+            vertices[pair[0]][pair[1]] = new Vertex(pair[0], pair[1], hex_size, center);
         }
         initEdges();
     }
@@ -206,5 +217,10 @@ public class Board {
         }
     }
 
-
 }
+
+
+/*
+        dist = max(abs(q), abs(r), abs((-q-r)))
+        if dist <= self.rings:
+ */

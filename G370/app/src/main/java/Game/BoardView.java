@@ -68,18 +68,7 @@ public class BoardView extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Point_XY click = new Point_XY(event.getX(), event.getY());
-            Point_QR hex = click.toHex(board.getCenter(), board.getClickableSize());
-            if(debug)
-                if ((hex.q()-hex.r())%3 == 0)System.out.println("CLICK: Hex    coordinates: " +
-                    click.toHex(board.getCenter(), board.getClickableSize()));
-                else System.out.println("CLICK: VERTEX coordinates: " +
-                    click.toHex(board.getCenter(), board.getClickableSize()));
-            touch_x = click.x(); touch_y = click.y();
-
-            board.setOwner(hex.q(), hex.r(), player_turn);
-            invalidate();
-
+            touch_x = (int)event.getX(); touch_y = (int)event.getY();
         }
         else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             if (event.getPointerCount() == 2) {
@@ -121,6 +110,22 @@ public class BoardView extends View {
             }
         }
         else if (event.getAction() == MotionEvent.ACTION_UP) {
+            // touch released. if this wasn't a move or zoom...
+            if (!moving && !zooming) {
+                Point_XY click = new Point_XY(event.getX(), event.getY());
+                Point_QR hex = click.toHex(board.getCenter(), board.getClickableSize());
+                // if the click is in the region of the board
+                if (board.isValidHex(hex)) {
+                    if(debug)
+                        if ((hex.q()-hex.r())%3 == 0)System.out.println("CLICK: Hex    coordinates: " +
+                                click.toHex(board.getCenter(), board.getClickableSize()));
+                        else System.out.println("CLICK: VERTEX coordinates: " +
+                                click.toHex(board.getCenter(), board.getClickableSize()));
+
+                    board.setOwner(hex.q(), hex.r(), player_turn);
+                    invalidate();
+                }
+            }
             moving = false;
             zooming = false;
             pinch_distance = 0;

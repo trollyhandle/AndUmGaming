@@ -6,7 +6,8 @@ import random
 resources = ["gold", "orangered", "seagreen", "orchid", "turquoise"]
 
 # WIN_SIZE = 500
-WIN_SIZE = 800
+# WIN_SIZE = 800
+WIN_SIZE = 900
 # WIN_SIZE = 1100
 
 # hex_size = WIN_SIZE // 10
@@ -77,8 +78,6 @@ def test_points():
 
 
 
-
-
 class Board:
     def __init__(self, hex_size, center, win, rings=2):
         if rings < 2:
@@ -104,12 +103,12 @@ class Board:
 
                     num += 1
         rings //= 2
-        extra_vertices = [(rings, rings+1), (2*rings+1, -rings), (-rings-1, 2*rings+1)]
-        for pair in extra_vertices:
-            vertices[ pair[0]][ pair[1]] = Vertex( pair[0],  pair[1])
-            vertices[ pair[1]][ pair[0]] = Vertex( pair[1],  pair[0])
-            vertices[-pair[0]][-pair[1]] = Vertex(-pair[0], -pair[1])
-            vertices[-pair[1]][-pair[0]] = Vertex(-pair[1], -pair[0])
+        # extra_vertices = [(rings, rings+1), (2*rings+1, -rings), (-rings-1, 2*rings+1)]
+        # for pair in extra_vertices:
+        #     vertices[ pair[0]][ pair[1]] = Vertex( pair[0],  pair[1])
+        #     vertices[ pair[1]][ pair[0]] = Vertex( pair[1],  pair[0])
+        #     vertices[-pair[0]][-pair[1]] = Vertex(-pair[0], -pair[1])
+        #     vertices[-pair[1]][-pair[0]] = Vertex(-pair[1], -pair[0])
         self.vertices = vertices
         print("\n")  # DEBUG
 
@@ -128,16 +127,16 @@ class Board:
                     # cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
                     # cir.setFill("red")
                     # cir.draw(win)
-        for i in range(0,len(extra_vertices)):
-            q, r = extra_vertices[i]
-            q, r = -q, -r
-            v = self.vertices[q][r]
-            print('extra vertex at',q,r,'\nneighbors:')
-            print(ptstr(v.neighbor(0)),ptstr(v.neighbor(2)),ptstr(v.neighbor(4)))
-            edges[q][r][0] = Edge(Point(q,r), v.neighbor(0))
-            edges[q][r][1] = Edge(Point(q,r), v.neighbor(2))
-            edges[q][r][2] = Edge(Point(q,r), v.neighbor(4))
-            v.setColor("green")
+        # for i in range(0,len(extra_vertices)):
+        #     q, r = extra_vertices[i]
+        #     q, r = -q, -r
+        #     v = self.vertices[q][r]
+        #     print('extra vertex at',q,r,'\nneighbors:')
+        #     print(ptstr(v.neighbor(0)),ptstr(v.neighbor(2)),ptstr(v.neighbor(4)))
+        #     edges[q][r][0] = Edge(Point(q,r), v.neighbor(0))
+        #     edges[q][r][1] = Edge(Point(q,r), v.neighbor(2))
+        #     edges[q][r][2] = Edge(Point(q,r), v.neighbor(4))
+        #     v.setColor("green")
             # cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
             # cir.setFill("red")
             # cir.draw(win)
@@ -167,10 +166,10 @@ class Board:
                     if edge is not None:
                         edge.place(center, hex_size)
         rings=self.rings
-        for q in range(-rings, rings+1):
-            for r in range(max(-rings, -q-rings), min(rings, -q+rings)+1):
-                if ((q-r)%3!=0):
-                    self.vertices[q][r].setColor("blue")
+        # for q in range(-rings, rings+1):
+        #     for r in range(max(-rings, -q-rings), min(rings, -q+rings)+1):
+        #         if ((q-r)%3!=0):
+        #             self.vertices[q][r].setColor("blue")
 
     def move(self, win, center):
         self.center = center
@@ -212,23 +211,27 @@ class Board:
         #     print("out of grid")
         #     return
 
-        line = Line(self.center, jump_hex(self.center, self.hex_size, q, r))
-        line2 = Line(self.center, click)
-        line3 = Line(click, jump_hex(self.center, self.hex_size, q, r))
-        line.setWidth(4)
-        line.setOutline("green")
-        line2.setOutline("red")
-        line3.setOutline("red")
-        line.draw(win)
-        line2.draw(win)
-        line3.draw(win)
-        time.sleep(.2)
-        line.undraw()
-        line2.undraw()
-        line3.undraw()
+        dist = max(abs(q), abs(r), abs((-q-r)))
+        print("Radius: {:d}, Board radius: {:d}".format(dist, self.rings))
 
-        if self.vertices[q][r] is not None:
-            self.vertices[q][r].setColor("Green")
+        if dist <= self.rings:
+            line = Line(self.center, jump_hex(self.center, self.hex_size, q, r))
+            line2 = Line(self.center, click)
+            line3 = Line(click, jump_hex(self.center, self.hex_size, q, r))
+            line.setWidth(4)
+            line.setOutline("green")
+            line2.setOutline("red")
+            line3.setOutline("red")
+            line.draw(win)
+            line2.draw(win)
+            line3.draw(win)
+            time.sleep(.2)
+            line.undraw()
+            line2.undraw()
+            line3.undraw()
+
+            if self.vertices[q][r] is not None:
+                self.vertices[q][r].setColor("Green")
 
     def __str__(self):  # TODO use place() algo
         prt = ""
@@ -292,6 +295,12 @@ class Hex:
                              jump_linear(self.center, 210, poly_size),
                              jump_linear(self.center, 270, poly_size),
                              jump_linear(self.center, 330, poly_size))
+        self.spoly = Polygon(jump_linear(self.center, 30, self.vertex_size),  # vertex_size
+                             jump_linear(self.center, 90, self.vertex_size),
+                             jump_linear(self.center, 150, self.vertex_size),
+                             jump_linear(self.center, 210, self.vertex_size),
+                             jump_linear(self.center, 270, self.vertex_size),
+                             jump_linear(self.center, 330, self.vertex_size))
         # self.vpoly.setFill(self.resource)
 
         self.cir_center = Circle(self.center, 3)
@@ -301,7 +310,7 @@ class Hex:
     def draw(self, win):
         if self.center is not None:
             # self.poly.draw(win)
-            self.vpoly.draw(win)
+            self.spoly.draw(win)
             self.txt.draw(win)
 
     def undraw(self):
@@ -338,7 +347,7 @@ class Vertex:
         return "({:2},{:2})".format(self.q, self.r)
 
     def place(self, grid_center, size):
-        self.color = "white"
+        self.color = "black" if (self.q-self.r) % 3 == 1 else "blue"
         self.grid_center = grid_center
         self.size = size
         # self.size_short = size * math.sqrt(3) / 2
@@ -362,7 +371,8 @@ class Vertex:
         #     self.color = "green"
         #     for edge in self.edges:
         #         edge.place(grid_center, size)
-
+        # self.poly.setFill(self.color)
+        self.poly.setOutline(self.color)
 
     def draw(self, win):
         self.poly.draw(win)
@@ -376,7 +386,7 @@ class Vertex:
 
     def setColor(self, color="black"):
         if (self.color is not None):
-            # self.poly.setFill(self.color)
+            self.poly.setFill(self.color)
             self.poly.setOutline(self.color)
             self.color = color
 
