@@ -18,8 +18,9 @@ public abstract class Shape {
     private boolean debug = false;
 
     private static int[][] directions = {
-            { 1, 0}, { 1, -1}, {0, -1},
-            {-1, 0}, {-1,  1}, {0,  1}  };
+            {0,  1}, {-1,  1}, {-1, 0},
+            {0, -1}, { 1, -1}, { 1, 0},
+    };
 
     
     public Shape(int q, int r)
