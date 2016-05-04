@@ -69,10 +69,12 @@ public class GameTest extends AppCompatActivity {
 
         if(debug)System.out.println("TEST creating BoardView");
         boardView = new BoardView(this, board);
+        boardView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
-        if (layout != null) // calms Android Studios: should not be null, I think...
+        if (layout != null) {  // calms Android Studios: should not be null, I think...
             layout.addView(boardView);
+        }
         else if(debug)System.out.println("VIEW ERROR dynamic add-to-layout failed");
 
         // bring buttons to foreground
@@ -162,6 +164,8 @@ public class GameTest extends AppCompatActivity {
                 board.setHexSize(default_hex_size);
                 board.setCenter(default_center);
                 boardView.invalidate();  // force a redraw
+                boardView.nextTurn();
+
             }
         });
 
