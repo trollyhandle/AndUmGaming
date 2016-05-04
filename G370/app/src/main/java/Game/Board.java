@@ -11,7 +11,7 @@ public class Board {
     private boolean debug = true;
 
     private static final int MIN_SIZE = 80;
-    private static final int MAX_SIZE = 440;
+    private static final int MAX_SIZE = 840;
 
     // RESOURCE PAINT_COLOR LOOKUP
     private enum RES {
@@ -44,7 +44,7 @@ public class Board {
     private ShapeDrawable[] shapes;
 
     private Point_XY center;
-    private int hex_size;
+    private int hex_size, board_size;
 
     private boolean update;
 
@@ -111,6 +111,7 @@ public class Board {
      * @return int: size of clickable area
      */
     public int getClickableSize() { return (int)(hex_size * Math.sqrt(3)/ 3); }
+    public int getSize() { return 8 * getClickableSize(); }
     public int getHexSize() { return hex_size; }
     public void setHexSize(int size)
     {
@@ -126,6 +127,7 @@ public class Board {
         if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is owned
             return false;
         if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
+
         ((Vertex)s).setOwner(player);
         update = true;
         return true;

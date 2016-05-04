@@ -15,9 +15,10 @@ import android.view.View;
 public class BoardView extends View {
 
     private Board board;
+    private int boardSize;
     private ShapeDrawable[] shapes;
 
-    private final int dist_to_begin_move = 8;
+    private final int dist_to_begin_move = 10;
 
     private int touch_x, touch_y, pinch_distance;
     private boolean moving, zooming;
@@ -35,6 +36,7 @@ public class BoardView extends View {
     public BoardView(Context context, Board board) {
         this(context);
         this.board = board;
+        boardSize = board.getSize();
     }
 
     public void setBoard(Board board) { this.board = board; }
@@ -90,6 +92,7 @@ public class BoardView extends View {
                 int distance = (int) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
                 if (pinch_distance > 0) {
                     board.resize((distance - pinch_distance) / 2);
+                    boardSize = board.getSize();
                     invalidate();
                     if (debug) System.out.printf("ZOOM : %1$3d to %2$3d : CHANGE: %3$d\n",
                             distance, pinch_distance, distance - pinch_distance);
@@ -102,8 +105,12 @@ public class BoardView extends View {
                 int drag_x = (int)event.getRawX(), drag_y = (int)event.getRawY();
                 int dx = Math.abs(drag_x - touch_x), dy = Math.abs(drag_y - touch_y);
                 if (moving || (dx > dist_to_begin_move && dy > dist_to_begin_move)) {
-                    board.move(drag_x - touch_x, drag_y - touch_y);
-                    invalidate();
+                    int width = getWidth(), height = getHeight();
+                    int new_x = dx + board.getCenter().x(), new_y = dy + board.getCenter().y();
+                    if (!(new_x + boardSize < 0 || width < new_x - boardSize) &&
+                            !(new_y + boardSize < 0 || height < new_y - boardSize))
+                        board.move(drag_x - touch_x, drag_y - touch_y);
+                        invalidate();
                     moving = true;
                     if (debug) System.out.printf("DRAG : start - end - delta: " +
                                     "(%1$4d, %2$4d), (%3$4d, %4$4d), (%5$3d, %6$3d)\n",
