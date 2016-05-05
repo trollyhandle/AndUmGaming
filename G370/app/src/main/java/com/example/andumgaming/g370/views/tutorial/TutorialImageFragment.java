@@ -3,16 +3,14 @@ package com.example.andumgaming.g370.views.tutorial;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.FullscreenActivity;
-import com.example.andumgaming.g370.views.fragments.MenuFragment;
 
 // Instances of this class are fragments representing a single
 // object in our collection.
