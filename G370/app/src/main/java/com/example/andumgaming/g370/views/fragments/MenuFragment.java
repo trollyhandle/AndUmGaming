@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.MusicService;
 
 /**
  * Created by Jeff on 4/14/16.
@@ -39,7 +40,6 @@ public class MenuFragment extends Fragment{
         super.onCreate(savedInstance);
     }
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
 
         View view = inflater.inflate(R.layout.menu_fragment,container, false);
@@ -62,8 +62,6 @@ public class MenuFragment extends Fragment{
                                 .getSimpleName()).commit();
 
 
-
-
             }
         });
 
@@ -84,6 +82,7 @@ public class MenuFragment extends Fragment{
             public void onClick(View v) {
                 TutorialActivity newFragment = new TutorialActivity();
                 Intent i = new Intent(getActivity().getApplicationContext(), TutorialActivity.class);
+                i.putExtra("isMusicPlaying", MusicService.mPlayer.isPlaying());
                 getActivity().startActivity(i);
             }
         });
