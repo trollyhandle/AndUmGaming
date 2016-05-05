@@ -33,8 +33,10 @@ public class TutorialImageFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity().getApplicationContext(), FullscreenActivity.class);
-                getActivity().startActivity(i);
+               //Intent i = new Intent(getActivity().getApplicationContext(), FullscreenActivity.class);
+               //getActivity().startActivity(i);
+               getActivity().onBackPressed();
+
             }
         });
         return rootView;
