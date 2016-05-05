@@ -1,27 +1,38 @@
 package com.example.andumgaming.g370.views.fragments;
 
+
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
 import android.content.Context;
 import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.andumgaming.g370.R;
+<<<<<<< HEAD
 import com.example.andumgaming.g370.views.MusicService;
+=======
+import com.example.andumgaming.g370.views.TutorialActivity;
+
+import Interface.BackStackLisnter;
+>>>>>>> origin/master
 
 /**
  * Created by Jeff on 4/14/16.
  */
-public class MenuFragment extends Fragment{
+public class MenuFragment extends Fragment implements BackStackLisnter {
     private Button playButton;
     private Button settingsButton;
     private Button tutorialButton;
     private Button leaderButton;
     private Button aboutButton;
+    static final int ZTIME = 1500;
+    private long mBackedPressed;
 
     public MenuFragment(){
 
@@ -54,6 +65,8 @@ public class MenuFragment extends Fragment{
             @Override
             public void onClick(View v) {
 
+                System.out.println("MENU : pre-add " + getFragmentManager().getBackStackEntryCount());
+
                 SettingsFragment newFragment = new SettingsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -61,6 +74,10 @@ public class MenuFragment extends Fragment{
                         .addToBackStack(SettingsFragment.class
                                 .getSimpleName()).commit();
 
+<<<<<<< HEAD
+=======
+                System.out.println("MENU : postadd " + getFragmentManager().getBackStackEntryCount());
+>>>>>>> origin/master
 
             }
         });
@@ -103,6 +120,22 @@ public class MenuFragment extends Fragment{
 
         return view;
         }
+
+    @Override
+    public void onBackButtonPressed(){
+        // this checks for a double back press to close the app from the main menu
+        if (mBackedPressed + ZTIME > System.currentTimeMillis())
+        {
+            getActivity().finish();
+            return;
+        }
+        mBackedPressed = System.currentTimeMillis();
+
+    }
+
+
+
+
 
     @Override
     public void onAttach(Context context){

@@ -16,10 +16,13 @@ import com.example.andumgaming.g370.R;
 
 import java.security.SecurityPermission;
 
+import Interface.BackStackLisnter;
+
 /**
  * Created by Jeff on 4/21/2016.
  */
-public class SplashFragment extends Fragment {
+public class SplashFragment extends Fragment implements BackStackLisnter {
+
 
     public SplashFragment(){
 
@@ -69,4 +72,9 @@ public class SplashFragment extends Fragment {
     return view;
     }
 
+    @Override
+    public void onBackButtonPressed() {
+        // if they press the back button while loading it just quits
+        getActivity().finish();
+    }
 }
