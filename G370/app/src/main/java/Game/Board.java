@@ -180,13 +180,15 @@ public class Board {
         int rings = this.rings / 2, i = 0;
         int[][] more_coords = {{rings, rings+1}, {-rings, 2*rings+1}, {-rings-1, 2*rings+1}};
         for (int[] pair : more_coords) {
-            extra_vertices[i++] = new int[]{( pair[0]+arraySize)%arraySize, ( pair[1]+arraySize)%arraySize};
-            extra_vertices[i++] = new int[]{( pair[1]+arraySize)%arraySize, ( pair[0]+arraySize)%arraySize};
-            extra_vertices[i++] = new int[]{(-pair[0]+arraySize)%arraySize, (-pair[1]+arraySize)%arraySize};
-            extra_vertices[i++] = new int[]{(-pair[1]+arraySize)%arraySize, (-pair[0]+arraySize)%arraySize};
+            extra_vertices[i++] = new int[]{ pair[0],  pair[1]};
+            extra_vertices[i++] = new int[]{ pair[1],  pair[0]};
+            extra_vertices[i++] = new int[]{-pair[0], -pair[1]};
+            extra_vertices[i++] = new int[]{-pair[1], -pair[0]};
         }
         for (int[] pair: extra_vertices) {
-            vertices[pair[0]][pair[1]] = new Vertex(pair[0], pair[1], hex_size, center);
+            System.out.printf("Extra vertex: (%1$2d,%2$2d)\n", pair[0], pair[1]);
+            vertices[(pair[0]+arraySize)%arraySize][(pair[1]+arraySize)%arraySize] =
+                    new Vertex(pair[0], pair[1], hex_size, center);
         }
         initEdges();
     }
