@@ -29,18 +29,18 @@ public class LoginActivity extends AppCompatActivity {
         method = (TextView)findViewById(R.id.textView9);
     }
 
+    /*
     public void login(View view){
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
         method.setText("Get Method");
         new LoginAsyncTask(this,status,role,0).execute(username,password);
 
-    }
+    }*/
 
     public void loginPost(View view){
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
-        method.setText("Post Method");
         new LoginAsyncTask(this,status,role,1).execute(username,password);
     }
 }

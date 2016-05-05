@@ -45,7 +45,7 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
             try{
                 String username = (String)arg0[0];
                 String password = (String)arg0[1];
-                String link = "http://g370.duckdns.org/login.php?username="+username+"& password="+password;
+                String link = "http://g370.duckdns.org/login.php?username="+username+"&password="+password;
 
                 URL url = new URL(link);
                 HttpClient client = new DefaultHttpClient();
@@ -74,7 +74,7 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
                 String username = (String)arg0[0];
                 String password = (String)arg0[1];
 
-                String link="http://myphpmysqlweb.hostei.com/loginpost.php";
+                String link="http://g370.duckdns.org/login.php";
                 String data  = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
                 data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
@@ -108,7 +108,6 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result){
-        this.statusField.setText("Login Successful");
         this.roleField.setText(result);
     }
 }

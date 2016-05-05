@@ -26,7 +26,7 @@
     <string name="Password">Password</string>
     <string name="LoginGet">Login - Get</string>
     <string name="LoginPost">Login - Post</string>
-    <string name="App">Login Application</string>
+    <string name="login_text">Login to Polygonia</string>
     <string name="LoginStatus">Login Status</string>
     <string name="LoginRole">Login Role</string>
     <string name="Status">Not login</string>
