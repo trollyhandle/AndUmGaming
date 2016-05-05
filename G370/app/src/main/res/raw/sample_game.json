@@ -47,8 +47,6 @@
     ],
     "board":
     {
-      "hexSize": 400,
-      "center": { "pointxy": { "x": 300, "y": 300 }},
       "vertices": [
         { "shape": {
             "type": "hexagon",
@@ -78,6 +76,9 @@
           "owner": 1,
           "level": 2
         }}
+      ],
+      "edges": [
+        /* todo */
       ]
     }
   }

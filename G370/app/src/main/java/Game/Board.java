@@ -161,6 +161,44 @@ public class Board {
         return prt;
     }
 
+    public String serialize()
+    {
+        Shape s;
+        String json = "{\"board\":{";
+        json += "\"vertices\":[";
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                s = vertices[q][r];
+                if (s != null) {
+                    json += s.serialize() + ",";
+                }
+            }
+        }
+        // remove trailing comma
+        json = json.substring(0, json.length()-1);
+
+        /* edges not functional at this time
+        Edge e;
+        json += "\"edges\":[";
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                e = edges[q][r];
+                if (e != null) {
+                    json += e.serialize() + ",";
+                }
+            }
+        }
+        // remove trailing comma
+        json = json.substring(0, json.length()-1);
+        // */
+
+        return json;
+    }
+    public static Board deserialize(String json)
+    {
+        return null;
+    }
+
 // *********** PRIVATE FUNCTIONS ***********
 
     private void initBoard()

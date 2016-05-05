@@ -9,13 +9,8 @@ import java.util.ArrayList;
  * Represents a vertex in the game board
  */
 public class Vertex extends Shape {
-//    Point_QR coord;
-//    int hex_size;
-//    Point_XY boardCenter;
     private int owner;
-
-//    Path path;
-    private int poly_size;
+    private int level;
 
     public Vertex(int q, int r)
     {
@@ -24,19 +19,14 @@ public class Vertex extends Shape {
     public Vertex(int q, int r, int hex_size, Point_XY board_center)
     {
         super(q, r, hex_size, board_center);
-        poly_size = hex_size / 4;
-        owner = 0;
+        owner = level = 0;
     }
 
     public String type() { return "Vertex"; }
 
-    public void setHexSize(int hex_size)
-    {
-        super.setHexSize(hex_size);
-        poly_size = hex_size / 4;
-    }
     public void makeDrawable()
     {
+        int poly_size = hex_size / 4;
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(330, poly_size);
 
@@ -65,5 +55,15 @@ public class Vertex extends Shape {
     public int getOwner() { return owner; }
     public boolean isOwned() { return owner != 0; }
     public void setOwner(int player) { owner = player; }
+
+    public String serialize()
+    {
+        String json = "{\"shape\":{";
+        json += "\"type\":\"" + type() + "\",";
+        json += "\"coord\":" + coord.serialize() + ",";
+        json += "\"owner\":" + owner + ",";
+        json += "\"level\":" + level + "}}";
+        return json;
+    }
 
 }

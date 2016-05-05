@@ -8,14 +8,7 @@ import android.graphics.Path;
  * Represents a hexagon in the game board
  */
 public class Hexagon extends Shape {
-//    Point_QR coord;
-//    int hex_size;
-//    Point_XY boardCenter;
     private int resource;
-
-//    Path path;
-    private int poly_size;
-
 
     public Hexagon(int q, int r)
     {
@@ -24,22 +17,17 @@ public class Hexagon extends Shape {
     public Hexagon(int q, int r, int hex_size, Point_XY board_center)
     {
         super(q, r, hex_size, board_center);
-        poly_size = (int)(hex_size/1.3);
         resource = 0;
     }
 
     public int getResource() { return resource; }
     public void setResource(int resource) { this.resource = resource; }
 
-    public void setHexSize(int hex_size)
-    {
-        super.setHexSize(hex_size);
-        poly_size = (int)(hex_size/1.3);
-    }
     public String type() { return "Hexagon"; }
 
     public void makeDrawable()
     {
+        int poly_size = (int)(hex_size/1.3);
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(0, poly_size);
 
@@ -52,6 +40,15 @@ public class Hexagon extends Shape {
             path.lineTo(pt.x(), pt.y());
         }
         path.close();
+    }
+
+    public String serialize()
+    {
+        String json = "{\"shape\":{";
+        json += "\"type\":\"" + type() + "\",";
+        json += "\"coord\":" + coord.serialize() + ",";
+        json += "\"resource\":" + resource + "}}";
+        return json;
     }
 
 }

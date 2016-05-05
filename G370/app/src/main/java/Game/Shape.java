@@ -9,9 +9,9 @@ import android.graphics.Path;
  */
 public abstract class Shape {
     protected Point_QR coord;
+
     protected int hex_size;
     protected Point_XY boardCenter;
-
     protected Path path;
     private boolean debug = false;
 
@@ -19,7 +19,6 @@ public abstract class Shape {
             {0,  1}, {-1,  1}, {-1, 0},
             {0, -1}, { 1, -1}, { 1, 0},
     };
-
     
     public Shape(int q, int r)
     {
@@ -67,5 +66,12 @@ public abstract class Shape {
 //        return str;
         return "" + coord;
     }
-    
+
+    public abstract String serialize();
+    public static Shape deserialize(String json)
+    {
+        return null;
+    }
+
+
 }
