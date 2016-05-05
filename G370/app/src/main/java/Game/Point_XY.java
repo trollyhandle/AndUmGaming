@@ -7,6 +7,15 @@ package Game;
  */
 public class Point_XY {
 
+
+    /*    JSON
+
+    PointXY {
+        "x":0
+        "y":0
+    }
+
+     */
     private int _x, _y;
 
     public Point_XY(int x, int y)

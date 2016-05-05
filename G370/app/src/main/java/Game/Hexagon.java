@@ -8,13 +8,14 @@ import android.graphics.Path;
  * Represents a hexagon in the game board
  */
 public class Hexagon extends Shape {
-//    NOTE: inherited member variables:
 //    Point_QR coord;
-//    Point_XY boardCenter;
 //    int hex_size;
-//    int poly_size;
-//    Path path;
+//    Point_XY boardCenter;
     private int resource;
+
+//    Path path;
+    private int poly_size;
+
 
     public Hexagon(int q, int r)
     {

@@ -8,16 +8,14 @@ import android.graphics.Path;
  * Abstract class. Parent to Vertex and Hexagon
  */
 public abstract class Shape {
-
     protected Point_QR coord;
-    protected Point_XY boardCenter;
     protected int hex_size;
-    protected int poly_size;
-    protected Path path;
+    protected Point_XY boardCenter;
 
+    protected Path path;
     private boolean debug = false;
 
-    private static int[][] directions = {
+    private static int[][] directions = {  // rotates CCW
             {0,  1}, {-1,  1}, {-1, 0},
             {0, -1}, { 1, -1}, { 1, 0},
     };
@@ -52,7 +50,6 @@ public abstract class Shape {
     public void makeDrawable()
     {
         if(debug)System.out.println("SHAPE Making path...");
-        if(debug)System.out.println("SHAPE polygon size: " + poly_size + " (" + type() + ")");
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         if(debug)System.out.println("SHAPE Center at " + shape_center);
 

@@ -9,13 +9,13 @@ import java.util.ArrayList;
  * Represents a vertex in the game board
  */
 public class Vertex extends Shape {
-//    NOTE: inherited member variables:
 //    Point_QR coord;
-//    Point_XY boardCenter;
 //    int hex_size;
-//    int poly_size;
-//    Path path;
+//    Point_XY boardCenter;
     private int owner;
+
+//    Path path;
+    private int poly_size;
 
     public Vertex(int q, int r)
     {

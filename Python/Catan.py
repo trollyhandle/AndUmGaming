@@ -309,7 +309,7 @@ class Hex:
     def draw(self, win):
         if self.center is not None:
             # self.poly.draw(win)
-            self.vpoly.draw(win)
+            self.spoly.draw(win)
             self.txt.draw(win)
 
     def undraw(self):

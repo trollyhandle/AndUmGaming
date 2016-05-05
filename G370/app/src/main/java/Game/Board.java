@@ -39,13 +39,15 @@ public class Board {
     }
 
     private int rings, arraySize;
-    private Shape[][] vertices;
     private int[][] extra_vertices;
-    private Edge[][] edges;
     private ShapeDrawable[] shapes;
 
     private Point_XY center;
     private int hex_size, board_size;
+
+
+    private Shape[][] vertices;
+    private Edge[][] edges;
 
     private boolean update;
 
@@ -126,7 +128,7 @@ public class Board {
     public boolean setOwner(int q, int r, int player)
     {
         Shape s = vertices[(q+arraySize)%arraySize][(r+arraySize)%arraySize];
-        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is owned
+        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
             return false;
         if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
 
@@ -220,9 +222,3 @@ public class Board {
     }
 
 }
-
-
-/*
-        dist = max(abs(q), abs(r), abs((-q-r)))
-        if dist <= self.rings:
- */
