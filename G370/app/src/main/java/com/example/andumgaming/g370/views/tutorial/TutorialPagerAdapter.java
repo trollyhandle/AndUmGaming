@@ -16,22 +16,20 @@ public class TutorialPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        TutorialImageFragment fragment = new TutorialImageFragment();
         switch(i)
         {
-            case 0: fragment.setTutorialImage(R.id.page_zero);
-            case 1: fragment.setTutorialImage(R.id.page_one);
-            case 2: fragment.setTutorialImage(R.id.page_two);
-            case 3: fragment.setTutorialImage(R.id.page_three);
-            case 4: fragment.setTutorialImage(R.id.page_four);
-            case 5: fragment.setTutorialImage(R.id.page_five);
-            case 6: fragment.setTutorialImage(R.id.page_six);
-            case 7: fragment.setTutorialImage(R.id.page_seven);
-            case 8: fragment.setTutorialImage(R.id.page_eight);
-            case 9: fragment.setTutorialImage(R.id.page_nine);
-            default: fragment.setTutorialImage(R.id.page_zero);
+            case 0: return new TutorialImageFragment().newInstance(R.layout.tutorial_image0,R.id.page_zero);
+            case 1: return new TutorialImageFragment().newInstance(R.layout.tutorial_image1,R.id.page_one);
+            case 2: return new TutorialImageFragment().newInstance(R.layout.tutorial_image2,R.id.page_two);
+            case 3: return new TutorialImageFragment().newInstance(R.layout.tutorial_image3,R.id.page_three);
+            case 4: return new TutorialImageFragment().newInstance(R.layout.tutorial_image4, R.id.page_four);
+            case 5: return new TutorialImageFragment().newInstance(R.layout.tutorial_image5,R.id.page_five);
+            case 6: return new TutorialImageFragment().newInstance(R.layout.tutorial_image6, R.id.page_six);
+            case 7: return new TutorialImageFragment().newInstance(R.layout.tutorial_image7, R.id.page_seven);
+            case 8: return new TutorialImageFragment().newInstance(R.layout.tutorial_image8,R.id.page_eight);
+            case 9: return new TutorialImageFragment().newInstance(R.layout.tutorial_image9,R.id.page_nine);
+            default: return new TutorialImageFragment().newInstance(R.layout.tutorial_image0, R.id.page_zero);
         }
-        return fragment;
     }
 
     @Override

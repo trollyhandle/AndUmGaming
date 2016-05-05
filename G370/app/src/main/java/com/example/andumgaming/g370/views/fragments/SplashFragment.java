@@ -62,7 +62,6 @@ public class SplashFragment extends Fragment implements BackStackLisnter {
 
                 transaction.replace(R.id.container, newFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
 
-
             }
 
             @Override
