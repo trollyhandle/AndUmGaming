@@ -1,6 +1,6 @@
 package com.example.andumgaming.g370.views.fragments;
 
-import android.support.v4.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,10 +11,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.LoginActivity;
+import com.example.andumgaming.g370.views.asynctask.LoginAsyncTask;
 
-
-
-import java.security.SecurityPermission;
 
 import Interface.BackStackLisnter;
 
@@ -56,13 +55,8 @@ public class SplashFragment extends Fragment implements BackStackLisnter {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
-                MenuFragment newFragment = new MenuFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-                transaction.replace(R.id.container, newFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
-
-
+                Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                getActivity().startActivity(intent);
             }
 
             @Override

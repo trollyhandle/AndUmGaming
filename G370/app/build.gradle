@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.andumgaming.g370"
-        minSdkVersion 15
-        targetSdkVersion 23
+        minSdkVersion 16
+        maxSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -17,6 +17,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    useLibrary 'org.apache.http.legacy'
 }
 
 dependencies {
@@ -24,4 +26,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:support-v4:23.2.1'
+    compile group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
 }
