@@ -15,12 +15,7 @@ hex_size = 80
 # hex_size_short = hex_size * math.sqrt(3) / 2
 
 
-
-# TODO TODO DO THIS TODO detect out-of-bounds/off-of-board clicks
-
 # TODO TOFUCKINGDO EDGES EDGES EDGESSSSSSS
-
-# TODO orientation lock
 
 # TODO game logic
 
@@ -103,12 +98,19 @@ class Board:
 
                     num += 1
         rings //= 2
-        # extra_vertices = [(rings, rings+1), (2*rings+1, -rings), (-rings-1, 2*rings+1)]
-        # for pair in extra_vertices:
-        #     vertices[ pair[0]][ pair[1]] = Vertex( pair[0],  pair[1])
-        #     vertices[ pair[1]][ pair[0]] = Vertex( pair[1],  pair[0])
-        #     vertices[-pair[0]][-pair[1]] = Vertex(-pair[0], -pair[1])
-        #     vertices[-pair[1]][-pair[0]] = Vertex(-pair[1], -pair[0])
+
+        extra_vertices = []
+        more_coords = [[rings, rings+1], [-rings, 2*rings+1], [-rings-1, 2*rings+1]]
+        for pair in more_coords:
+            extra_vertices.append([ pair[0],  pair[1]])
+            extra_vertices.append([ pair[1],  pair[0]])
+            extra_vertices.append([-pair[0], -pair[1]])
+            extra_vertices.append([-pair[1], -pair[0]])
+
+        for pair in extra_vertices:
+            print("Extra vertex: ({:2d},{:2d})".format(pair[0], pair[1]))
+            vertices[pair[0]][pair[1]] = Vertex(pair[0], pair[1])
+
         self.vertices = vertices
         print("\n")  # DEBUG
 
@@ -279,9 +281,6 @@ class Hex:
         self.vertex_size_short = self.vertex_size * math.sqrt(3) / 2
         poly_size = size * math.sqrt(3)/ 3
 
-        print("hex size:", self.size)
-        print("hex wide:", poly_size)
-
         self.center = hex_to_pixel(grid_center, self.size, self.q, self.r)
         self.poly = Polygon(jump_linear(self.center, 0, self.size),  # size
                             jump_linear(self.center, 60, self.size),
@@ -310,7 +309,7 @@ class Hex:
     def draw(self, win):
         if self.center is not None:
             # self.poly.draw(win)
-            self.spoly.draw(win)
+            self.vpoly.draw(win)
             self.txt.draw(win)
 
     def undraw(self):
