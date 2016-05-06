@@ -5,6 +5,7 @@
 {  /* Player data */
   "player":
   {
+    "id": 1,
     "username": "trollyhandle",
     "resources": {  /* resources */
       "wheat": 1,
