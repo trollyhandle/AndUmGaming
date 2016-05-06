@@ -18,7 +18,6 @@ import android.content.Context;
 import com.example.andumgaming.g370.R;
 
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
-import com.example.andumgaming.g370.views.fragments.SplashFragment;
 
 import java.util.List;
 
@@ -29,7 +28,8 @@ import Interface.BackStackLisnter;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
-    private SplashFragment splashFragment;
+   // private SlashActivity splashFragment;
+    private MenuFragment menuFragment;
     private BackStackLisnter backStackLisnter;
 
 
@@ -38,7 +38,7 @@ public class FullscreenActivity extends AppCompatActivity {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
         Fragment cuurentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        if(cuurentFragment instanceof MenuFragment || cuurentFragment instanceof SplashFragment) {
+        if(cuurentFragment instanceof MenuFragment) {
             for (Fragment f:fragments){
                 if (f instanceof BackStackLisnter){
                     backStackLisnter = (BackStackLisnter)f;
@@ -138,13 +138,13 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
-        splashFragment = SplashFragment.newInstance();
-
+        //splashFragment = SlashActivity.newInstance();
+         menuFragment = MenuFragment.newInstance();
         //menuFragment.setOnFr
 
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(SplashFragment.class.getSimpleName()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
 
 
         /*initialize buttons*/
