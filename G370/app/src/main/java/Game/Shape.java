@@ -9,9 +9,6 @@ import android.graphics.Path;
  */
 public abstract class Shape {
     protected Point_QR coord;
-
-    protected int hex_size;
-    protected Point_XY boardCenter;
     protected Path path;
     private boolean debug = false;
 
@@ -19,18 +16,12 @@ public abstract class Shape {
             {0,  1}, {-1,  1}, {-1, 0},
             {0, -1}, { 1, -1}, { 1, 0},
     };
-    
+
     public Shape(int q, int r)
     {
-        this(q, r, 30, new Point_XY(0, 0));
-    }
-    public Shape(int q, int r, int hex_size, Point_XY board_center)
-    {
         coord = new Point_QR(q, r);
-        boardCenter = board_center;
-        this.hex_size = hex_size;
+        path = new Path();
     }
-
 
     public Point_QR getNeighbor(int dir)
     {
@@ -39,24 +30,18 @@ public abstract class Shape {
         return new Point_QR(neighbor_q, neighbor_r);
     }
 
-    public int getHexSize() { return hex_size; }
-    public void setHexSize(int hexSize) { this.hex_size = hexSize; }
-    
-    public void setBoardCenter(Point_XY newCenter) { boardCenter = newCenter; }
-
     public Path getPath() { return path; }
 
-    public void makeDrawable()
+    public void getDrawable(int hex_size, Point_XY boardCenter)
     {
         if(debug)System.out.println("SHAPE Making path...");
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         if(debug)System.out.println("SHAPE Center at " + shape_center);
 
-        path = new Path();
+        path.rewind();
         path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
         if(debug)System.out.println("SHAPE path complete");
     }
-
 
     public abstract String type();
     public String toString()
@@ -72,6 +57,5 @@ public abstract class Shape {
     {
         return null;
     }
-
 
 }

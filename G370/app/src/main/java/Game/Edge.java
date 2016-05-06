@@ -10,44 +10,42 @@ import android.graphics.Path;
 public class Edge {
     private Point_QR source;
     private Point_QR dest;
-
-    protected int hex_size;
-    protected Point_XY boardCenter;
-    protected Path path;
-    private boolean debug = false;
+    private int direction;
+    private Path path;
 
     private int owner;
 
-    public Edge(Point_QR source, Point_QR dest)
+    public Edge(Point_QR source, Point_QR dest, int dir)
     {
         this.source = source;
         this.dest = dest;
+        direction = dir;
         owner = 0;
     }
 
-
-
-    public int getSize() { return hex_size; }
-    public void setHexSize(int hexSize) { this.hex_size = hexSize; }
     public Point_QR getSource() { return source; }
     public Point_QR getDestination() { return dest; }
 
     public int getOwner() { return owner; }
 
-    public void setBoardCenter(Point_XY newCenter) { boardCenter = newCenter; }
-
     public Path getPath() { return path; }
-
-    public void makeDrawable()
+    public void getDrawable(int hex_size, Point_XY boardCenter)
     {
-        Point_XY src = boardCenter.jump_hex(source.q(), source.r(), hex_size);
-        Point_XY dst = boardCenter.jump_hex(dest.q(), dest.r(), hex_size);
+        Point_XY src_pt = boardCenter.jump_hex(source.q(), source.r(), hex_size);
+        Point_XY dst_pt = boardCenter.jump_hex(dest.q(), dest.r(), hex_size);
+
+        int angle = 60 * direction, offset = 15, vertex_size = hex_size/4;
+        Point_XY src_a = src_pt.jump_linear(angle+offset, vertex_size);
+        Point_XY src_b = src_pt.jump_linear(angle-offset, vertex_size);
+        Point_XY dst_a = dst_pt.jump_linear(angle-offset, -vertex_size);
+        Point_XY dst_b = dst_pt.jump_linear(angle+offset, -vertex_size);
 
         path = new Path();
-        path.addCircle(src.x(), src.y(), 8, Path.Direction.CCW);
-        path.lineTo(dst.x(), dst.y());
-        path.addCircle(dst.x(), dst.y(), 8, Path.Direction.CCW);
-
+        path.moveTo(src_a.x(), src_a.y());
+        path.lineTo(dst_a.x(), dst_a.y());
+        path.lineTo(dst_b.x(), dst_b.y());
+        path.lineTo(src_b.x(), src_b.y());
+        path.lineTo(src_a.x(), src_a.y());
         path.close();
     }
 

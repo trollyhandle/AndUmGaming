@@ -91,7 +91,7 @@ public class BoardView extends View {
                 pinch_distance = distance;
 
             } else if (!zooming){
-                int drag_x = (int)event.getRawX(), drag_y = (int)event.getRawY();
+                int drag_x = (int)event.getX(), drag_y = (int)event.getY();
                 int dx = Math.abs(drag_x - touch_x), dy = Math.abs(drag_y - touch_y);
                 if (moving || (dx > dist_to_begin_move && dy > dist_to_begin_move)) {
                     int width = getWidth(), height = getHeight();

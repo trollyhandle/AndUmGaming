@@ -14,23 +14,19 @@ public class Vertex extends Shape {
 
     public Vertex(int q, int r)
     {
-        this(q, r, 10, new Point_XY(0,0));
-    }
-    public Vertex(int q, int r, int hex_size, Point_XY board_center)
-    {
-        super(q, r, hex_size, board_center);
+        super(q, r);
         owner = level = 0;
     }
 
     public String type() { return "Vertex"; }
 
-    public void makeDrawable()
+    public void getDrawable(int hex_size, Point_XY boardCenter)
     {
         int poly_size = hex_size / 4;
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(330, poly_size);
 
-        path = new Path();
+        path.rewind();
         path.addCircle(shape_center.x(), shape_center.y(), 4, Path.Direction.CCW);
         path.moveTo(pt.x(), pt.y());
 
@@ -41,16 +37,16 @@ public class Vertex extends Shape {
         path.close();
     }
 
-    public Edge[] generateEdges()
-    {
-        if (((coord.q() - coord.r()) + 1) % 3 == 0) {
-            return new Edge[] {
-                    new Edge(coord, getNeighbor(1)),
-                    new Edge(coord, getNeighbor(1)),
-                    new Edge(coord, getNeighbor(1))};
-        }
-        return null;
-    }
+//    public Edge[] generateEdges()
+//    {
+//        if (((coord.q() - coord.r()) + 1) % 3 == 0) {
+//            return new Edge[] {
+//                    new Edge(coord, getNeighbor(1)),
+//                    new Edge(coord, getNeighbor(1)),
+//                    new Edge(coord, getNeighbor(1))};
+//        }
+//        return null;
+//    }
 
     public int getOwner() { return owner; }
     public boolean isOwned() { return owner != 0; }
