@@ -30,4 +30,14 @@ public class Point_QR {
     {
         return String.format("(%1$2d,%2$2d)", q, r);
     }
+    public String serialize()
+    {
+        String json = "\"pointqr\":";
+        json += "{\"q\":" + q + ",\"r\":" + r + "}}";
+        return json;
+    }
+    public static Point_QR deserialize(String json)
+    {
+        return null;
+    }
 }

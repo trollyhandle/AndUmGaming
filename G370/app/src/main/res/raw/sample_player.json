@@ -1,0 +1,26 @@
+
+/* Player serialization guide
+ * Author: Tyler Holland
+ */
+{  /* Player data */
+  "player":
+  {
+    "id": 1,
+    "username": "trollyhandle",
+    "resources": {  /* resources */
+      "wheat": 1,
+      "wood": 3,
+      "ore": 2,
+      "brick": 1,
+      "sheep": 14
+    },
+    "knights": 0,
+    "roads": 0,
+    "cards": {  /* development cards */
+      "road building": 0,
+      "windfall": 1,
+      "monopoly": 0,
+      "knight": 2
+    }
+  }
+}

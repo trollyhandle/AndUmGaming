@@ -1,0 +1,58 @@
+
+/*  Board serialization guide
+ *  Author: Tyler Holland
+ */
+{
+  "board": // JSON SERIALIZATION OF A BOARD OBJECT
+  {
+    "vertices": [  // JSON array of all hexagons and vertices
+
+
+      {  // JSON SERIALIZATION FOR A SHAPE (HEXAGON OR VERTEX)
+        "shape":
+        {
+          "type": "hexagon",  // hexagon vs vertex
+          "coord": { "pointqr": { "q": 0, "r": 0 }},  // hexagonal coordinates of this shape
+          "resource": 0  // hexagon resource (0 -> desert, 1 -> wheat, etc.)
+        }
+      },
+
+      {
+        "shape":
+        {
+          "type": "vertex",  // vertex vs hexagon
+          "coord": { "pointqr": { "q": 0, "r": 0 }},  // hexagonal coordinates of this shape
+          "owner": 0,  // which player owns this vertex (0 -> none, 1 -> P1, etc.)
+          "level": 0  // level of development on this vertex (0 -> none, 1 -> settled, 2 -> city)
+        }
+      },
+
+      { "shape": {
+        "type": "vertex",
+        "coord": { "pointqr": { "q": 0, "r": 0 }},
+        "owner": 0,
+        "level": 0
+      }},
+      { "shape": {
+        "type": "hexagon",
+        "coord": { "pointqr": { "q": 0, "r": 0 }},
+        "resource": 0
+      }},
+      { "shape": {
+        "type": "vertex",
+        "coord": { "pointqr": { "q": 0, "r": 0 }},
+        "owner": 0,
+        "level": 0
+      }}
+    ],
+
+    "edges": [  // JSON array of all edges
+
+      // NOTE: the edges do not work yet
+      // JSONification guide will be available at a later time
+
+    ]
+  }
+}
+
+

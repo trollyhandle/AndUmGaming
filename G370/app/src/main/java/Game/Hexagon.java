@@ -8,41 +8,26 @@ import android.graphics.Path;
  * Represents a hexagon in the game board
  */
 public class Hexagon extends Shape {
-//    NOTE: inherited member variables:
-//    Point_QR coord;
-//    Point_XY boardCenter;
-//    int hex_size;
-//    int poly_size;
-//    Path path;
     private int resource;
 
     public Hexagon(int q, int r)
     {
-        this(q, r, 10, new Point_XY(0,0));
-    }
-    public Hexagon(int q, int r, int hex_size, Point_XY board_center)
-    {
-        super(q, r, hex_size, board_center);
-        poly_size = (int)(hex_size/1.3);
+        super(q, r);
         resource = 0;
     }
 
     public int getResource() { return resource; }
     public void setResource(int resource) { this.resource = resource; }
 
-    public void setHexSize(int hex_size)
-    {
-        super.setHexSize(hex_size);
-        poly_size = (int)(hex_size/1.3);
-    }
     public String type() { return "Hexagon"; }
 
-    public void makeDrawable()
+    public void getDrawable(int hex_size, Point_XY boardCenter)
     {
+        int poly_size = (int)(hex_size/1.3);
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(0, poly_size);
 
-        path = new Path();
+        path.rewind();
         path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
         path.moveTo(pt.x(), pt.y());
 
@@ -51,6 +36,15 @@ public class Hexagon extends Shape {
             path.lineTo(pt.x(), pt.y());
         }
         path.close();
+    }
+
+    public String serialize()
+    {
+        String json = "{\"shape\":{";
+        json += "\"type\":\"" + type() + "\",";
+        json += "\"coord\":" + coord.serialize() + ",";
+        json += "\"resource\":" + resource + "}}";
+        return json;
     }
 
 }

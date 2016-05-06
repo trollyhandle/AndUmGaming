@@ -39,12 +39,15 @@ public class Board {
     }
 
     private int rings, arraySize;
-    private Shape[][] vertices;
-    private Edge[][] edges;
+    private int[][] extra_vertices;
     private ShapeDrawable[] shapes;
 
     private Point_XY center;
     private int hex_size, board_size;
+
+
+    private Shape[][] vertices;
+    private Edge[][][] edges;
 
     private boolean update;
 
@@ -53,9 +56,12 @@ public class Board {
         rings = 4;  // Two rings of full hexes, but vertices take more rings
         arraySize = rings*2+1;
         vertices = new Shape[arraySize][arraySize];
+        edges = new Edge[(arraySize)/3][arraySize][3];
         this.center = center;
         this.hex_size = hex_size;
-        shapes = new ShapeDrawable[arraySize*arraySize];
+        //                          vertices/hexes     +        edges
+        shapes = new ShapeDrawable[arraySize*arraySize + ((arraySize)/3)*(arraySize)*3];
+        extra_vertices = new int[12][];
         initBoard();
         fillTiles();
         update = false;
@@ -65,15 +71,14 @@ public class Board {
 
     public void update() {
         if(debug)System.out.println("BOARD Updating path...");
+        if(debug) System.out.println(this);
         int i = 0;
         Shape s;
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
                 if (s != null) {
-                    s.setBoardCenter(center);
-                    s.setHexSize(hex_size);
-                    s.makeDrawable();
+                    s.getDrawable(hex_size, center);
 
                     int color = (q-r)%3 == 0? (RES.get(((Hexagon)s).getResource())) :
                             PLAYERS.get(((Vertex)s).getOwner());
@@ -81,6 +86,22 @@ public class Board {
                 }
             }
         }
+        Edge e;
+        int edgesDrawn = 0;
+        for (int q = 0; q < (arraySize)/3; q++) {
+            for (int r = 0; r < (arraySize); r++) {
+                for (int k = 0; k < 3; k++) {
+                    e = edges[q][r][k];
+                    if (e != null) {
+                        e.getDrawable(hex_size, center);
+                        int color = PLAYERS.get(e.getOwner());
+                        shapes[i++] = new ShapeDrawable(e.getPath(), color);
+                        edgesDrawn++;
+                    }
+                }
+            }
+        }
+        if(debug) System.out.println("Edges drawn: " + edgesDrawn);
         update = false;
     }
 
@@ -123,14 +144,25 @@ public class Board {
 
     public boolean setOwner(int q, int r, int player)
     {
-        Shape s = vertices[(q+arraySize)%arraySize][(r+arraySize)%arraySize];
-        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is owned
+        Shape s = vertices[aib(q)][aib(r)];
+        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
             return false;
         if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
 
         ((Vertex)s).setOwner(player);
         update = true;
         return true;
+    }
+
+    public boolean isValid(Point_QR hex)
+    {
+        int q = hex.q(), r = hex.r();
+        if (Math.max(Math.max(Math.abs(q), Math.abs(r)), Math.abs((-q-r))) <= rings)
+            return true;
+        for (int[] pair: extra_vertices)
+            if (q == pair[0] && r == pair[1])
+                return true;
+        return false;
     }
 
     public String toString()
@@ -144,44 +176,156 @@ public class Board {
             }
             prt += '\n';
         }
-        return prt;
+        prt += '\n';
+        Edge e;
+        int numEdges = 0;
+        for (int q = 0; q < arraySize/3; q++) {
+            prt += "q:" + q;
+            for (int r = 0; r < arraySize; r++) {
+                prt += "\tr:" + r;
+                for (int i = 0; i < 3; i++) {
+                    prt += "[";
+                    e = edges[q][r][i];
+                    prt += (e == null ? "       .   .       " : e + " ");
+                    numEdges += e == null? 0: 1;
+                    prt += "]";
+                }
+                prt += '\n';
+            }
+            prt += '\n';
+        }
+        return prt + "Edges: " + numEdges + '\n';
+    }
+
+    public String serialize()
+    {
+        Shape s;
+        String json = "{\"board\":{";
+        json += "\"vertices\":[";
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                s = vertices[q][r];
+                if (s != null) {
+                    json += s.serialize() + ",";
+                }
+            }
+        }
+        // remove trailing comma
+        json = json.substring(0, json.length()-1);
+
+        /* edges not functional at this time
+        Edge e;
+        json += "\"edges\":[";
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                e = edges[q][r];
+                if (e != null) {
+                    json += e.serialize() + ",";
+                }
+            }
+        }
+        // remove trailing comma
+        json = json.substring(0, json.length()-1);
+        // */
+
+        return json;
+    }
+    public static Board deserialize(String json)
+    {
+        return null;
     }
 
 // *********** PRIVATE FUNCTIONS ***********
+
+    private int aib(int i)
+    {  // array-index boundary
+        return (i+arraySize) % arraySize;
+    }
+
+    private Edge getEdge(Point_QR a, Point_QR b)
+    {
+        if (((a.q() - a.r()) + 1) % 3 == 0) {
+            // a is the source
+            for (Edge e: edges[aib(a.q())/3][aib(a.r())])
+                if (e.getDestination().equals(b))
+                    return e;
+        }
+        else {
+            // b is the source
+            for (Edge e: edges[aib(b.q())/3][aib(b.r())])
+                if (e.getDestination().equals(a))
+                    return e;
+        }
+        return null;  // a and b are not adjacent
+    }
 
     private void initBoard()
     {
         for (int q = -rings; q <= rings; q++) {
             for (int r = Math.max(-rings, -q - rings); r <= Math.min(rings, -q + rings); r++) {
-                int q_index = (q+arraySize)%arraySize;  // adjust for negative indices
-                int r_index = (r+arraySize)%arraySize;  // adjust for negative indices
                 if (Math.abs(q-r) % 3 == 0) {  // a full Hexagon
-                    vertices[q_index][r_index] = new Hexagon(q, r, hex_size, center);
+                    vertices[aib(q)][aib(r)] = new Hexagon(q, r);
                 }
                 else {  // otherwise a Vertex
-                    vertices[q_index][r_index] = new Vertex(q, r, hex_size, center);
+                    vertices[aib(q)][aib(r)] = new Vertex(q, r);
                 }
             }
         }
         // The above algorithm misses 12 vertices on the outermost edges of the board.
         // Here they come.
-        int rings = this.rings / 2;
-        int[][] extra_vertices = {{rings, rings+1}, {-rings, 2*rings+1}, {-rings-1, 2*rings+1}};
-        for (int[] pair : extra_vertices) {
-            vertices[( pair[0]+arraySize)%arraySize][( pair[1]+arraySize)%arraySize] =  // normal
-                    new Vertex( pair[0],  pair[1], hex_size, center);
-            vertices[( pair[1]+arraySize)%arraySize][( pair[0]+arraySize)%arraySize] =  // reversed
-                    new Vertex( pair[1],  pair[0], hex_size, center);
-            vertices[(-pair[0]+arraySize)%arraySize][(-pair[1]+arraySize)%arraySize] =  // negative
-                    new Vertex(-pair[0], -pair[1], hex_size, center);
-            vertices[(-pair[1]+arraySize)%arraySize][(-pair[0]+arraySize)%arraySize] =  // neg reversed
-                    new Vertex(-pair[1], -pair[0], hex_size, center);
+        int rings = this.rings / 2, i = 0;
+        int[][] more_coords = {{rings, rings+1}, {-rings, 2*rings+1}, {-rings-1, 2*rings+1}};
+        for (int[] pair : more_coords) {
+            extra_vertices[i++] = new int[]{ pair[0],  pair[1]};
+            extra_vertices[i++] = new int[]{ pair[1],  pair[0]};
+            extra_vertices[i++] = new int[]{-pair[0], -pair[1]};
+            extra_vertices[i++] = new int[]{-pair[1], -pair[0]};
+        }
+        for (int[] pair: extra_vertices) {
+            if(debug) System.out.printf("Extra vertex: (%1$2d,%2$2d)\n", pair[0], pair[1]);
+            vertices[aib(pair[0])][aib(pair[1])] = new Vertex(pair[0], pair[1]);
         }
         initEdges();
     }
     private void initEdges()
     {
-        // pass for now...
+        Shape v;
+        int numEdges = 0;  // debugging
+        for (int q = -rings; q < rings+1; q++) {
+            for (int r = Math.max(-rings, -q-rings); r < Math.min(rings, -q+rings)+1; r++) {
+                v = vertices[aib(q)][aib(r)];
+                if (((q - r) + 1) % 3 == 0 && v != null) {  // necessary for larger boards
+                    if (isValid(v.getNeighbor(0))) {
+                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0); numEdges++;
+                    }
+                    if (isValid(v.getNeighbor(2))) {
+                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4); numEdges++;
+                    }
+                    if (isValid(v.getNeighbor(4))) {
+                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); numEdges++;
+                        if(debug) System.out.println("Creating Edge: " + edges[aib(q) / 3][aib(r)][2]);
+                    }
+                }
+            }
+        }
+        for (int[] pair: extra_vertices) {
+            int q = pair[0], r = pair[1];
+            if (((q - r) + 1) % 3 == 0) {
+                v = vertices[aib(q)][aib(r)];
+                if (v != null) {
+                    if (isValid(v.getNeighbor(0))) {
+                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0); numEdges++;
+                    }
+                    if (isValid(v.getNeighbor(2))) {
+                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4); numEdges++;
+                    }
+                    if (isValid(v.getNeighbor(4))) {
+                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); numEdges++;
+                    }
+                }
+            }
+        }
+        if(debug) System.out.println("Edges made: " + numEdges);
     }
 
     private void fillTiles()
@@ -205,6 +349,5 @@ public class Board {
             }
         }
     }
-
 
 }

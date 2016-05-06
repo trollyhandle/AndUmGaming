@@ -1,0 +1,86 @@
+
+/* Game serialization guide
+ * Author: Tyler Holland
+ */
+{
+  "game": {
+    "turn": 3,
+    "players": [
+      {
+        "id": 1,
+        "username": "trollyhandle",
+        "resources": {
+          "wheat": 1,
+          "wood": 3,
+          "ore": 2,
+          "brick": 1,
+          "sheep": 14
+        },
+        "knights": 0,
+        "roads": 4,
+        "cards": {
+          "road building": 0,
+          "windfall": 1,
+          "monopoly": 0,
+          "knight": 2
+        }
+      },
+      {
+        "id": 2,
+        "username": "PhatFree",
+        "resources": {
+          "wheat": 1,
+          "wood": 2,
+          "ore": 2,
+          "brick": 1,
+          "sheep": 4
+        },
+        "knights": 3,
+        "roads": 2,
+        "cards": {
+          "road building": 1,
+          "windfall": 0,
+          "monopoly": 0,
+          "knight": 1
+        }
+      }
+    ],
+    "board":
+    {
+      "vertices": [
+        { "shape": {
+            "type": "hexagon",
+            "coord": { "pointqr": { "q": 0, "r": 0 }},
+            "resource": 2  // wood
+        }},
+        { "shape": {
+          "type": "vertex",
+          "coord": { "pointqr": { "q": 1, "r": 0 }},
+          "owner": 1,  // trollyhandle
+          "level": 1  // settlement
+        }},
+        { "shape": {
+          "type": "vertex",
+          "coord": { "pointqr": { "q": 3, "r": -4 }},
+          "owner": 2,  // PhatFree
+          "level": 2  // city
+        }},
+        { "shape": {
+          "type": "hexagon",
+          "coord": { "pointqr": { "q": 2, "r": 2 }},
+          "resource": 5  // sheep
+        }},
+        { "shape": {
+          "type": "vertex",
+          "coord": { "pointqr": { "q": -2, "r": 1 }},
+          "owner": 1,
+          "level": 2
+        }}
+      ],
+      "edges": [
+        /* todo */
+      ]
+    }
+  }
+
+}

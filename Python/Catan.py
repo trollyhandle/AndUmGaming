@@ -6,7 +6,8 @@ import random
 resources = ["gold", "orangered", "seagreen", "orchid", "turquoise"]
 
 # WIN_SIZE = 500
-WIN_SIZE = 800
+# WIN_SIZE = 800
+WIN_SIZE = 900
 # WIN_SIZE = 1100
 
 # hex_size = WIN_SIZE // 10
@@ -14,12 +15,7 @@ hex_size = 80
 # hex_size_short = hex_size * math.sqrt(3) / 2
 
 
-
-# TODO TODO DO THIS TODO detect out-of-bounds/off-of-board clicks
-
 # TODO TOFUCKINGDO EDGES EDGES EDGESSSSSSS
-
-# TODO orientation lock
 
 # TODO game logic
 
@@ -77,8 +73,6 @@ def test_points():
 
 
 
-
-
 class Board:
     def __init__(self, hex_size, center, win, rings=2):
         if rings < 2:
@@ -104,43 +98,52 @@ class Board:
 
                     num += 1
         rings //= 2
-        extra_vertices = [(rings, rings+1), (2*rings+1, -rings), (-rings-1, 2*rings+1)]
+
+        extra_vertices = []
+        more_coords = [[rings, rings+1], [-rings, 2*rings+1], [-rings-1, 2*rings+1]]
+        for pair in more_coords:
+            extra_vertices.append([ pair[0],  pair[1]])
+            extra_vertices.append([ pair[1],  pair[0]])
+            extra_vertices.append([-pair[0], -pair[1]])
+            extra_vertices.append([-pair[1], -pair[0]])
+
         for pair in extra_vertices:
-            vertices[ pair[0]][ pair[1]] = Vertex( pair[0],  pair[1])
-            vertices[ pair[1]][ pair[0]] = Vertex( pair[1],  pair[0])
-            vertices[-pair[0]][-pair[1]] = Vertex(-pair[0], -pair[1])
-            vertices[-pair[1]][-pair[0]] = Vertex(-pair[1], -pair[0])
+            print("Extra vertex: ({:2d},{:2d})".format(pair[0], pair[1]))
+            vertices[pair[0]][pair[1]] = Vertex(pair[0], pair[1])
+
         self.vertices = vertices
+        self.extra_vertices = extra_vertices
+
         print("\n")  # DEBUG
 
         rings *= 2
-        edges = [[[None,None,None] for i in range(rings*2+1)]for j in range(rings*2+1)]
-        # for q in range(-self.rings, self.rings+1):
-        #     for r in range(-self.rings, self.rings+1):
+        edges = [[[None,None,None] for i in range(rings*2+1)]for j in range((rings*2+1)//3)]
         for q in range(-rings, rings+1):
             for r in range(max(-rings, -q-rings), min(rings, -q+rings)+1):
                 if ((q - r) + 1) % 3 == 0 and self.vertices[q][r] is not None:  # necessary for larger boards
                     v = self.vertices[q][r]
-                    edges[q][r][0] = Edge(Point(q,r), v.neighbor(0))
-                    edges[q][r][1] = Edge(Point(q,r), v.neighbor(2))
-                    edges[q][r][2] = Edge(Point(q,r), v.neighbor(4))
+                    if self.isValidHex(v.neighbor(0).x, v.neighbor(0).y):
+                        edges[q//3][r][0] = Edge(Point(q,r), v.neighbor(0), 0)
+                    if self.isValidHex(v.neighbor(2).x, v.neighbor(2).y):
+                        edges[q//3][r][1] = Edge(Point(q,r), v.neighbor(2), 2)
+                    if self.isValidHex(v.neighbor(4).x, v.neighbor(4).y):
+                        edges[q//3][r][2] = Edge(Point(q,r), v.neighbor(4), 4)
                     v.setColor("blue")
                     # cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
                     # cir.setFill("red")
                     # cir.draw(win)
         for i in range(0,len(extra_vertices)):
             q, r = extra_vertices[i]
-            q, r = -q, -r
-            v = self.vertices[q][r]
-            print('extra vertex at',q,r,'\nneighbors:')
-            print(ptstr(v.neighbor(0)),ptstr(v.neighbor(2)),ptstr(v.neighbor(4)))
-            edges[q][r][0] = Edge(Point(q,r), v.neighbor(0))
-            edges[q][r][1] = Edge(Point(q,r), v.neighbor(2))
-            edges[q][r][2] = Edge(Point(q,r), v.neighbor(4))
-            v.setColor("green")
-            # cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
-            # cir.setFill("red")
-            # cir.draw(win)
+            if ((q - r) + 1) % 3 == 0:
+                v = self.vertices[q][r]
+                print('extra vertex at',q,r,'\nneighbors:')
+                print(ptstr(v.neighbor(0)),ptstr(v.neighbor(2)),ptstr(v.neighbor(4)))
+                if self.isValidHex(v.neighbor(0).x, v.neighbor(0).y):
+                    edges[q//3][r][0] = Edge(Point(q,r), v.neighbor(0), 0)
+                if self.isValidHex(v.neighbor(2).x, v.neighbor(2).y):
+                    edges[q//3][r][1] = Edge(Point(q,r), v.neighbor(2), 2)
+                if self.isValidHex(v.neighbor(4).x, v.neighbor(4).y):
+                    edges[q//3][r][2] = Edge(Point(q,r), v.neighbor(4), 4)
         self.edges = edges
 
 
@@ -167,10 +170,10 @@ class Board:
                     if edge is not None:
                         edge.place(center, hex_size)
         rings=self.rings
-        for q in range(-rings, rings+1):
-            for r in range(max(-rings, -q-rings), min(rings, -q+rings)+1):
-                if ((q-r)%3!=0):
-                    self.vertices[q][r].setColor("blue")
+        # for q in range(-rings, rings+1):
+        #     for r in range(max(-rings, -q-rings), min(rings, -q+rings)+1):
+        #         if ((q-r)%3!=0):
+        #             self.vertices[q][r].setColor("blue")
 
     def move(self, win, center):
         self.center = center
@@ -189,11 +192,11 @@ class Board:
             for v in v_row:
                 if v is not None:
                     v.draw(win)
-        # for edge_row in self.edges:
-        #     for edge_source in edge_row:
-        #         for edge in edge_source:
-        #             if edge is not None:
-        #                 edge.draw(win)
+        for edge_row in self.edges:
+            for edge_source in edge_row:
+                for edge in edge_source:
+                    if edge is not None:
+                        edge.draw(win)
 
     def undraw(self):  # TODO place() algorithm
         for v_row in self.vertices:
@@ -212,23 +215,36 @@ class Board:
         #     print("out of grid")
         #     return
 
-        line = Line(self.center, jump_hex(self.center, self.hex_size, q, r))
-        line2 = Line(self.center, click)
-        line3 = Line(click, jump_hex(self.center, self.hex_size, q, r))
-        line.setWidth(4)
-        line.setOutline("green")
-        line2.setOutline("red")
-        line3.setOutline("red")
-        line.draw(win)
-        line2.draw(win)
-        line3.draw(win)
-        time.sleep(.2)
-        line.undraw()
-        line2.undraw()
-        line3.undraw()
+        dist = max(abs(q), abs(r), abs((-q-r)))
+        print("Radius: {:d}, Board radius: {:d}".format(dist, self.rings))
 
-        if self.vertices[q][r] is not None:
-            self.vertices[q][r].setColor("Green")
+        if self.isValidHex(q, r):
+            line = Line(self.center, jump_hex(self.center, self.hex_size, q, r))
+            line2 = Line(self.center, click)
+            line3 = Line(click, jump_hex(self.center, self.hex_size, q, r))
+            line.setWidth(4)
+            line.setOutline("green")
+            line2.setOutline("red")
+            line3.setOutline("red")
+            line.draw(win)
+            line2.draw(win)
+            line3.draw(win)
+            time.sleep(.2)
+            line.undraw()
+            line2.undraw()
+            line3.undraw()
+
+            if self.vertices[q][r] is not None:
+                self.vertices[q][r].setColor("Green")
+
+    def isValidHex(self, q, r):
+        if max(abs(q), abs(r), abs(-q-r)) <= self.rings:
+            return True
+        for pair in self.extra_vertices:
+            if (q == pair[0] and r == pair[1]):
+                return True
+        return False
+
 
     def __str__(self):  # TODO use place() algo
         prt = ""
@@ -248,14 +264,30 @@ class Board:
                     prt += "   ..   "
             prt += '\n'
         prt += '\n'
-        for q in range(len(self.vertices)):
-            for r in range(len(self.vertices[q])):
-                if ((q - r) + 1) % 3 == 0 and self.vertices[q][r] is not None:
-                    prt += self.vertices[q][r].__str__() + " "
-                else:
-                    prt += "   ..   "
+        # for q in range(len(self.vertices)):
+        #     for r in range(len(self.vertices[q])):
+        #         if ((q - r) + 1) % 3 == 0 and self.vertices[q][r] is not None:
+        #             prt += self.vertices[q][r].__str__() + " "
+        #         else:
+        #             prt += "   ..   "
+        #     prt += '\n'
+        # prt += '\n'
+        num_edges = 0
+        for q in range(len(self.edges)):
+            prt += 'q:'+str(q)
+            for r in range(len(self.edges[q])):
+                prt += '\tr:'+str(r)+' '
+                for i in range(3):
+                    prt += '['
+                    if self.edges[q][r][i] is not None:
+                        prt += self.edges[q][r][i].__str__() + " "
+                        num_edges += 1
+                    else:
+                        prt += "       . .       "
+                    prt += ']'
+                prt += '\n'
             prt += '\n'
-        prt += '\n'
+        prt += '\nedges: ' + str(num_edges) + '\n'
         return prt
 
 
@@ -276,9 +308,6 @@ class Hex:
         self.vertex_size_short = self.vertex_size * math.sqrt(3) / 2
         poly_size = size * math.sqrt(3)/ 3
 
-        print("hex size:", self.size)
-        print("hex wide:", poly_size)
-
         self.center = hex_to_pixel(grid_center, self.size, self.q, self.r)
         self.poly = Polygon(jump_linear(self.center, 0, self.size),  # size
                             jump_linear(self.center, 60, self.size),
@@ -292,6 +321,12 @@ class Hex:
                              jump_linear(self.center, 210, poly_size),
                              jump_linear(self.center, 270, poly_size),
                              jump_linear(self.center, 330, poly_size))
+        self.spoly = Polygon(jump_linear(self.center, 30, self.vertex_size),  # vertex_size
+                             jump_linear(self.center, 90, self.vertex_size),
+                             jump_linear(self.center, 150, self.vertex_size),
+                             jump_linear(self.center, 210, self.vertex_size),
+                             jump_linear(self.center, 270, self.vertex_size),
+                             jump_linear(self.center, 330, self.vertex_size))
         # self.vpoly.setFill(self.resource)
 
         self.cir_center = Circle(self.center, 3)
@@ -303,6 +338,7 @@ class Hex:
             # self.poly.draw(win)
             self.vpoly.draw(win)
             self.txt.draw(win)
+        # pass
 
     def undraw(self):
         if self.center is not None:
@@ -338,7 +374,7 @@ class Vertex:
         return "({:2},{:2})".format(self.q, self.r)
 
     def place(self, grid_center, size):
-        self.color = "white"
+        self.color = "black" if (self.q-self.r) % 3 == 1 else "blue"
         self.grid_center = grid_center
         self.size = size
         # self.size_short = size * math.sqrt(3) / 2
@@ -362,7 +398,8 @@ class Vertex:
         #     self.color = "green"
         #     for edge in self.edges:
         #         edge.place(grid_center, size)
-
+        # self.poly.setFill(self.color)
+        self.poly.setOutline(self.color)
 
     def draw(self, win):
         self.poly.draw(win)
@@ -376,7 +413,7 @@ class Vertex:
 
     def setColor(self, color="black"):
         if (self.color is not None):
-            # self.poly.setFill(self.color)
+            self.poly.setFill(self.color)
             self.poly.setOutline(self.color)
             self.color = color
 
@@ -393,22 +430,50 @@ class Vertex:
 
 
 class Edge:
-    def __init__(self, source, destination):
+    def __init__(self, source, destination, dir):
         self.source = source
         self.dest = destination
+        self.direction = dir # used solely for drawing purposes
         self.has_road = False
         self.player = None
+
     def place(self, grid_center, size):
+        vertex_size = size//4
+        # x, y coordinates of vertex centers
         src_pt = jump_hex(grid_center, size, self.source.x, self.source.y)
         dst_pt = jump_hex(grid_center, size, self.dest.x, self.dest.y)
-        self.line = Line(src_pt, dst_pt)
+
+        angle = 60 * self.direction
+        src_a = jump_linear(src_pt, angle+15, vertex_size)
+        src_b = jump_linear(src_pt, angle-15, vertex_size)
+        dst_a = jump_linear(dst_pt, angle-15, -vertex_size)
+        dst_b = jump_linear(dst_pt, angle+15, -vertex_size)
+
+        self.src = Line(src_a, src_b)
+        self.dst = Line(dst_a, dst_b)
+        self.srcdst_a = Line(src_a, dst_a)
+        self.srcdst_b = Line(src_b, dst_b)
+
+        # self.lines = [src, dst, srcdst_a, srcdst_b]
         # self.line.setWidth(4)
+        # self.line.setOutline("grey")
+
     def draw(self, win):
-        self.line.draw(win)
+        # for line in self.lines:
+        #     line.draw(win)
+        self.src.draw(win)
+        self.dst.draw(win)
+        self.srcdst_a.draw(win)
+        self.srcdst_b.draw(win)
+
+
     def placeRoad(self, road_owner):
         if not self.has_road:
             self.has_road = True
             self.player = road_owner
+
+    def __str__(self):
+        return "({:2d},{:2d})->({:2d},{:2d})".format(self.source.x, self.source.y, self.dest.x, self.dest.y)
 
 def ptstr(pt):
     return "({:2d},{:2d})".format(pt.x, pt.y)

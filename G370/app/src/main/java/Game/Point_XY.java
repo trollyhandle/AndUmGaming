@@ -91,7 +91,16 @@ public class Point_XY {
         return String.format("(%1$4d,%2$4d)", _x, _y);
 
     }
-
+    public String serialize()
+    {
+        String json = "\"pointxy\":";
+        json += "{\"x\":" + _x + ",\"y\":" + _y + "}}";
+        return json;
+    }
+    public static Point_XY deserialize(String json)
+    {
+        return null;
+    }
     public static String point_format(int x, int y) {
         return String.format("(%1$4d,%2$4d)", x, y);
     }
