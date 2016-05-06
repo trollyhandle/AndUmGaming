@@ -1,8 +1,8 @@
 package com.example.andumgaming.g370.views;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -13,7 +13,7 @@ import com.example.andumgaming.g370.R;
 /**
  * Created by Jeff on 5/5/2016.
  */
-public class SlashActivity extends AppCompatActivity {
+public class SlashActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -32,7 +32,7 @@ public class SlashActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 finish();
-                Intent i = new Intent(getApplicationContext(), FullscreenActivity.class);
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
             }
 

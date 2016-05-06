@@ -12,17 +12,20 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 
+import com.example.andumgaming.g370.views.FullscreenActivity;
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
 import com.example.andumgaming.g370.R;
-
-import com.google.gson.Gson;
+//TODO fix GSON
+//import com.google.gson.Gson;
 
 public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     private TextView statusField,roleField;
@@ -81,12 +84,14 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Gson gson = new Gson();
+        //TODO fix gson
+        //Gson gson = new Gson();
         if (true) {
-            MenuFragment newFragment = new MenuFragment();
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            Intent i = new Intent(context, FullscreenActivity.class);
+            context.startActivity(i);
+            ((Activity)context).finish();
 
-            transaction.replace(R.id.container, newFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
+
         } else
             this.roleField.setText("INVALID LOGIN");
     }
