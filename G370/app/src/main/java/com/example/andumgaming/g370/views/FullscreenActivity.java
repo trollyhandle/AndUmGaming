@@ -22,7 +22,8 @@ import android.widget.EditText;
 import com.example.andumgaming.g370.R;
 
 import com.example.andumgaming.g370.views.asynctask.LoginAsyncTask;
-import com.example.andumgaming.g370.views.fragments.SplashFragment;
+
+import com.example.andumgaming.g370.views.fragments.MenuFragment;
 
 import java.util.List;
 
@@ -33,7 +34,8 @@ import Interface.BackStackLisnter;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
-    private SplashFragment splashFragment;
+   // private SlashActivity splashFragment;
+    private MenuFragment menuFragment;
     private BackStackLisnter backStackLisnter;
 
 
@@ -41,8 +43,10 @@ public class FullscreenActivity extends AppCompatActivity {
     public void onBackPressed() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        if(currentFragment instanceof SplashFragment) {
+
+        Fragment cuurentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        if(cuurentFragment instanceof MenuFragment) {
+
             for (Fragment f:fragments){
                 if (f instanceof BackStackLisnter){
                     backStackLisnter = (BackStackLisnter)f;
@@ -142,8 +146,8 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
-        splashFragment = SplashFragment.newInstance();
-
+        //splashFragment = SlashActivity.newInstance();
+         menuFragment = MenuFragment.newInstance();
         //menuFragment.setOnFr
 
         /* Login Activity */
@@ -156,7 +160,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(SplashFragment.class.getSimpleName()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
 
 
         /*initialize buttons*/
@@ -239,8 +243,8 @@ public class FullscreenActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         MusicService.mPlayer.stop();
         MusicService.mPlayer.release();
+        super.onDestroy();
     }
 }
