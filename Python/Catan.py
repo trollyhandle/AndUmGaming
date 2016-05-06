@@ -112,36 +112,38 @@ class Board:
             vertices[pair[0]][pair[1]] = Vertex(pair[0], pair[1])
 
         self.vertices = vertices
+        self.extra_vertices = extra_vertices
+
         print("\n")  # DEBUG
 
         rings *= 2
-        edges = [[[None,None,None] for i in range(rings*2+1)]for j in range(rings*2+1)]
-        # for q in range(-self.rings, self.rings+1):
-        #     for r in range(-self.rings, self.rings+1):
+        edges = [[[None,None,None] for i in range(rings*2+1)]for j in range((rings*2+1)//3)]
         for q in range(-rings, rings+1):
             for r in range(max(-rings, -q-rings), min(rings, -q+rings)+1):
                 if ((q - r) + 1) % 3 == 0 and self.vertices[q][r] is not None:  # necessary for larger boards
                     v = self.vertices[q][r]
-                    edges[q][r][0] = Edge(Point(q,r), v.neighbor(0))
-                    edges[q][r][1] = Edge(Point(q,r), v.neighbor(2))
-                    edges[q][r][2] = Edge(Point(q,r), v.neighbor(4))
+                    if self.isValidHex(v.neighbor(0).x, v.neighbor(0).y):
+                        edges[q//3][r][0] = Edge(Point(q,r), v.neighbor(0))
+                    if self.isValidHex(v.neighbor(2).x, v.neighbor(2).y):
+                        edges[q//3][r][1] = Edge(Point(q,r), v.neighbor(2))
+                    if self.isValidHex(v.neighbor(4).x, v.neighbor(4).y):
+                        edges[q//3][r][2] = Edge(Point(q,r), v.neighbor(4))
                     v.setColor("blue")
                     # cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
                     # cir.setFill("red")
                     # cir.draw(win)
-        # for i in range(0,len(extra_vertices)):
-        #     q, r = extra_vertices[i]
-        #     q, r = -q, -r
-        #     v = self.vertices[q][r]
-        #     print('extra vertex at',q,r,'\nneighbors:')
-        #     print(ptstr(v.neighbor(0)),ptstr(v.neighbor(2)),ptstr(v.neighbor(4)))
-        #     edges[q][r][0] = Edge(Point(q,r), v.neighbor(0))
-        #     edges[q][r][1] = Edge(Point(q,r), v.neighbor(2))
-        #     edges[q][r][2] = Edge(Point(q,r), v.neighbor(4))
-        #     v.setColor("green")
-            # cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
-            # cir.setFill("red")
-            # cir.draw(win)
+        for i in range(0,len(extra_vertices)):
+            q, r = extra_vertices[i]
+            if ((q - r) + 1) % 3 == 0:
+                v = self.vertices[q][r]
+                print('extra vertex at',q,r,'\nneighbors:')
+                print(ptstr(v.neighbor(0)),ptstr(v.neighbor(2)),ptstr(v.neighbor(4)))
+                if self.isValidHex(v.neighbor(0).x, v.neighbor(0).y):
+                    edges[q//3][r][0] = Edge(Point(q,r), v.neighbor(0))
+                if self.isValidHex(v.neighbor(2).x, v.neighbor(2).y):
+                    edges[q//3][r][1] = Edge(Point(q,r), v.neighbor(2))
+                if self.isValidHex(v.neighbor(4).x, v.neighbor(4).y):
+                    edges[q//3][r][2] = Edge(Point(q,r), v.neighbor(4))
         self.edges = edges
 
 
@@ -190,11 +192,11 @@ class Board:
             for v in v_row:
                 if v is not None:
                     v.draw(win)
-        # for edge_row in self.edges:
-        #     for edge_source in edge_row:
-        #         for edge in edge_source:
-        #             if edge is not None:
-        #                 edge.draw(win)
+        for edge_row in self.edges:
+            for edge_source in edge_row:
+                for edge in edge_source:
+                    if edge is not None:
+                        edge.draw(win)
 
     def undraw(self):  # TODO place() algorithm
         for v_row in self.vertices:
@@ -216,7 +218,7 @@ class Board:
         dist = max(abs(q), abs(r), abs((-q-r)))
         print("Radius: {:d}, Board radius: {:d}".format(dist, self.rings))
 
-        if dist <= self.rings:
+        if self.isValidHex(q, r):
             line = Line(self.center, jump_hex(self.center, self.hex_size, q, r))
             line2 = Line(self.center, click)
             line3 = Line(click, jump_hex(self.center, self.hex_size, q, r))
@@ -234,6 +236,15 @@ class Board:
 
             if self.vertices[q][r] is not None:
                 self.vertices[q][r].setColor("Green")
+
+    def isValidHex(self, q, r):
+        if max(abs(q), abs(r), abs(-q-r)) <= self.rings:
+            return True
+        for pair in self.extra_vertices:
+            if (q == pair[0] and r == pair[1]):
+                return True
+        return False
+
 
     def __str__(self):  # TODO use place() algo
         prt = ""
@@ -253,14 +264,30 @@ class Board:
                     prt += "   ..   "
             prt += '\n'
         prt += '\n'
-        for q in range(len(self.vertices)):
-            for r in range(len(self.vertices[q])):
-                if ((q - r) + 1) % 3 == 0 and self.vertices[q][r] is not None:
-                    prt += self.vertices[q][r].__str__() + " "
-                else:
-                    prt += "   ..   "
+        # for q in range(len(self.vertices)):
+        #     for r in range(len(self.vertices[q])):
+        #         if ((q - r) + 1) % 3 == 0 and self.vertices[q][r] is not None:
+        #             prt += self.vertices[q][r].__str__() + " "
+        #         else:
+        #             prt += "   ..   "
+        #     prt += '\n'
+        # prt += '\n'
+        num_edges = 0
+        for q in range(len(self.edges)):
+            prt += 'q:'+str(q)
+            for r in range(len(self.edges[q])):
+                prt += '\tr:'+str(r)+' '
+                for i in range(3):
+                    prt += '['
+                    if self.edges[q][r][i] is not None:
+                        prt += self.edges[q][r][i].__str__() + " "
+                        num_edges += 1
+                    else:
+                        prt += "       . .       "
+                    prt += ']'
+                prt += '\n'
             prt += '\n'
-        prt += '\n'
+        prt += '\nedges: ' + str(num_edges) + '\n'
         return prt
 
 
@@ -407,17 +434,24 @@ class Edge:
         self.dest = destination
         self.has_road = False
         self.player = None
+
     def place(self, grid_center, size):
         src_pt = jump_hex(grid_center, size, self.source.x, self.source.y)
         dst_pt = jump_hex(grid_center, size, self.dest.x, self.dest.y)
         self.line = Line(src_pt, dst_pt)
         # self.line.setWidth(4)
+        self.line.setOutline("grey")
+
     def draw(self, win):
         self.line.draw(win)
+
     def placeRoad(self, road_owner):
         if not self.has_road:
             self.has_road = True
             self.player = road_owner
+
+    def __str__(self):
+        return "({:2d},{:2d})->({:2d},{:2d})".format(self.source.x, self.source.y, self.dest.x, self.dest.y)
 
 def ptstr(pt):
     return "({:2d},{:2d})".format(pt.x, pt.y)
