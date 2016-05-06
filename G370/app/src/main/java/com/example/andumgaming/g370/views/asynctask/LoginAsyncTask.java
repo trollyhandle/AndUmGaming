@@ -16,6 +16,14 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
+
+import com.example.andumgaming.g370.views.fragments.MenuFragment;
+import com.example.andumgaming.g370.R;
+
+import com.google.gson.Gson;
+
 public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     private TextView statusField,roleField;
     private Context context;
@@ -72,7 +80,14 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     }
 
     @Override
-    protected void onPostExecute(String result){
-        this.roleField.setText(result);
+    protected void onPostExecute(String result) {
+        Gson gson = new Gson();
+        if (true) {
+            MenuFragment newFragment = new MenuFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.container, newFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
+        } else
+            this.roleField.setText("INVALID LOGIN");
     }
 }
