@@ -123,11 +123,11 @@ class Board:
                 if ((q - r) + 1) % 3 == 0 and self.vertices[q][r] is not None:  # necessary for larger boards
                     v = self.vertices[q][r]
                     if self.isValidHex(v.neighbor(0).x, v.neighbor(0).y):
-                        edges[q//3][r][0] = Edge(Point(q,r), v.neighbor(0))
+                        edges[q//3][r][0] = Edge(Point(q,r), v.neighbor(0), 0)
                     if self.isValidHex(v.neighbor(2).x, v.neighbor(2).y):
-                        edges[q//3][r][1] = Edge(Point(q,r), v.neighbor(2))
+                        edges[q//3][r][1] = Edge(Point(q,r), v.neighbor(2), 2)
                     if self.isValidHex(v.neighbor(4).x, v.neighbor(4).y):
-                        edges[q//3][r][2] = Edge(Point(q,r), v.neighbor(4))
+                        edges[q//3][r][2] = Edge(Point(q,r), v.neighbor(4), 4)
                     v.setColor("blue")
                     # cir = Circle(jump_hex(center, hex_size, v.q, v.r ), 4)
                     # cir.setFill("red")
@@ -139,11 +139,11 @@ class Board:
                 print('extra vertex at',q,r,'\nneighbors:')
                 print(ptstr(v.neighbor(0)),ptstr(v.neighbor(2)),ptstr(v.neighbor(4)))
                 if self.isValidHex(v.neighbor(0).x, v.neighbor(0).y):
-                    edges[q//3][r][0] = Edge(Point(q,r), v.neighbor(0))
+                    edges[q//3][r][0] = Edge(Point(q,r), v.neighbor(0), 0)
                 if self.isValidHex(v.neighbor(2).x, v.neighbor(2).y):
-                    edges[q//3][r][1] = Edge(Point(q,r), v.neighbor(2))
+                    edges[q//3][r][1] = Edge(Point(q,r), v.neighbor(2), 2)
                 if self.isValidHex(v.neighbor(4).x, v.neighbor(4).y):
-                    edges[q//3][r][2] = Edge(Point(q,r), v.neighbor(4))
+                    edges[q//3][r][2] = Edge(Point(q,r), v.neighbor(4), 4)
         self.edges = edges
 
 
@@ -336,8 +336,9 @@ class Hex:
     def draw(self, win):
         if self.center is not None:
             # self.poly.draw(win)
-            self.spoly.draw(win)
+            self.vpoly.draw(win)
             self.txt.draw(win)
+        # pass
 
     def undraw(self):
         if self.center is not None:
@@ -429,21 +430,42 @@ class Vertex:
 
 
 class Edge:
-    def __init__(self, source, destination):
+    def __init__(self, source, destination, dir):
         self.source = source
         self.dest = destination
+        self.direction = dir # used solely for drawing purposes
         self.has_road = False
         self.player = None
 
     def place(self, grid_center, size):
+        vertex_size = size//4
+        # x, y coordinates of vertex centers
         src_pt = jump_hex(grid_center, size, self.source.x, self.source.y)
         dst_pt = jump_hex(grid_center, size, self.dest.x, self.dest.y)
-        self.line = Line(src_pt, dst_pt)
+
+        angle = 60 * self.direction
+        src_a = jump_linear(src_pt, angle+15, vertex_size)
+        src_b = jump_linear(src_pt, angle-15, vertex_size)
+        dst_a = jump_linear(dst_pt, angle-15, -vertex_size)
+        dst_b = jump_linear(dst_pt, angle+15, -vertex_size)
+
+        self.src = Line(src_a, src_b)
+        self.dst = Line(dst_a, dst_b)
+        self.srcdst_a = Line(src_a, dst_a)
+        self.srcdst_b = Line(src_b, dst_b)
+
+        # self.lines = [src, dst, srcdst_a, srcdst_b]
         # self.line.setWidth(4)
-        self.line.setOutline("grey")
+        # self.line.setOutline("grey")
 
     def draw(self, win):
-        self.line.draw(win)
+        # for line in self.lines:
+        #     line.draw(win)
+        self.src.draw(win)
+        self.dst.draw(win)
+        self.srcdst_a.draw(win)
+        self.srcdst_b.draw(win)
+
 
     def placeRoad(self, road_owner):
         if not self.has_road:
