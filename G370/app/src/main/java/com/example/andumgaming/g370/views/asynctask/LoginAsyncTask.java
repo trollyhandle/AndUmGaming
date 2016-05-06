@@ -40,69 +40,39 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... arg0) {
-        if(byGetOrPost == 0){ //means by Get Method
 
-            try{
-                String username = (String)arg0[0];
-                String password = (String)arg0[1];
-                String link = "http://g370.duckdns.org/login.php?username="+username+"&password="+password;
+        try{
+            String username = (String)arg0[0];
+            String password = (String)arg0[1];
 
-                URL url = new URL(link);
-                HttpClient client = new DefaultHttpClient();
-                HttpGet request = new HttpGet();
-                request.setURI(new URI(link));
-                HttpResponse response = client.execute(request);
-                BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            String link="http://g370.duckdns.org/login.php";
+            String data  = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+            data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
-                StringBuffer sb = new StringBuffer("");
-                String line="";
+            URL url = new URL(link);
+            URLConnection conn = url.openConnection();
 
-                while ((line = in.readLine()) != null) {
-                    sb.append(line);
-                    break;
-                }
-                in.close();
-                return sb.toString();
+            conn.setDoOutput(true);
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+
+            wr.write( data );
+            wr.flush();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            // Read Server Response
+            while((line = reader.readLine()) != null)
+            {
+                sb.append(line);
+                break;
             }
-
-            catch(Exception e){
-                return new String("Exception: " + e.getMessage());
-            }
+            return sb.toString();
         }
-        else{
-            try{
-                String username = (String)arg0[0];
-                String password = (String)arg0[1];
-
-                String link="http://g370.duckdns.org/login.php";
-                String data  = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
-                data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
-
-                URL url = new URL(link);
-                URLConnection conn = url.openConnection();
-
-                conn.setDoOutput(true);
-                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
-
-                wr.write( data );
-                wr.flush();
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                // Read Server Response
-                while((line = reader.readLine()) != null)
-                {
-                    sb.append(line);
-                    break;
-                }
-                return sb.toString();
-            }
-            catch(Exception e){
-                return new String("Exception: " + e.getMessage());
-            }
+        catch(Exception e){
+            return new String("Exception: " + e.getMessage());
         }
     }
 
