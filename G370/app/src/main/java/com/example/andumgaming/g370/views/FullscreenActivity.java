@@ -151,9 +151,7 @@ public class FullscreenActivity extends AppCompatActivity {
         usernameField = (EditText)findViewById(R.id.editText1);
         passwordField = (EditText)findViewById(R.id.editText2);
 
-        status = (TextView)findViewById(R.id.textView6);
         role = (TextView)findViewById(R.id.textView7);
-        method = (TextView)findViewById(R.id.textView9);
 
 
         mContentView = findViewById(R.id.container);

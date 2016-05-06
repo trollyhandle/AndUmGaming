@@ -24,9 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameField = (EditText)findViewById(R.id.editText1);
         passwordField = (EditText)findViewById(R.id.editText2);
 
-        status = (TextView)findViewById(R.id.textView6);
         role = (TextView)findViewById(R.id.textView7);
-        method = (TextView)findViewById(R.id.textView9);
     }
 
     /*
@@ -41,6 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     public void loginPost(View view){
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
+
+        role = (TextView)findViewById(R.id.textView7);
+
         new LoginAsyncTask(this,status,role,1).execute(username,password);
     }
 }
