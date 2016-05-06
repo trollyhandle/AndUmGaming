@@ -115,7 +115,7 @@ public class BoardView extends View {
                 Point_XY click = new Point_XY(event.getX(), event.getY());
                 Point_QR hex = click.toHex(board.getCenter(), board.getClickableSize());
                 // if the click is in the region of the board
-                if (board.isValidHex(hex)) {
+                if (board.isValid(hex)) {
                     if(debug)
                         if ((hex.q()-hex.r())%3 == 0)System.out.println("CLICK: Hex    coordinates: " +
                                 click.toHex(board.getCenter(), board.getClickableSize()));
