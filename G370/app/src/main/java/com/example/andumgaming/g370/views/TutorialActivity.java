@@ -1,6 +1,7 @@
 package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -17,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.andumgaming.g370.views.MusicService;
 import com.example.andumgaming.g370.views.tutorial.TutorialPagerAdapter;
 
 import com.example.andumgaming.g370.R;
@@ -28,32 +30,16 @@ import com.example.andumgaming.g370.R;
 public class TutorialActivity extends AppCompatActivity {
     TutorialPagerAdapter mTutorialPagerAdapter;
     ViewPager mViewPager;
-
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
     private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
-    /**
-     * Some older devices needs a small delay between UI widget updates
-     * and a change of the status and navigation bar.
-     */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
-            // Delayed removal of status and navigation bar
-
             // Note that some of these constants are new as of API 16 (Jelly Bean)
             // and API 19 (KitKat). It is safe to use them, as they are inlined
             // at compile-time and do nothing on earlier devices.
@@ -69,7 +55,6 @@ public class TutorialActivity extends AppCompatActivity {
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
-            // Delayed display of UI elements
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
                 actionBar.show();
@@ -81,14 +66,9 @@ public class TutorialActivity extends AppCompatActivity {
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
-            hide();
+            //hide();
         }
     };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
     private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -107,19 +87,17 @@ public class TutorialActivity extends AppCompatActivity {
 
         mVisible = true;
 
-        // Set up the user interaction to manually show or hide the system UI.
-        /*mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });*/
-
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
         mTutorialPagerAdapter = new TutorialPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mTutorialPagerAdapter);
+
+        if(getIntent().getBooleanExtra("isMusicPlaying",false)) {
+            Intent music = new Intent();
+            music.setClass(this, MusicService.class);
+            startService(music);
+        }
 
     }
 
@@ -131,28 +109,6 @@ public class TutorialActivity extends AppCompatActivity {
         // created, to briefly hint to the user that UI controls
         // are available.
         delayedHide(100);
-    }
-
-    private void toggle() {
-        if (mVisible) {
-            hide();
-        } else {
-            show();
-        }
-    }
-
-    private void hide() {
-        // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-        mControlsView.setVisibility(View.GONE);
-        mVisible = false;
-
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
     @SuppressLint("InlinedApi")
@@ -167,75 +123,32 @@ public class TutorialActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
     }
 
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-}
 
-
-/*
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-
-
-import com.example.andumgaming.g370.views.tutorial.TutorialPagerAdapter;
-
-import com.example.andumgaming.g370.R;
-
-/**
- * Created by Jeff on 4/21/2016.
-
-public class TutorialFragment extends Fragment {
-    private Button backButton;
-
-    TutorialPagerAdapter mTutorialPagerAdapter;
-    ViewPager mViewPager;
-
-    public TutorialFragment(){
-
-    }
-
-    public static TutorialFragment newInstance() {
-        TutorialFragment fragment = new TutorialFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (MusicService.mPlayer.isPlaying() == true) {
+            MusicService.mPlayer.pause();
+        }
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-        mTutorialPagerAdapter = new TutorialPagerAdapter(getSupportFragmentManager());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mTutorialPagerAdapter);
+    protected void onResume() {
+        super.onResume();
+        if (MusicService.mPlayer != null &&getIntent().getBooleanExtra("isMusicPlaying",false)  && MusicService.mPlayer.isPlaying() == false) {
+            MusicService.mPlayer.start();
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-
-        View view = inflater.inflate(R.layout.tutorial_fragment, container, false);
-        backButton = (Button)view.findViewById(R.id.back);
-
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getFragmentManager().popBackStack();
-            }
-        });
-
-        return view;
+    public void onDestroy() {
+        MusicService.mPlayer.stop();
+        MusicService.mPlayer.release();
+        super.onDestroy();
     }
+
 }
-*/

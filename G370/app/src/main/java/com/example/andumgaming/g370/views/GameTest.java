@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -89,6 +90,7 @@ public class GameTest extends AppCompatActivity {
         loadfragment();
         FrameLayout fragmentlayout = (FrameLayout)findViewById(R.id.fragmentlayout);
         fragmentlayout.bringToFront();
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     private void findSize()

@@ -14,9 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.andumgaming.g370.R;
+
+import com.example.andumgaming.g370.views.MusicService;
+
 import com.example.andumgaming.g370.views.TutorialActivity;
 
 import Interface.BackStackLisnter;
+
 
 /**
  * Created by Jeff on 4/14/16.
@@ -47,7 +51,6 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
         super.onCreate(savedInstance);
     }
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
 
         View view = inflater.inflate(R.layout.menu_fragment,container, false);
@@ -71,7 +74,6 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
                         .addToBackStack(SettingsFragment.class
                                 .getSimpleName()).commit();
 
-                System.out.println("MENU : postadd " + getFragmentManager().getBackStackEntryCount());
 
             }
         });
@@ -93,6 +95,7 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
             public void onClick(View v) {
                 TutorialActivity newFragment = new TutorialActivity();
                 Intent i = new Intent(getActivity().getApplicationContext(), TutorialActivity.class);
+                i.putExtra("isMusicPlaying", MusicService.mPlayer.isPlaying());
                 getActivity().startActivity(i);
             }
         });

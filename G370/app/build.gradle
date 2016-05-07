@@ -18,7 +18,25 @@ android {
         }
     }
 
-    useLibrary 'org.apache.http.legacy'
+    //useLibrary 'org.apache.http.legacy'
+
+    //stuff added for subdirectories of layout
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+            java.srcDirs = ['src/main/java','.apt_generated']
+            aidl.srcDirs = ['src/main/aidl','.apt_generated']
+            assets.srcDirs = ['src/main/assets']
+            res.srcDirs =
+                    [
+                            'src/main/res/layouts/tutorials',
+                            'src/main/res/layouts',
+                            'src/main/res'
+                    ]
+        }
+    }
+    //end of changes
+
 }
 
 dependencies {

@@ -93,21 +93,22 @@
     <FrameLayout
         android:id="@+id/fragmentlayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="55dp">
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:name="com.example.andumgaming.g370.views.fragments.PlayerStatusesFragment"
+            android:id="@+id/playerstatus"
+            tools:layout="@layout/playerstatuses_fragment"
+            android:layout_gravity="center_horizontal|top" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:id="@+id/game_container">
+            android:id="@+id/game_container"
+            android:layout_gravity="center_horizontal|bottom">
         </FrameLayout>
-
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:name="com.example.andumgaming.g370.views.fragments.PlayerStatusesFragment"
-            android:id="@+id/playerstatus"
-            tools:layout="@layout/playerstatuses_fragment"
-            android:layout_gravity="center_horizontal|bottom" />
         <!--
         <Button
         android:text="Buy"
