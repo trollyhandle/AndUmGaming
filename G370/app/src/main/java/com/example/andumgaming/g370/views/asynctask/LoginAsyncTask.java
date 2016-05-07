@@ -23,7 +23,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
-import android.
 
 import com.google.gson.Gson;
 
@@ -42,11 +41,11 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... arg0)  {
-        try {
+       /* try {
             URL url = new URL("http://google.com");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setReadTimeout(10000 *//* milliseconds *//*);
+            conn.setConnectTimeout(15000 *//* milliseconds *//*);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             // Starts the query
@@ -57,9 +56,9 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
 
             // Convert the InputStream into a string
             String contentAsString = readIt(is, len);
-            return contentAsString;
+            return contentAsString;*/
 
-            return result; //"Failed to fetch data!";
+            return "0"; //"Failed to fetch data!";
     }
 
     @Override
