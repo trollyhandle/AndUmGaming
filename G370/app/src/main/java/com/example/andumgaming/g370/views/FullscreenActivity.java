@@ -144,7 +144,10 @@ public class FullscreenActivity extends AppCompatActivity {
 
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(SplashFragment.class.getSimpleName()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container,splashFragment)
+                .addToBackStack(SplashFragment.class.getSimpleName())
+                .commit();
 
 
         /*initialize buttons*/
@@ -192,7 +195,7 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (MusicService.mPlayer.isPlaying() == true) {
+        if (MusicService.mPlayer.isPlaying()) {
             MusicService.mPlayer.pause();
         }
     }
@@ -200,7 +203,7 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (MusicService.mPlayer != null && MusicService.mPlayer.isPlaying() == false) {
+        if (MusicService.mPlayer != null && ! MusicService.mPlayer.isPlaying()) {
             MusicService.mPlayer.start();
         }
     }

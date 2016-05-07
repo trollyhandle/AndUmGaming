@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentManager;
 
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -61,7 +62,8 @@ public class GameTest extends AppCompatActivity {
         default_hex_size = width / 9;
         default_center = new Point_XY(width/2, height/2);
 
-        loadButtons();  // BUTTONS
+        loadButtons();  // ZOOM BUTTONS
+        loadfragment();  // TRANSACTION
 
         if(debug)System.out.println("TEST creating Board");
         if(debug)System.out.printf("TEST center at (%1$2d,%2$2d)\n", width / 2, height / 2);
@@ -82,14 +84,14 @@ public class GameTest extends AppCompatActivity {
         LinearLayout button_layout = (LinearLayout)findViewById(R.id.zoom_control_layout);
         if (button_layout != null) // calms Android Studios: should not be null, I think...
             button_layout.bringToFront();
-
         else if(debug)System.out.println("VIEW ERROR buttons move to foreground failed");
 
-
-
-        loadfragment();
+        // bring fragment to foreground
         FrameLayout fragmentlayout = (FrameLayout)findViewById(R.id.fragmentlayout);
-        fragmentlayout.bringToFront();
+        if (fragmentlayout != null) // calms Android Studios: should not be null, I think...
+            fragmentlayout.bringToFront();
+        else if(debug)System.out.println("VIEW ERROR fragment bring to foreground failed");
+
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
@@ -179,7 +181,6 @@ public class GameTest extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.game_container,newFragment)
                         .addToBackStack(BuySubpanelFragment.class
                                 .getSimpleName()).commit();
-
     }
 
 

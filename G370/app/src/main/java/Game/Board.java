@@ -13,31 +13,6 @@ public class Board {
     private static final int MIN_SIZE = 80;
     private static final int MAX_SIZE = 840;
 
-    // RESOURCE PAINT_COLOR LOOKUP
-    private enum RES {
-        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
-        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
-        private int val; RES(int color) {val=color;}
-        static int get(int i) { switch(i) {
-            case 1: return WHEAT.val; case 2: return WOOD.val;
-            case 3: return ORE.val; case 4: return BRICK.val;
-            case 5: return SHEEP.val; } return BLANK.val; }
-        static int index(RES r) { switch(r) {
-            case WHEAT: return 1; case WOOD: return 2;
-            case ORE: return 3; case BRICK: return 4;
-            case SHEEP: return 5; } return 0; }
-    }
-    // PLAYER PAINT_COLOR LOOKUP
-    private enum PLAYERS {
-        NONE (0xffFFFFFF)/*WHITE*/, ONE (0xffFF0800)/*RED*/, TWO(0xff00FF00)/*GREEN*/,
-        THREE(0xff1C1CF0)/*BLUE*/,  FOUR(0xffBF00FF)/*VIOLET*/;
-        private int val; PLAYERS(int value) {val=value;}
-        static int get(int i) { switch(i) {
-            case 1: return ONE.val; case 2: return TWO.val;
-            case 3: return THREE.val; case 4: return FOUR.val;
-        } return NONE.val; }
-    }
-
     private int rings, arraySize;
     private int[][] extra_vertices;
     private ShapeDrawable[] shapes;
@@ -80,8 +55,8 @@ public class Board {
                 if (s != null) {
                     s.getDrawable(hex_size, center);
 
-                    int color = (q-r)%3 == 0? (RES.get(((Hexagon)s).getResource())) :
-                            PLAYERS.get(((Vertex)s).getOwner());
+                    int color = (q-r)%3 == 0? (Game.RESOURCES.getColor(((Hexagon) s).getResource())) :
+                            Game.PLAYERS.getColor(((Vertex) s).getOwner());
                     shapes[i++] = new ShapeDrawable(s.getPath(), color);
                 }
             }
@@ -94,7 +69,7 @@ public class Board {
                     e = edges[q][r][k];
                     if (e != null) {
                         e.getDrawable(hex_size, center);
-                        int color = PLAYERS.get(e.getOwner());
+                        int color = Game.PLAYERS.getColor(e.getOwner());
                         shapes[i++] = new ShapeDrawable(e.getPath(), color);
                         edgesDrawn++;
                     }
@@ -211,21 +186,21 @@ public class Board {
             }
         }
         // remove trailing comma
-        json = json.substring(0, json.length()-1);
-
-        /* edges not functional at this time
+        json = json.substring(0, json.length()-1) + "],";
         Edge e;
         json += "\"edges\":[";
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
-                e = edges[q][r];
-                if (e != null) {
-                    json += e.serialize() + ",";
+                for (int k = 0; k < 3; k++) {
+                    e = edges[q][r][k];
+                    if (e != null) {
+                        json += e.serialize() + ",";
+                    }
                 }
             }
         }
         // remove trailing comma
-        json = json.substring(0, json.length()-1);
+        json = json.substring(0, json.length()-1) + "]}}";
         // */
 
         return json;
@@ -330,11 +305,12 @@ public class Board {
 
     private void fillTiles()
     {
-        RES shuffle[] = { RES.BLANK, // one desert
-                RES.WHEAT,RES.WHEAT,RES.WHEAT,RES.WHEAT,  // 4 wheat
-                RES.WOOD, RES.WOOD, RES.WOOD, RES.WOOD,  // 4 wood
-                RES.SHEEP, RES.SHEEP, RES.SHEEP, RES.SHEEP,  // 4 sheep
-                RES.ORE, RES.ORE, RES.ORE, RES.BRICK, RES.BRICK, RES.BRICK};  // 3 ore and brick
+        Game.RESOURCES shuffle[] = { Game.RESOURCES.BLANK, // one desert
+                Game.RESOURCES.WHEAT, Game.RESOURCES.WHEAT, Game.RESOURCES.WHEAT, Game.RESOURCES.WHEAT,  // 4 wheat
+                Game.RESOURCES.WOOD, Game.RESOURCES.WOOD, Game.RESOURCES.WOOD, Game.RESOURCES.WOOD,  // 4 wood
+                Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP,  // 4 sheep
+                Game.RESOURCES.ORE, Game.RESOURCES.ORE, Game.RESOURCES.ORE,
+                Game.RESOURCES.BRICK, Game.RESOURCES.BRICK, Game.RESOURCES.BRICK};  // 3 ore and brick
         int shufsize = shuffle.length;  // 4+4+4+3+3+1 = 19
         Random rand = new Random();
         Shape s;
@@ -343,7 +319,7 @@ public class Board {
                 s = vertices[q][r];
                 if ((q-r)%3==0 && s != null) {
                     int which = rand.nextInt(shufsize);
-                    ((Hexagon)s).setResource(RES.index(shuffle[which]));
+                    ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
                     shuffle[which] = shuffle[--shufsize];
                 }
             }

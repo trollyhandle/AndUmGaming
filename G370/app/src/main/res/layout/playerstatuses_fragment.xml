@@ -13,42 +13,39 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/brick"
-            android:text="Brick: 99"
+            android:id="@+id/wheat"
+            android:text="@string/wheat"
             android:layout_weight="0.20"
             android:gravity="center"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lumber"
-            android:text="Lumber: 99"
+            android:id="@+id/wood"
+            android:text="@string/wood"
             android:layout_weight=".20"
             android:gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/wool"
-            android:text="Wool: 99"
-            android:layout_weight="0.20"
-            android:gravity="center"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/grain"
-            android:text="Grain: 99"
-            android:layout_weight="0.20"
-            android:gravity="center"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ore"
-            android:text="Ore: 99"
+            android:text="@string/ore"
             android:layout_weight="0.20"
             android:gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/brick"
+            android:text="@string/brick"
+            android:layout_weight="0.20"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sheep"
+            android:text="@string/sheep"
+            android:layout_weight="0.20"
+            android:gravity="center"/>
+
     </LinearLayout>
 
 </LinearLayout>

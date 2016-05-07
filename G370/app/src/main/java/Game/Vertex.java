@@ -48,9 +48,11 @@ public class Vertex extends Shape {
 //        return null;
 //    }
 
-    public int getOwner() { return owner; }
     public boolean isOwned() { return owner != 0; }
+    public int getOwner() { return owner; }
     public void setOwner(int player) { owner = player; }
+    public int getLevel() { return level; }
+    public void setLevel(int level) { this.level = level; }
 
     public String serialize()
     {

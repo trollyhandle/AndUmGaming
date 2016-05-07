@@ -39,8 +39,9 @@
     -->
 
     <!--
-    Strings
+    Strings for Game activity & Game support fragments
     -->
+    <!-- Zoom controls -->
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
     <string name="zoom_left">L</string>
@@ -48,8 +49,14 @@
     <string name="zoom_down">D</string>
     <string name="zoom_right">R</string>
     <string name="zoom_reset">*</string>
-    <!--<string name="zoom_reset">next turn</string>-->
 
-    <string name="buy">Buy</string>
+    <!-- Resource transactions -->
+    <string name="buy"  >Buy</string>
+    <string name="wheat">Wheat: 0</string>
+    <string name="wood" >Wood: 0</string>
+    <string name="ore"  >Ore: 0</string>
+    <string name="brick">Brick: 0</string>
+    <string name="sheep">Sheep: 0</string>
+
 
 </resources>
