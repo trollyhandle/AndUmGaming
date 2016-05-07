@@ -55,6 +55,8 @@ public class GameTest extends AppCompatActivity {
         loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
 
+
+
         game = new Game(this, width, height);
 
         // add game - board and view - to layout
@@ -152,6 +154,8 @@ public class GameTest extends AppCompatActivity {
             }
         });
 
+
+        // TODO if the transaction buttons can be made to work here they're fairly easy
     }
 
     private void loadFragment() {

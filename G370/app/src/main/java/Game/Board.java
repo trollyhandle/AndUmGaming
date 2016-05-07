@@ -55,9 +55,9 @@ public class Board {
                 if (s != null) {
                     s.update(hex_size, center);
 
-                    int color = (q-r)%3 == 0? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
+                    int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
                             Game.PLAYERS.getColor(((Vertex)s).getOwner());
-                    if(debug)System.out.println("BOARD drawing with color " + color);
+//                    if(debug)System.out.printf("BOARD drawing with color %1$x\n", color);
                     shapes[i++] = new ShapeDrawable(s.getPath(), color);
                 }
             }
@@ -121,22 +121,27 @@ public class Board {
     public boolean buildSettlement(int q, int r, int player)
     {
         Shape s = vertices[aib(q)][aib(r)];
-        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
+        if (isHex(q,r) || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
             return false;
         if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
 
+        // TODO check that none of Vertex(q, r)'s neighbors are occupied
+
         ((Vertex)s).setOwner(player);
+        ((Vertex)s).setLevel(1);
         update = true;
         return true;
     }
     public boolean buildCity(int q, int r, int player)
     {
         Shape s = vertices[aib(q)][aib(r)];
-        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
+        if (isHex(q,r) || ((Vertex)s).getLevel() != 1)  // is a Hexagon, or is not a settlement
+            return false;
+        if (((Vertex)s).getOwner() != player) // settlement is not owned by building player
             return false;
         if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
 
-        ((Vertex)s).setOwner(player);
+        ((Vertex)s).setLevel(2);  // level up to a city!
         update = true;
         return true;
     }
@@ -145,6 +150,9 @@ public class Board {
         Edge e = getEdge(src, dst);
         if (e == null) // no such edge
             return false;
+
+        // TODO check that player owns at least one of [src, dst]
+
         e.setOwner(player);
         if(debug) System.out.println("BOARD setting ownership of road " + e + " to " + player);
         update = true;
@@ -238,9 +246,12 @@ public class Board {
     {  // array-index boundary
         return (i+arraySize) % arraySize;
     }
-
+    private boolean isHex(int q, int r) { return Math.abs(q-r) % 3 == 0; }
+    private boolean isHex(Point_QR hex) { return Math.abs(hex.q()-hex.r()) % 3 == 0; }
     private Edge getEdge(Point_QR a, Point_QR b)
     {
+        if (isHex(a) || isHex(b))
+            return null;
         if (((a.q() - a.r()) + 1) % 3 == 0) {
             // a is the source
             for (Edge e: edges[aib(a.q())/3][aib(a.r())])
@@ -260,7 +271,7 @@ public class Board {
     {
         for (int q = -rings; q <= rings; q++) {
             for (int r = Math.max(-rings, -q - rings); r <= Math.min(rings, -q + rings); r++) {
-                if (Math.abs(q-r) % 3 == 0) {  // a full Hexagon
+                if (isHex(q, r)) {  // a full Hexagon
                     vertices[aib(q)][aib(r)] = new Hexagon(q, r);
                 }
                 else {  // otherwise a Vertex
@@ -338,7 +349,7 @@ public class Board {
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
-                if ((q-r)%3==0 && s != null) {
+                if (isHex(q, r) && s != null) {
                     int which = rand.nextInt(shufsize);
                     ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
                     shuffle[which] = shuffle[--shufsize];
