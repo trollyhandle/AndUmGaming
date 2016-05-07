@@ -1,0 +1,28 @@
+<% include ../partials/header.ejs %>
+<% include ../partials/nav.ejs %>
+
+<% if(rs.length > 0) { %>
+<table border="1">
+    <tr>
+        <th>game Title</th>
+        <th>Tagline</th>
+        <th></th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <% for (var i=0; rs.length > i; i++) { %>
+    <tr>
+        <td><a href="/game/?game_id=<%= rs[i].game_id %>"> <%= rs[i].title %></a></td>
+        <td><a href="/game/?game_id=<%= rs[i].game_id %>"> <%= rs[i].tagline %></a></td>
+        <td></td>
+        <td><a href="/game/edit/?game_id=<%= rs[i].game_id %>">Edit</a></td>
+        <td><a href="/game/delete/?game_id=<%= rs[i].game_id %>&title=<%= rs[i].title%>">Delete</a></td>
+    </tr>
+    <% } %>
+</table>
+<% } else { %>
+No games exist.
+<% } %>
+</br><a href="/game/new">Add game</a>
+
+<% include ../partials/footer.ejs %>

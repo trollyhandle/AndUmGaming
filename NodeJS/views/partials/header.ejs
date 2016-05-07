@@ -1,0 +1,19 @@
+<html>
+<head>
+    <title>Lab 11 Login</title>
+    <style>
+        label {
+            width:75px;
+            display:inline-block;
+            margin-bottom:10px;
+        }
+    </style>
+</head>
+<body>
+<div style="float:right;">
+    <% if(typeof firstname !== "undefined") { %>
+    Welcome, <%= firstname %>
+    <% } else { %>
+    <a href="/login">Login</a>
+    <% } %>
+</div>
