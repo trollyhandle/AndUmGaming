@@ -119,7 +119,7 @@ public class GameTest extends AppCompatActivity {
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON move left");
 //                game.move(-10, 0);
-                game.setBuildState(Game.BUILD.CITY);
+                game.setBuildState(Game.BUILD.SETLLEMENT);
             }
         });
         zoomRight.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +134,8 @@ public class GameTest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON move up");
-                game.move(0, -10);
+//                game.move(0, -10);
+                game.setBuildState(Game.BUILD.CITY);
             }
         });
         zoomDown.setOnClickListener(new View.OnClickListener() {
