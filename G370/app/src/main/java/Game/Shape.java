@@ -32,7 +32,7 @@ public abstract class Shape {
 
     public Path getPath() { return path; }
 
-    public void getDrawable(int hex_size, Point_XY boardCenter)
+    public void update(int hex_size, Point_XY boardCenter)
     {
         if(debug)System.out.println("SHAPE Making path...");
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);

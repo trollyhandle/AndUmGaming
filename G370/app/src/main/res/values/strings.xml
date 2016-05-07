@@ -44,10 +44,10 @@
     <!-- Zoom controls -->
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
-    <string name="zoom_left">L</string>
+    <string name="zoom_left">cty</string>
     <string name="zoom_up">U</string>
     <string name="zoom_down">D</string>
-    <string name="zoom_right">R</string>
+    <string name="zoom_right">rd</string>
     <string name="zoom_reset">*</string>
 
     <!-- Resource transactions -->
@@ -56,11 +56,20 @@
     <string name="road">Buy Road</string>
     <string name="card">Buy Card</string>
 
+    <!-- where in the resource string the number begins-->
+    <integer name="res_count_index">7</integer>
+
     <string name="wheat">Wheat: 0</string>
     <string name="wood" >Wood: 0</string>
     <string name="ore"  >Ore: 0</string>
     <string name="brick">Brick: 0</string>
     <string name="sheep">Sheep: 0</string>
+
+    <string name="wheat_f">Wheat: %1$d</string>
+    <string name="wood_f" >Wood: %1$d</string>
+    <string name="ore_f"  >Ore: %1$d</string>
+    <string name="brick_f">Brick: %1$d</string>
+    <string name="sheep_f">Sheep: %1$d</string>
 
 
 </resources>

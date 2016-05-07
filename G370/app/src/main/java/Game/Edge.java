@@ -21,15 +21,26 @@ public class Edge {
         this.dest = dest;
         direction = dir;
         owner = 0;
+        path = new Path();
+    }
+
+    public boolean isEdge(Point_QR a, Point_QR b)
+    {
+        if (a.equals(source))
+            return b.equals(dest);
+        else if (b.equals(source))
+            return a.equals(dest);
+        return false;
     }
 
     public Point_QR getSource() { return source; }
     public Point_QR getDestination() { return dest; }
 
     public int getOwner() { return owner; }
+    public void setOwner(int player) { owner = player; }
 
     public Path getPath() { return path; }
-    public void getDrawable(int hex_size, Point_XY boardCenter)
+    public void update(int hex_size, Point_XY boardCenter)
     {
         Point_XY src_pt = boardCenter.jump_hex(source.q(), source.r(), hex_size);
         Point_XY dst_pt = boardCenter.jump_hex(dest.q(), dest.r(), hex_size);
@@ -40,7 +51,7 @@ public class Edge {
         Point_XY dst_a = dst_pt.jump_linear(angle-offset, -vertex_size);
         Point_XY dst_b = dst_pt.jump_linear(angle+offset, -vertex_size);
 
-        path = new Path();
+        path.rewind();
         path.moveTo(src_a.x(), src_a.y());
         path.lineTo(dst_a.x(), dst_a.y());
         path.lineTo(dst_b.x(), dst_b.y());

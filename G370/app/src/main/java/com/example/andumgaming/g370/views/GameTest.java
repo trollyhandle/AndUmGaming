@@ -1,7 +1,6 @@
 
 package com.example.andumgaming.g370.views;
 
-
 import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.fragments.ActionPanelFragment;
 import com.example.andumgaming.g370.views.fragments.BuySubpanelFragment;
@@ -28,15 +27,14 @@ import android.widget.RelativeLayout;
 
 import Game.Board;
 import Game.BoardView;
+import Game.Game;
 import Game.Point_XY;
-
 
 public class GameTest extends AppCompatActivity {
 
     private boolean debug = true;
 
-    private Board board;
-    private BoardView boardView;
+    private Game game;
 
     private Button zoomIn;
     private Button zoomOut;
@@ -47,8 +45,6 @@ public class GameTest extends AppCompatActivity {
     private Button zoomReset;
 
     private int width, height;
-    private int default_hex_size;
-    private Point_XY default_center;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,28 +52,15 @@ public class GameTest extends AppCompatActivity {
         setContentView(R.layout.activity_game_test);
         findSize();
 
-        // width/9 is a good initial hex size.
-        // I determined this after multiple iterations of a complex modeling algorithm...
-        //      just kidding, guess and check
-        default_hex_size = width / 9;
-        default_center = new Point_XY(width/2, height/2);
-
+        loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
-        loadfragment();  // TRANSACTION
 
-        if(debug)System.out.println("TEST creating Board");
-        if(debug)System.out.printf("TEST center at (%1$2d,%2$2d)\n", width / 2, height / 2);
-        board = new Board(default_hex_size, default_center);
-        board.update();
+        game = new Game(this, width, height);
 
-        if(debug)System.out.println("TEST creating BoardView");
-        boardView = new BoardView(this, board);
-        boardView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
+        // add game - board and view - to layout
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
-        if (layout != null) {  // calms Android Studios: should not be null, I think...
-            layout.addView(boardView);
-        }
+        if (layout != null)  // calms Android Studios: should not be null, I think...
+            layout.addView(game.getView());
         else if(debug)System.out.println("VIEW ERROR dynamic add-to-layout failed");
 
         // bring buttons to foreground
@@ -87,11 +70,12 @@ public class GameTest extends AppCompatActivity {
         else if(debug)System.out.println("VIEW ERROR buttons move to foreground failed");
 
         // bring fragment to foreground
-        FrameLayout fragmentlayout = (FrameLayout)findViewById(R.id.fragmentlayout);
-        if (fragmentlayout != null) // calms Android Studios: should not be null, I think...
-            fragmentlayout.bringToFront();
+        FrameLayout fragmentLayout = (FrameLayout)findViewById(R.id.fragmentlayout);
+        if (fragmentLayout != null) // calms Android Studios: should not be null, I think...
+            fragmentLayout.bringToFront();
         else if(debug)System.out.println("VIEW ERROR fragment bring to foreground failed");
 
+        game.getView().setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
@@ -106,81 +90,79 @@ public class GameTest extends AppCompatActivity {
 
     private void loadButtons()
     {
-        zoomIn = (Button)findViewById(R.id.zoomIn);
-        zoomOut = (Button)findViewById(R.id.zoomOut);
-        zoomLeft = (Button)findViewById(R.id.zoomLeft);
-        zoomUp = (Button)findViewById(R.id.zoomUp);
-        zoomDown = (Button)findViewById(R.id.zoomDown);
-        zoomRight = (Button)findViewById(R.id.zoomRight);
-        zoomReset = (Button)findViewById(R.id.zoomReset);
+        zoomIn      = (Button)findViewById(R.id.zoomIn);
+        zoomOut     = (Button)findViewById(R.id.zoomOut);
+        zoomLeft    = (Button)findViewById(R.id.zoomLeft);
+        zoomUp      = (Button)findViewById(R.id.zoomUp);
+        zoomDown    = (Button)findViewById(R.id.zoomDown);
+        zoomRight   = (Button)findViewById(R.id.zoomRight);
+        zoomReset   = (Button)findViewById(R.id.zoomReset);
+
         zoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON zoom in");
-                board.resize(10);
-                boardView.invalidate();  // force a redraw
+                game.resize(10);
             }
         });
         zoomOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON zoom out");
-                board.resize(-10);
-                boardView.invalidate();  // force a redraw
+                game.resize(-10);
             }
         });
         zoomLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON move left");
-                board.move(-10, 0);
-                boardView.invalidate();  // force a redraw
+//                game.move(-10, 0);
+                game.setBuildState(Game.BUILD.CITY);
             }
         });
         zoomRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON move right");
-                board.move(10, 0);
-                boardView.invalidate();  // force a redraw
+//                game.move(10, 0);
+                game.setBuildState(Game.BUILD.ROAD);
             }
         });
         zoomUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON move up");
-                board.move(0, -10);
-                boardView.invalidate();  // force a redraw
+                game.move(0, -10);
             }
         });
         zoomDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON move down");
-                board.move(0, 10);
-                boardView.invalidate();  // force a redraw
+                game.move(0, 10);
             }
         });
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON reset zoom");
-                board.setHexSize(default_hex_size);
-                board.setCenter(default_center);
-                boardView.invalidate();  // force a redraw
-                boardView.nextTurn();
+                game.resetZoom();
+                game.nextTurn();
 
             }
         });
 
     }
 
-    private void loadfragment() {
+    private void loadFragment() {
         ActionPanelFragment newFragment = new ActionPanelFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.game_container,newFragment)
-                        .addToBackStack(BuySubpanelFragment.class
-                                .getSimpleName()).commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.game_container, newFragment)
+                .addToBackStack(BuySubpanelFragment.class.getSimpleName())
+                .commit();
+
+
     }
 
 

@@ -39,24 +39,25 @@ public class Board {
         extra_vertices = new int[12][];
         initBoard();
         fillTiles();
-        update = false;
+        update = true;
     }
 
     public ShapeDrawable[] getShapeDrawables() { if (update) update(); return shapes; }
 
     public void update() {
         if(debug)System.out.println("BOARD Updating path...");
-        if(debug) System.out.println(this);
+//        if(debug) System.out.println(this);
         int i = 0;
         Shape s;
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
                 if (s != null) {
-                    s.getDrawable(hex_size, center);
+                    s.update(hex_size, center);
 
-                    int color = (q-r)%3 == 0? (Game.RESOURCES.getColor(((Hexagon) s).getResource())) :
-                            Game.PLAYERS.getColor(((Vertex) s).getOwner());
+                    int color = (q-r)%3 == 0? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
+                            Game.PLAYERS.getColor(((Vertex)s).getOwner());
+                    if(debug)System.out.println("BOARD drawing with color " + color);
                     shapes[i++] = new ShapeDrawable(s.getPath(), color);
                 }
             }
@@ -68,7 +69,7 @@ public class Board {
                 for (int k = 0; k < 3; k++) {
                     e = edges[q][r][k];
                     if (e != null) {
-                        e.getDrawable(hex_size, center);
+                        e.update(hex_size, center);
                         int color = Game.PLAYERS.getColor(e.getOwner());
                         shapes[i++] = new ShapeDrawable(e.getPath(), color);
                         edgesDrawn++;
@@ -117,7 +118,7 @@ public class Board {
     }
 
 
-    public boolean setOwner(int q, int r, int player)
+    public boolean buildSettlement(int q, int r, int player)
     {
         Shape s = vertices[aib(q)][aib(r)];
         if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
@@ -125,6 +126,27 @@ public class Board {
         if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
 
         ((Vertex)s).setOwner(player);
+        update = true;
+        return true;
+    }
+    public boolean buildCity(int q, int r, int player)
+    {
+        Shape s = vertices[aib(q)][aib(r)];
+        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
+            return false;
+        if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
+
+        ((Vertex)s).setOwner(player);
+        update = true;
+        return true;
+    }
+    public boolean buildRoad(Point_QR src, Point_QR dst, int player)
+    {
+        Edge e = getEdge(src, dst);
+        if (e == null) // no such edge
+            return false;
+        e.setOwner(player);
+        if(debug) System.out.println("BOARD setting ownership of road " + e + " to " + player);
         update = true;
         return true;
     }
@@ -222,13 +244,13 @@ public class Board {
         if (((a.q() - a.r()) + 1) % 3 == 0) {
             // a is the source
             for (Edge e: edges[aib(a.q())/3][aib(a.r())])
-                if (e.getDestination().equals(b))
+                if (e != null && e.getDestination().equals(b))
                     return e;
         }
         else {
             // b is the source
             for (Edge e: edges[aib(b.q())/3][aib(b.r())])
-                if (e.getDestination().equals(a))
+                if (e != null && e.getDestination().equals(a))
                     return e;
         }
         return null;  // a and b are not adjacent
@@ -278,7 +300,6 @@ public class Board {
                     }
                     if (isValid(v.getNeighbor(4))) {
                         edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); numEdges++;
-                        if(debug) System.out.println("Creating Edge: " + edges[aib(q) / 3][aib(r)][2]);
                     }
                 }
             }

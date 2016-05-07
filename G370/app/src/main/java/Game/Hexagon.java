@@ -21,7 +21,7 @@ public class Hexagon extends Shape {
 
     public String type() { return "Hexagon"; }
 
-    public void getDrawable(int hex_size, Point_XY boardCenter)
+    public void update(int hex_size, Point_XY boardCenter)
     {
         int poly_size = (int)(hex_size/1.3);
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);

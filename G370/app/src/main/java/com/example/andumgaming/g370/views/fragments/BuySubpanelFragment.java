@@ -48,6 +48,9 @@ public class BuySubpanelFragment extends Fragment {
         });
 
         //implement the following buy buttons
+        // if these can be made to work in GameTest, they'll work
+        // just call on the Game.setBuildState() function
+        /* *********************/
 
         buyRoad = (Button)view.findViewById(R.id.road);
         buyRoad.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +75,8 @@ public class BuySubpanelFragment extends Fragment {
                 //implement buying a card
             }
         });
+
+        //  *********************  */
 
         return view;
     }

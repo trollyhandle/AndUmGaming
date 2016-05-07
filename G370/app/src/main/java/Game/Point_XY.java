@@ -91,6 +91,9 @@ public class Point_XY {
         return String.format("(%1$4d,%2$4d)", _x, _y);
 
     }
+    public boolean equals(Point_XY other) {
+        return _x == other._x && _y == other._y;
+    }
     public String serialize()
     {
         String json = "\"pointxy\":";
