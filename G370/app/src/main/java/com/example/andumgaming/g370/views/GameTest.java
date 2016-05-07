@@ -45,9 +45,9 @@ public class GameTest extends AppCompatActivity {
     private Button zoomRight;
     private Button zoomReset;
     private Button BuyRoad;
-    private Button BuySettlement;
-    private Button BuyCard;
-    private Button BackButton;
+    private Button BuyHouse;
+    private Button EndTurn;
+    //private Button BackButton;
 
     private int width, height;
     private int default_hex_size;
@@ -115,9 +115,9 @@ public class GameTest extends AppCompatActivity {
         zoomRight = (Button) findViewById(R.id.zoomRight);
         zoomReset = (Button) findViewById(R.id.zoomReset);
         BuyRoad = (Button) findViewById(R.id.buyroad);
-        BuySettlement = (Button) findViewById(R.id.buysettlement);
-        BuyCard = (Button) findViewById(R.id.buycard);
-        BackButton = (Button) findViewById(R.id.back);
+        BuyHouse = (Button) findViewById(R.id.buyhouse);
+        EndTurn = (Button) findViewById(R.id.endturn);
+        //BackButton = (Button) findViewById(R.id.back);
 
         zoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,30 +178,30 @@ public class GameTest extends AppCompatActivity {
 
             }
         });
-
+/*
         BackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-
+*/
         BuyRoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        BuySettlement.setOnClickListener(new View.OnClickListener() {
+        BuyHouse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
-        BuyCard.setOnClickListener(new View.OnClickListener() {
+        EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                boardView.nextTurn();
             }
         });
 
