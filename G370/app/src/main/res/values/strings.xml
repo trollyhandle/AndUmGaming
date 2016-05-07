@@ -44,8 +44,8 @@
     <!-- Zoom controls -->
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
-    <string name="zoom_left">cty</string>
-    <string name="zoom_up">U</string>
+    <string name="zoom_left">stl</string>
+    <string name="zoom_up">cty</string>
     <string name="zoom_down">D</string>
     <string name="zoom_right">rd</string>
     <string name="zoom_reset">*</string>
