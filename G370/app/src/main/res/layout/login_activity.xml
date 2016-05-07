@@ -58,30 +58,28 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="15sp"
         android:textColor="#ffffff"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="39dp"
         android:layout_below="@+id/textView5"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5"
         android:layout_alignRight="@+id/button2"
-        android:layout_alignEnd="@+id/button2"
-        android:layout_toEndOf="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignEnd="@+id/button2" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/LoginRole"
-        android:layout_alignLeft="@+id/textView7"
-        android:layout_alignStart="@+id/textView7"
-        android:layout_marginTop="26dp"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3" />
 
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="loginPost"
+        android:onClick="login"
         android:text="@string/login_button_text"
         android:layout_marginTop="28dp"
         android:layout_below="@+id/editText2"

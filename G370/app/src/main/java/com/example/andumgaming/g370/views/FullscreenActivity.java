@@ -155,7 +155,7 @@ public class FullscreenActivity extends AppCompatActivity {
         usernameField = (EditText)findViewById(R.id.editText1);
         passwordField = (EditText)findViewById(R.id.editText2);
 
-        role = (TextView)findViewById(R.id.textView7);
+        status = (TextView)findViewById(R.id.textView7);
 
 
         mContentView = findViewById(R.id.container);
@@ -174,21 +174,13 @@ public class FullscreenActivity extends AppCompatActivity {
 
     /* Login Activity */
     private EditText usernameField,passwordField;
-    private TextView status,role,method;
+    private TextView status, method;
 
     public void login(View view){
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
-        method.setText("Get Method");
-        new LoginAsyncTask(this,status,role,0).execute(username,password);
-
-    }
-
-    public void loginPost(View view){
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
         method.setText("Post Method");
-        new LoginAsyncTask(this,status,role,1).execute(username,password);
+        new LoginAsyncTask(this,status).execute(username,password);
     }
 
 

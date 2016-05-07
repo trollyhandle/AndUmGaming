@@ -24,20 +24,17 @@ import android.support.v4.app.Fragment;
 import com.example.andumgaming.g370.views.FullscreenActivity;
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
 import com.example.andumgaming.g370.R;
+import com.google.gson.Gson;
 //TODO fix GSON
 //import com.google.gson.Gson;
 
 public class LoginAsyncTask extends AsyncTask<String,Void,String> {
-    private TextView statusField,roleField;
+    private TextView loginStatus;
     private Context context;
-    private int byGetOrPost = 0;
 
-    //flag 0 means get and 1 means post.(By default it is get.)
-    public LoginAsyncTask(Context context, TextView statusField, TextView roleField, int flag) {
+    public LoginAsyncTask(Context context, TextView loginStatus) {
         this.context = context;
-        this.statusField = statusField;
-        this.roleField = roleField;
-        byGetOrPost = flag;
+        this.loginStatus = loginStatus;
     }
 
     protected void onPreExecute(){
@@ -51,8 +48,8 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
             String username = (String)arg0[0];
             String password = (String)arg0[1];
 
-            String link="http://g370.duckdns.org/login.php";
-            String data  = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+            String link="localhost:3000";
+            String data  = "/authenticate" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
             URL url = new URL(link);
@@ -82,17 +79,22 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
+    public class JsonResponse {
+        private int success;
+        private String status;
+    }
+
     @Override
     protected void onPostExecute(String result) {
-        //TODO fix gson
-        //Gson gson = new Gson();
-        if (true) {
+        Gson gson = new Gson();
+        JsonResponse status = gson.fromJson(result, JsonResponse.class);
+        if (status.success == 1) {
             Intent i = new Intent(context, FullscreenActivity.class);
             context.startActivity(i);
             ((Activity)context).finish();
 
 
         } else
-            this.roleField.setText("INVALID LOGIN");
+            this.loginStatus.setText("INVALID LOGIN");
     }
 }
