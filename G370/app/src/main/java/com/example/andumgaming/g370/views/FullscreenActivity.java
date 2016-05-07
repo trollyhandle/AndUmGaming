@@ -2,7 +2,6 @@ package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +14,16 @@ import android.os.IBinder;
 import android.content.Intent;
 import android.content.Context;
 
+/* Login required */
+import android.widget.TextView;
+import android.widget.EditText;
+
+
 import com.example.andumgaming.g370.R;
 
+import com.example.andumgaming.g370.views.asynctask.LoginAsyncTask;
+
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
-import com.example.andumgaming.g370.views.fragments.SplashFragment;
 
 import java.util.List;
 
@@ -29,7 +34,8 @@ import Interface.BackStackLisnter;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
-    private SplashFragment splashFragment;
+   // private SlashActivity splashFragment;
+    private MenuFragment menuFragment;
     private BackStackLisnter backStackLisnter;
 
 
@@ -37,8 +43,10 @@ public class FullscreenActivity extends AppCompatActivity {
     public void onBackPressed() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
 
+
         Fragment cuurentFragment = getSupportFragmentManager().findFragmentById(R.id.container);
-        if(cuurentFragment instanceof MenuFragment || cuurentFragment instanceof SplashFragment) {
+        if(cuurentFragment instanceof MenuFragment) {
+
             for (Fragment f:fragments){
                 if (f instanceof BackStackLisnter){
                     backStackLisnter = (BackStackLisnter)f;
@@ -138,13 +146,21 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
-        splashFragment = SplashFragment.newInstance();
-
+        //splashFragment = SlashActivity.newInstance();
+         menuFragment = MenuFragment.newInstance();
         //menuFragment.setOnFr
+
+        /* Login Activity */
+
+        usernameField = (EditText)findViewById(R.id.editText1);
+        passwordField = (EditText)findViewById(R.id.editText2);
+
+        role = (TextView)findViewById(R.id.textView7);
+
 
         mContentView = findViewById(R.id.container);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,splashFragment).addToBackStack(SplashFragment.class.getSimpleName()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container,menuFragment).addToBackStack(MenuFragment.class.getSimpleName()).commit();
 
 
         /*initialize buttons*/
@@ -155,6 +171,26 @@ public class FullscreenActivity extends AppCompatActivity {
         music.setClass(this, MusicService.class);
         startService(music);
     }
+
+    /* Login Activity */
+    private EditText usernameField,passwordField;
+    private TextView status,role,method;
+
+    public void login(View view){
+        String username = usernameField.getText().toString();
+        String password = passwordField.getText().toString();
+        method.setText("Get Method");
+        new LoginAsyncTask(this,status,role,0).execute(username,password);
+
+    }
+
+    public void loginPost(View view){
+        String username = usernameField.getText().toString();
+        String password = passwordField.getText().toString();
+        method.setText("Post Method");
+        new LoginAsyncTask(this,status,role,1).execute(username,password);
+    }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
