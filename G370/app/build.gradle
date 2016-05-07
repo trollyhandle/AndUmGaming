@@ -18,7 +18,6 @@ android {
         }
     }
 
-    //useLibrary 'org.apache.http.legacy'
 
     //stuff added for subdirectories of layout
     sourceSets {
