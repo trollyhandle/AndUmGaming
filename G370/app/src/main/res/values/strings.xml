@@ -52,6 +52,10 @@
 
     <!-- Resource transactions -->
     <string name="buy"  >Buy</string>
+    <string name="settlement">Buy Settlement</string>
+    <string name="road">Buy Road</string>
+    <string name="card"></string>
+
     <string name="wheat">Wheat: 0</string>
     <string name="wood" >Wood: 0</string>
     <string name="ore"  >Ore: 0</string>
