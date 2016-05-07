@@ -44,6 +44,10 @@ public class GameTest extends AppCompatActivity {
     private Button zoomDown;
     private Button zoomRight;
     private Button zoomReset;
+    private Button BuyRoad;
+    private Button BuySettlement;
+    private Button BuyCard;
+    private Button BackButton;
 
     private int width, height;
     private int default_hex_size;
@@ -87,7 +91,7 @@ public class GameTest extends AppCompatActivity {
 
 
 
-        loadfragment();
+    //    loadfragment();
         FrameLayout fragmentlayout = (FrameLayout)findViewById(R.id.fragmentlayout);
         fragmentlayout.bringToFront();
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -102,19 +106,23 @@ public class GameTest extends AppCompatActivity {
         if(debug)System.out.println("TEST Window size: " + width + " by " + height);
     }
 
-    private void loadButtons()
-    {
-        zoomIn = (Button)findViewById(R.id.zoomIn);
-        zoomOut = (Button)findViewById(R.id.zoomOut);
-        zoomLeft = (Button)findViewById(R.id.zoomLeft);
-        zoomUp = (Button)findViewById(R.id.zoomUp);
-        zoomDown = (Button)findViewById(R.id.zoomDown);
-        zoomRight = (Button)findViewById(R.id.zoomRight);
-        zoomReset = (Button)findViewById(R.id.zoomReset);
+    private void loadButtons() {
+        zoomIn = (Button) findViewById(R.id.zoomIn);
+        zoomOut = (Button) findViewById(R.id.zoomOut);
+        zoomLeft = (Button) findViewById(R.id.zoomLeft);
+        zoomUp = (Button) findViewById(R.id.zoomUp);
+        zoomDown = (Button) findViewById(R.id.zoomDown);
+        zoomRight = (Button) findViewById(R.id.zoomRight);
+        zoomReset = (Button) findViewById(R.id.zoomReset);
+        BuyRoad = (Button) findViewById(R.id.buyroad);
+        BuySettlement = (Button) findViewById(R.id.buysettlement);
+        BuyCard = (Button) findViewById(R.id.buycard);
+        BackButton = (Button) findViewById(R.id.back);
+
         zoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)System.out.println("BUTTON zoom in");
+                if (debug) System.out.println("BUTTON zoom in");
                 board.resize(10);
                 boardView.invalidate();  // force a redraw
             }
@@ -122,7 +130,7 @@ public class GameTest extends AppCompatActivity {
         zoomOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)System.out.println("BUTTON zoom out");
+                if (debug) System.out.println("BUTTON zoom out");
                 board.resize(-10);
                 boardView.invalidate();  // force a redraw
             }
@@ -130,7 +138,7 @@ public class GameTest extends AppCompatActivity {
         zoomLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move left");
+                if (debug) System.out.println("BUTTON move left");
                 board.move(-10, 0);
                 boardView.invalidate();  // force a redraw
             }
@@ -138,7 +146,7 @@ public class GameTest extends AppCompatActivity {
         zoomRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move right");
+                if (debug) System.out.println("BUTTON move right");
                 board.move(10, 0);
                 boardView.invalidate();  // force a redraw
             }
@@ -146,7 +154,7 @@ public class GameTest extends AppCompatActivity {
         zoomUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move up");
+                if (debug) System.out.println("BUTTON move up");
                 board.move(0, -10);
                 boardView.invalidate();  // force a redraw
             }
@@ -154,7 +162,7 @@ public class GameTest extends AppCompatActivity {
         zoomDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move down");
+                if (debug) System.out.println("BUTTON move down");
                 board.move(0, 10);
                 boardView.invalidate();  // force a redraw
             }
@@ -162,11 +170,37 @@ public class GameTest extends AppCompatActivity {
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(debug)System.out.println("BUTTON reset zoom");
+                if (debug) System.out.println("BUTTON reset zoom");
                 board.setHexSize(default_hex_size);
                 board.setCenter(default_center);
                 boardView.invalidate();  // force a redraw
                 boardView.nextTurn();
+
+            }
+        });
+
+        BackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        BuyRoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        BuySettlement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        BuyCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
