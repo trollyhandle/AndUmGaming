@@ -30,11 +30,12 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name">
             android:theme="@style/FullscreenTheme">
-            <intent-filter>
+<!--            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+    -->
         </activity>
 
         <activity android:name=".views.SlashActivity">
@@ -57,18 +58,17 @@
             android:parentActivityName=".views.FullscreenActivity">
         </activity>
 
-        <activity android:name=".views.GameTest"></activity>
+        <activity
+            android:name=".views.GameTest">
 
+        </activity>
 
+<!--
 
         <activity
             android:name=".views.asynctask.LoginAsyncTask"
             android:label="@string/app_name" >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -77,6 +77,7 @@
             android:parentActivityName=".views.FullscreenActivity">
 
         </activity>
+    -->
         </application>
 
 
