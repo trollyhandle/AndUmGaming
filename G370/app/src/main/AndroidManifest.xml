@@ -71,7 +71,13 @@
             </intent-filter>
 
         </activity>
-    </application>
+        <activity
+            android:name=".views.TutorialActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:parentActivityName=".views.FullscreenActivity">
+
+        </activity>
+        </application>
 
 
 </manifest>

@@ -13,31 +13,6 @@ public class Board {
     private static final int MIN_SIZE = 80;
     private static final int MAX_SIZE = 840;
 
-    // RESOURCE PAINT_COLOR LOOKUP
-    private enum RES {
-        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
-        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
-        private int val; RES(int color) {val=color;}
-        static int get(int i) { switch(i) {
-            case 1: return WHEAT.val; case 2: return WOOD.val;
-            case 3: return ORE.val; case 4: return BRICK.val;
-            case 5: return SHEEP.val; } return BLANK.val; }
-        static int index(RES r) { switch(r) {
-            case WHEAT: return 1; case WOOD: return 2;
-            case ORE: return 3; case BRICK: return 4;
-            case SHEEP: return 5; } return 0; }
-    }
-    // PLAYER PAINT_COLOR LOOKUP
-    private enum PLAYERS {
-        NONE (0xffFFFFFF)/*WHITE*/, ONE (0xffFF0800)/*RED*/, TWO(0xff00FF00)/*GREEN*/,
-        THREE(0xff1C1CF0)/*BLUE*/,  FOUR(0xffBF00FF)/*VIOLET*/;
-        private int val; PLAYERS(int value) {val=value;}
-        static int get(int i) { switch(i) {
-            case 1: return ONE.val; case 2: return TWO.val;
-            case 3: return THREE.val; case 4: return FOUR.val;
-        } return NONE.val; }
-    }
-
     private int rings, arraySize;
     private int[][] extra_vertices;
     private ShapeDrawable[] shapes;
@@ -64,24 +39,25 @@ public class Board {
         extra_vertices = new int[12][];
         initBoard();
         fillTiles();
-        update = false;
+        update = true;
     }
 
     public ShapeDrawable[] getShapeDrawables() { if (update) update(); return shapes; }
 
     public void update() {
         if(debug)System.out.println("BOARD Updating path...");
-        if(debug) System.out.println(this);
+//        if(debug) System.out.println(this);
         int i = 0;
         Shape s;
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
                 if (s != null) {
-                    s.getDrawable(hex_size, center);
+                    s.update(hex_size, center);
 
-                    int color = (q-r)%3 == 0? (RES.get(((Hexagon)s).getResource())) :
-                            PLAYERS.get(((Vertex)s).getOwner());
+                    int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
+                            Game.PLAYERS.getColor(((Vertex)s).getOwner());
+//                    if(debug)System.out.printf("BOARD drawing with color %1$x\n", color);
                     shapes[i++] = new ShapeDrawable(s.getPath(), color);
                 }
             }
@@ -93,8 +69,8 @@ public class Board {
                 for (int k = 0; k < 3; k++) {
                     e = edges[q][r][k];
                     if (e != null) {
-                        e.getDrawable(hex_size, center);
-                        int color = PLAYERS.get(e.getOwner());
+                        e.update(hex_size, center);
+                        int color = Game.PLAYERS.getColor(e.getOwner());
                         shapes[i++] = new ShapeDrawable(e.getPath(), color);
                         edgesDrawn++;
                     }
@@ -142,14 +118,43 @@ public class Board {
     }
 
 
-    public boolean setOwner(int q, int r, int player)
+    public boolean buildSettlement(int q, int r, int player)
     {
         Shape s = vertices[aib(q)][aib(r)];
-        if ((q-r)%3 == 0 || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
+        if (isHex(q,r) || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
             return false;
         if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
 
+        // TODO check that none of Vertex(q, r)'s neighbors are occupied
+
         ((Vertex)s).setOwner(player);
+        ((Vertex)s).setLevel(1);
+        update = true;
+        return true;
+    }
+    public boolean buildCity(int q, int r, int player)
+    {
+        Shape s = vertices[aib(q)][aib(r)];
+        if (isHex(q,r) || ((Vertex)s).getLevel() != 1)  // is a Hexagon, or is not a settlement
+            return false;
+        if (((Vertex)s).getOwner() != player) // settlement is not owned by building player
+            return false;
+        if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
+
+        ((Vertex)s).setLevel(2);  // level up to a city!
+        update = true;
+        return true;
+    }
+    public boolean buildRoad(Point_QR src, Point_QR dst, int player)
+    {
+        Edge e = getEdge(src, dst);
+        if (e == null) // no such edge
+            return false;
+
+        // TODO check that player owns at least one of [src, dst]
+
+        e.setOwner(player);
+        if(debug) System.out.println("BOARD setting ownership of road " + e + " to " + player);
         update = true;
         return true;
     }
@@ -211,21 +216,21 @@ public class Board {
             }
         }
         // remove trailing comma
-        json = json.substring(0, json.length()-1);
-
-        /* edges not functional at this time
+        json = json.substring(0, json.length()-1) + "],";
         Edge e;
         json += "\"edges\":[";
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
-                e = edges[q][r];
-                if (e != null) {
-                    json += e.serialize() + ",";
+                for (int k = 0; k < 3; k++) {
+                    e = edges[q][r][k];
+                    if (e != null) {
+                        json += e.serialize() + ",";
+                    }
                 }
             }
         }
         // remove trailing comma
-        json = json.substring(0, json.length()-1);
+        json = json.substring(0, json.length()-1) + "]}}";
         // */
 
         return json;
@@ -241,19 +246,22 @@ public class Board {
     {  // array-index boundary
         return (i+arraySize) % arraySize;
     }
-
+    private boolean isHex(int q, int r) { return Math.abs(q-r) % 3 == 0; }
+    private boolean isHex(Point_QR hex) { return Math.abs(hex.q()-hex.r()) % 3 == 0; }
     private Edge getEdge(Point_QR a, Point_QR b)
     {
+        if (isHex(a) || isHex(b))
+            return null;
         if (((a.q() - a.r()) + 1) % 3 == 0) {
             // a is the source
             for (Edge e: edges[aib(a.q())/3][aib(a.r())])
-                if (e.getDestination().equals(b))
+                if (e != null && e.getDestination().equals(b))
                     return e;
         }
         else {
             // b is the source
             for (Edge e: edges[aib(b.q())/3][aib(b.r())])
-                if (e.getDestination().equals(a))
+                if (e != null && e.getDestination().equals(a))
                     return e;
         }
         return null;  // a and b are not adjacent
@@ -263,7 +271,7 @@ public class Board {
     {
         for (int q = -rings; q <= rings; q++) {
             for (int r = Math.max(-rings, -q - rings); r <= Math.min(rings, -q + rings); r++) {
-                if (Math.abs(q-r) % 3 == 0) {  // a full Hexagon
+                if (isHex(q, r)) {  // a full Hexagon
                     vertices[aib(q)][aib(r)] = new Hexagon(q, r);
                 }
                 else {  // otherwise a Vertex
@@ -303,7 +311,6 @@ public class Board {
                     }
                     if (isValid(v.getNeighbor(4))) {
                         edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); numEdges++;
-                        if(debug) System.out.println("Creating Edge: " + edges[aib(q) / 3][aib(r)][2]);
                     }
                 }
             }
@@ -330,20 +337,21 @@ public class Board {
 
     private void fillTiles()
     {
-        RES shuffle[] = { RES.BLANK, // one desert
-                RES.WHEAT,RES.WHEAT,RES.WHEAT,RES.WHEAT,  // 4 wheat
-                RES.WOOD, RES.WOOD, RES.WOOD, RES.WOOD,  // 4 wood
-                RES.SHEEP, RES.SHEEP, RES.SHEEP, RES.SHEEP,  // 4 sheep
-                RES.ORE, RES.ORE, RES.ORE, RES.BRICK, RES.BRICK, RES.BRICK};  // 3 ore and brick
+        Game.RESOURCES shuffle[] = { Game.RESOURCES.BLANK, // one desert
+                Game.RESOURCES.WHEAT, Game.RESOURCES.WHEAT, Game.RESOURCES.WHEAT, Game.RESOURCES.WHEAT,  // 4 wheat
+                Game.RESOURCES.WOOD, Game.RESOURCES.WOOD, Game.RESOURCES.WOOD, Game.RESOURCES.WOOD,  // 4 wood
+                Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP,  // 4 sheep
+                Game.RESOURCES.ORE, Game.RESOURCES.ORE, Game.RESOURCES.ORE,
+                Game.RESOURCES.BRICK, Game.RESOURCES.BRICK, Game.RESOURCES.BRICK};  // 3 ore and brick
         int shufsize = shuffle.length;  // 4+4+4+3+3+1 = 19
         Random rand = new Random();
         Shape s;
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
-                if ((q-r)%3==0 && s != null) {
+                if (isHex(q, r) && s != null) {
                     int which = rand.nextInt(shufsize);
-                    ((Hexagon)s).setResource(RES.index(shuffle[which]));
+                    ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
                     shuffle[which] = shuffle[--shufsize];
                 }
             }

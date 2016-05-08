@@ -56,8 +56,9 @@
     -->
 
     <!--
-    Strings
+    Strings for Game activity & Game support fragments
     -->
+    <!-- Zoom controls -->
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
     <string name="zoom_left">L</string>
@@ -65,8 +66,27 @@
     <string name="zoom_down">D</string>
     <string name="zoom_right">R</string>
     <string name="zoom_reset">*</string>
-    <!--<string name="zoom_reset">next turn</string>-->
 
-    <string name="buy">Buy</string>
+    <!-- Resource transactions -->
+    <string name="buy"  >Buy</string>
+    <string name="settlement">Buy Settlement</string>
+    <string name="road">Buy Road</string>
+    <string name="card">Buy Card</string>
+
+    <!-- where in the resource string the number begins-->
+    <integer name="res_count_index">7</integer>
+
+    <string name="wheat">Wheat: </string>
+    <string name="wood" >Wood: </string>
+    <string name="ore"  >Ore: </string>
+    <string name="brick">Brick: </string>
+    <string name="sheep">Sheep: </string>
+
+    <string name="wheat_f">%1$d</string>
+    <string name="wood_f" >%1$d</string>
+    <string name="ore_f"  >%1$d</string>
+    <string name="brick_f">%1$d</string>
+    <string name="sheep_f">%1$d</string>
+
 
 </resources>

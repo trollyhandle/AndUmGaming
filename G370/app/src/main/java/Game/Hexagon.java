@@ -21,14 +21,14 @@ public class Hexagon extends Shape {
 
     public String type() { return "Hexagon"; }
 
-    public void getDrawable(int hex_size, Point_XY boardCenter)
+    public void update(int hex_size, Point_XY boardCenter)
     {
         int poly_size = (int)(hex_size/1.3);
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(0, poly_size);
 
         path.rewind();
-        path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
+        path.addCircle(shape_center.x(), shape_center.y(), 8, Path.Direction.CCW);
         path.moveTo(pt.x(), pt.y());
 
         for (int i = 0; i <= 360; i += 60) {

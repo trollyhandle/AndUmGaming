@@ -2,15 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    android:padding="40dp">
-
-
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="Buy Road"
+        android:text="@string/road"
         android:id="@+id/road"
         android:textAllCaps="false"
         android:textSize="15sp" />
@@ -19,7 +16,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="Buy Settlement"
+        android:text="@string/settlement"
         android:id="@+id/settlement"
         android:textAllCaps="false"
         android:textSize="15sp" />
@@ -28,7 +25,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:text="Buy Card"
+        android:text="@string/card"
         android:id="@+id/card"
         android:textAllCaps="false"
         android:textSize="15sp" />
@@ -37,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="@string/back"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:textAllCaps="false"
         android:id="@+id/back" />
 

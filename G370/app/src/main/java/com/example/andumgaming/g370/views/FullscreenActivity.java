@@ -228,7 +228,7 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (MusicService.mPlayer.isPlaying() == true) {
+        if (MusicService.mPlayer.isPlaying()) {
             MusicService.mPlayer.pause();
         }
     }
@@ -236,7 +236,7 @@ public class FullscreenActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (MusicService.mPlayer != null && MusicService.mPlayer.isPlaying() == false) {
+        if (MusicService.mPlayer != null && ! MusicService.mPlayer.isPlaying()) {
             MusicService.mPlayer.start();
         }
     }

@@ -5,4 +5,20 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
+
+    <integer name="DESERT">0xffffffff</integer>
+    <integer name="WHEAT" >0xffFFDF00</integer>
+    <integer name="WOOD"  >0xff014421</integer>
+    <integer name="ORE"   >0xff8A7F80</integer>
+    <integer name="BRICK" >0xffCB4154</integer>
+    <integer name="SHEEP" >0xff98FF98</integer>
+
+    <integer name="NONE"  >0xffFFFFFF</integer>
+    <integer name="ONE"   >0xffFF0800</integer>
+    <integer name="TWO"   >0xff00FF00</integer>
+    <integer name="THREE" >0xff1C1CF0</integer>
+    <integer name="FOUR"  >0xffBF00FF</integer>
+
+
+
 </resources>
