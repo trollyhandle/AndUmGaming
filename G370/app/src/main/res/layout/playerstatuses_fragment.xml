@@ -13,42 +13,81 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:id="@+id/brick"
-            android:text="Brick: 99"
-            android:layout_weight="0.20"
-            android:gravity="center"/>
+            android:text="@string/brick"
+            android:layout_weight="0.10"
+            android:gravity="right"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/brickint"
+            android:text="@string/brick_f"
+            android:gravity="left"
+            android:layout_weight="0.0" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lumber"
-            android:text="Lumber: 99"
-            android:layout_weight=".20"
-            android:gravity="center"/>
+            android:text="@string/wood"
+            android:layout_weight=".10"
+            android:gravity="right"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lumberint"
+            android:text="@string/brick_f"
+            android:gravity="left"
+            android:layout_weight="0.0" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/wool"
-            android:text="Wool: 99"
-            android:layout_weight="0.20"
-            android:gravity="center"/>
+            android:text="@string/sheep"
+            android:layout_weight="0.10"
+            android:gravity="right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/woolint"
+            android:text="@string/sheep_f"
+            android:gravity="left"
+            android:layout_weight="0.0" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/grain"
-            android:text="Grain: 99"
-            android:layout_weight="0.20"
-            android:gravity="center"/>
+            android:text="@string/wheat"
+            android:layout_weight="0.10"
+            android:gravity="right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/grainint"
+            android:text="@string/wheat_f"
+            android:gravity="left"
+            android:layout_weight="0.0" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ore"
-            android:text="Ore: 99"
-            android:layout_weight="0.20"
-            android:gravity="center"/>
+            android:text="@string/ore"
+            android:layout_weight="0.10"
+            android:gravity="right"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/oreint"
+            android:text="@string/ore_f"
+            android:gravity="left"
+            android:layout_weight="0.10" />
+
     </LinearLayout>
 
 </LinearLayout>

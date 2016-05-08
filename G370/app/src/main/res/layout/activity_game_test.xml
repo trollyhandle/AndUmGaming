@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/game_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="com.example.andumgaming.g370.views.GameTest">
 
     <!-- Removed these from layout: the padding caused offset errors in board drawing stage -->
@@ -14,7 +14,7 @@
 
 
 
-    <LinearLayout
+     <LinearLayout
         android:id="@+id/zoom_control_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -86,7 +86,7 @@
             android:text="@string/zoom_out"
             android:textAllCaps="false"
             android:textSize="20sp"
-            android:layout_weight="20"/>
+            android:layout_weight="20" />
 
     </LinearLayout>
 
@@ -103,12 +103,64 @@
             tools:layout="@layout/playerstatuses_fragment"
             android:layout_gravity="center_horizontal|top" />
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:id="@+id/game_container"
-            android:layout_gravity="center_horizontal|bottom">
-        </FrameLayout>
+            android:layout_gravity="bottom|center_horizontal"
+            android:weightSum="1">
+
+<!--
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:textAllCaps="false"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/back"
+                android:id="@+id/back"
+                android:textSize="15sp"/>
+-->
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="End Turn"
+                android:id="@+id/endturn"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:layout_weight=".25" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Buy Road"
+                android:id="@+id/buyroad"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:layout_weight=".25" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Buy House"
+                android:id="@+id/buyhouse"
+                android:textAllCaps="false"
+                android:textSize="15sp"
+                android:layout_weight=".25" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="Buy City"
+                android:textAllCaps="false"
+                android:id="@+id/buycity"
+                android:textSize="15sp"
+                android:layout_weight=".25" />
+
+
+        </LinearLayout>
         <!--
         <Button
         android:text="Buy"
