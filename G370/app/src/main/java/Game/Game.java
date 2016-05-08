@@ -43,7 +43,7 @@ public class Game {
     }
 
     public enum BUILD {
-        NONE, ROAD, SETTLEMENT, CITY, KNIGHT;
+        NONE, ROAD, SETTLEMENT, CITY; //, KNIGHT;
     }
     private BUILD build;
     private Point_QR firstRoadPt;
@@ -88,13 +88,9 @@ public class Game {
         initResourceTabs(parent);
         setupTouchListener();
 
+        // TODO initialize players[], and at some point (maybe not here) call to server
+
     }
-
-
-
-
-
-
 
 
 
@@ -104,13 +100,12 @@ public class Game {
         turn = turn == 4? 1: turn + 1;
         build = BUILD.NONE;
 
-
-
         // set resources to the current player's stats
 
         // set cards too
 
     }
+
     public int getTurn() { return turn; }
 
     public void setBuildState(BUILD type) {

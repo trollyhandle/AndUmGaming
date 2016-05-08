@@ -46,7 +46,6 @@ public class Board {
 
     public void update() {
         if(debug)System.out.println("BOARD Updating path...");
-//        if(debug) System.out.println(this);
         int i = 0;
         Shape s;
         for (int q = 0; q < arraySize; q++) {
@@ -54,16 +53,13 @@ public class Board {
                 s = vertices[q][r];
                 if (s != null) {
                     s.update(hex_size, center);
-
                     int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
                             Game.PLAYERS.getColor(((Vertex)s).getOwner());
-//                    if(debug)System.out.printf("BOARD drawing with color %1$x\n", color);
                     shapes[i++] = new ShapeDrawable(s.getPath(), color);
                 }
             }
         }
         Edge e;
-        int edgesDrawn = 0;
         for (int q = 0; q < (arraySize)/3; q++) {
             for (int r = 0; r < (arraySize); r++) {
                 for (int k = 0; k < 3; k++) {
@@ -72,12 +68,10 @@ public class Board {
                         e.update(hex_size, center);
                         int color = Game.PLAYERS.getColor(e.getOwner());
                         shapes[i++] = new ShapeDrawable(e.getPath(), color);
-                        edgesDrawn++;
                     }
                 }
             }
         }
-        if(debug) System.out.println("Edges drawn: " + edgesDrawn);
         update = false;
     }
 
@@ -121,9 +115,11 @@ public class Board {
     public boolean buildSettlement(int q, int r, int player)
     {
         Shape s = vertices[aib(q)][aib(r)];
-        if (isHex(q,r) || ((Vertex)s).isOwned())  // is a Hexagon, or is already owned
+        if (isHex(q,r) || ((Vertex)s).isOwned()) {  // is a Hexagon, or is already owned
+            if (debug) System.out.println("BOARD cannot settle there!");
             return false;
-        if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
+        }
+        if (debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
 
         // TODO check that none of Vertex(q, r)'s neighbors are occupied
 
@@ -135,11 +131,15 @@ public class Board {
     public boolean buildCity(int q, int r, int player)
     {
         Shape s = vertices[aib(q)][aib(r)];
-        if (isHex(q,r) || ((Vertex)s).getLevel() != 1)  // is a Hexagon, or is not a settlement
+        if (isHex(q,r) || ((Vertex)s).getLevel() != 1) {  // is a Hexagon, or is not a settlement
+            if (debug) System.out.println("BOARD cannot settle there!");
             return false;
-        if (((Vertex)s).getOwner() != player) // settlement is not owned by building player
+        }
+        if (((Vertex)s).getOwner() != player) { // settlement is not owned by building player
+            if (debug) System.out.println("BOARD someone else has settled there!");
             return false;
-        if (debug) System.out.printf("BOARD setting ownership of %1$2d %2$2d to player %3$d\n", q, r, player);
+        }
+        if (debug) System.out.printf("BOARD upgrading ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
 
         ((Vertex)s).setLevel(2);  // level up to a city!
         update = true;
@@ -151,6 +151,7 @@ public class Board {
         if (e == null) // no such edge
             return false;
 
+        // TODO check that this edge is not already owned!
         // TODO check that player owns at least one of [src, dst]
 
         e.setOwner(player);
@@ -231,7 +232,6 @@ public class Board {
         }
         // remove trailing comma
         json = json.substring(0, json.length()-1) + "]}}";
-        // */
 
         return json;
     }
@@ -242,6 +242,7 @@ public class Board {
 
 // *********** PRIVATE FUNCTIONS ***********
 
+    // array-index boundary adjuster (transforms negative coordinates)
     private int aib(int i)
     {  // array-index boundary
         return (i+arraySize) % arraySize;
@@ -258,7 +259,7 @@ public class Board {
                 if (e != null && e.getDestination().equals(b))
                     return e;
         }
-        else {
+        else if (((b.q() - b.r()) + 1) % 3 == 0) {
             // b is the source
             for (Edge e: edges[aib(b.q())/3][aib(b.r())])
                 if (e != null && e.getDestination().equals(a))
@@ -290,7 +291,6 @@ public class Board {
             extra_vertices[i++] = new int[]{-pair[1], -pair[0]};
         }
         for (int[] pair: extra_vertices) {
-            if(debug) System.out.printf("Extra vertex: (%1$2d,%2$2d)\n", pair[0], pair[1]);
             vertices[aib(pair[0])][aib(pair[1])] = new Vertex(pair[0], pair[1]);
         }
         initEdges();
@@ -298,19 +298,18 @@ public class Board {
     private void initEdges()
     {
         Shape v;
-        int numEdges = 0;  // debugging
         for (int q = -rings; q < rings+1; q++) {
             for (int r = Math.max(-rings, -q-rings); r < Math.min(rings, -q+rings)+1; r++) {
                 v = vertices[aib(q)][aib(r)];
                 if (((q - r) + 1) % 3 == 0 && v != null) {  // necessary for larger boards
                     if (isValid(v.getNeighbor(0))) {
-                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0); numEdges++;
+                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0);
                     }
                     if (isValid(v.getNeighbor(2))) {
-                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4); numEdges++;
+                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4);
                     }
                     if (isValid(v.getNeighbor(4))) {
-                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); numEdges++;
+                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2);
                     }
                 }
             }
@@ -321,18 +320,17 @@ public class Board {
                 v = vertices[aib(q)][aib(r)];
                 if (v != null) {
                     if (isValid(v.getNeighbor(0))) {
-                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0); numEdges++;
+                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0);
                     }
                     if (isValid(v.getNeighbor(2))) {
-                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4); numEdges++;
+                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4);
                     }
                     if (isValid(v.getNeighbor(4))) {
-                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); numEdges++;
+                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2);
                     }
                 }
             }
         }
-        if(debug) System.out.println("Edges made: " + numEdges);
     }
 
     private void fillTiles()

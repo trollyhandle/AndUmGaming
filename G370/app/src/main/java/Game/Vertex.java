@@ -1,7 +1,6 @@
 package Game;
 
 import android.graphics.Path;
-import java.util.ArrayList;
 
 /**
  * Vertex.java
@@ -27,7 +26,8 @@ public class Vertex extends Shape {
         Point_XY pt = shape_center.jump_linear(330, poly_size);
 
         path.rewind();
-        path.addCircle(shape_center.x(), shape_center.y(), level==2? 0:4, Path.Direction.CCW);
+        if (level != 2)
+            path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
         path.moveTo(pt.x(), pt.y());
 
         for (int i = 30; i <= 360; i += 60) {
@@ -37,16 +37,6 @@ public class Vertex extends Shape {
         path.close();
     }
 
-//    public Edge[] generateEdges()
-//    {
-//        if (((coord.q() - coord.r()) + 1) % 3 == 0) {
-//            return new Edge[] {
-//                    new Edge(coord, getNeighbor(1)),
-//                    new Edge(coord, getNeighbor(1)),
-//                    new Edge(coord, getNeighbor(1))};
-//        }
-//        return null;
-//    }
 
     public boolean isOwned() { return owner != 0; }
     public int getOwner() { return owner; }

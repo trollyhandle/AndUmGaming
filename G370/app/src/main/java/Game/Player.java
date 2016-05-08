@@ -17,6 +17,8 @@ public class Player {
 
     }
 
+    // TODO lots of things.. mostly coordinate with server status
+
     public int getWheat() { return resources[0]; }
     public int getWood() { return resources[1]; }
     public int getOre() { return resources[2]; }

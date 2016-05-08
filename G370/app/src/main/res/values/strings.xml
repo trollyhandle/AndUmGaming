@@ -73,9 +73,6 @@
     <string name="road">Buy Road</string>
     <string name="card">Buy Card</string>
 
-    <!-- where in the resource string the number begins-->
-    <integer name="res_count_index">7</integer>
-
     <string name="wheat">Wheat: </string>
     <string name="wood" >Wood: </string>
     <string name="ore"  >Ore: </string>

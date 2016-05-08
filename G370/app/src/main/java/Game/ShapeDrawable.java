@@ -5,7 +5,8 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 /**
- * Created by Tyler on 5/1/16.
+ * Lightweight class to carry only the necessary information from the Board to the View for drawing.
+ * Author: Tyler Holland
  */
 public class ShapeDrawable {
 
