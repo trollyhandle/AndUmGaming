@@ -43,7 +43,7 @@ public class Game {
     }
 
     public enum BUILD {
-        NONE, ROAD, SETTLEMENT, CITY, KNIGHT;
+        NONE, ROAD, SETTLEMENT, CITY; //, KNIGHT;
     }
     private BUILD build;
     private Point_QR firstRoadPt;
@@ -88,13 +88,9 @@ public class Game {
         initResourceTabs(parent);
         setupTouchListener();
 
+        // TODO initialize players[], and at some point (maybe not here) call to server
+
     }
-
-
-
-
-
-
 
 
 
@@ -104,13 +100,13 @@ public class Game {
         turn = turn == 4? 1: turn + 1;
         build = BUILD.NONE;
 
-
-
         // set resources to the current player's stats
+//        refreshResourceCounts();  // dont do this till players are implemented
 
         // set cards too
 
     }
+
     public int getTurn() { return turn; }
 
     public void setBuildState(BUILD type) {
@@ -181,20 +177,20 @@ public class Game {
 
     private void initResourceTabs(Activity parent)
     {
-        wheat = (TextView)parent.findViewById(R.id.grain);
-        wood = (TextView)parent.findViewById(R.id.lumber);
-        ore = (TextView)parent.findViewById(R.id.ore);
-        brick = (TextView)parent.findViewById(R.id.brick);
-        sheep = (TextView)parent.findViewById(R.id.wool);
+        wheat   = (TextView)parent.findViewById(R.id.grainint);
+        wood    = (TextView)parent.findViewById(R.id.lumberint);
+        ore     = (TextView)parent.findViewById(R.id.oreint);
+        brick   = (TextView)parent.findViewById(R.id.brickint);
+        sheep   = (TextView)parent.findViewById(R.id.woolint);
     }
 
     private void refreshResourceCounts()
     {
-        wheat.setText(r.getString(R.string.wheat_f, players[turn].getWheat()));
-        wood.setText(r.getString(R.string.wood_f, players[turn].getWood()));
-        ore.setText(r.getString(R.string.ore_f, players[turn].getOre()));
-        brick.setText(r.getString(R.string.brick_f, players[turn].getBrick()));
-        sheep.setText(r.getString(R.string.sheep_f, players[turn].getSheep()));
+        wheat.setText   (r.getString(R.string.res_format, players[turn].getWheat()));
+        wood.setText    (r.getString(R.string.res_format, players[turn].getWood()));
+        ore.setText     (r.getString(R.string.res_format, players[turn].getOre()));
+        brick.setText   (r.getString(R.string.res_format, players[turn].getBrick()));
+        sheep.setText   (r.getString(R.string.res_format, players[turn].getSheep()));
     }
 
     private void setupTouchListener()

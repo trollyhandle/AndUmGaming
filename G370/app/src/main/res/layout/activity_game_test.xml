@@ -50,8 +50,6 @@
             android:textSize="20sp"
             android:layout_weight="20"/>
 
-
-
         <Button
             android:id="@+id/zoomReset"
             android:layout_width="200dp"
@@ -124,7 +122,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="End Turn"
+                android:text="@string/endturn"
                 android:id="@+id/endturn"
                 android:textAllCaps="false"
                 android:textSize="15sp"
@@ -134,7 +132,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="Buy Road"
+                android:text="@string/road"
                 android:id="@+id/buyroad"
                 android:textAllCaps="false"
                 android:textSize="15sp"
@@ -144,7 +142,7 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="Buy House"
+                android:text="@string/house"
                 android:id="@+id/buyhouse"
                 android:textAllCaps="false"
                 android:textSize="15sp"
@@ -153,12 +151,11 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="Buy City"
+                android:text="@string/city"
                 android:textAllCaps="false"
                 android:id="@+id/buycity"
                 android:textSize="15sp"
                 android:layout_weight=".25" />
-
 
         </LinearLayout>
         <!--

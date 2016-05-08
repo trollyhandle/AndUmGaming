@@ -5,6 +5,7 @@
     -->
     <string name="app_name">Polygonia</string>
     <string name="back">Back</string>
+    <string name="loading">loading</string>
 
 
     <!--
@@ -58,6 +59,7 @@
     <!--
     Strings for Game activity & Game support fragments
     -->
+    <string name="endturn">End Turn</string>
     <!-- Zoom controls -->
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>
@@ -70,23 +72,28 @@
     <!-- Resource transactions -->
     <string name="buy"  >Buy</string>
     <string name="settlement">Buy Settlement</string>
+    <string name="house">Buy House</string>
+    <string name="city">Buy City</string>
     <string name="road">Buy Road</string>
     <string name="card">Buy Card</string>
 
-    <!-- where in the resource string the number begins-->
-    <integer name="res_count_index">7</integer>
-
+    <!-- Resources -->
     <string name="wheat">Wheat: </string>
     <string name="wood" >Wood: </string>
     <string name="ore"  >Ore: </string>
     <string name="brick">Brick: </string>
     <string name="sheep">Sheep: </string>
 
-    <string name="wheat_f">%1$d</string>
-    <string name="wood_f" >%1$d</string>
-    <string name="ore_f"  >%1$d</string>
-    <string name="brick_f">%1$d</string>
-    <string name="sheep_f">%1$d</string>
+    <string name="res_empty">0</string>
+    <string name="res_format">%1$d</string>
+
+    <!-- player names (trade fragment) -->
+    <string name="player1">Player1</string>
+    <string name="player2">Player2</string>
+    <string name="player3">Player3</string>
+    <string name="player4">Player4</string>
+    <string name="player5">Player5</string>
+
 
 
 </resources>

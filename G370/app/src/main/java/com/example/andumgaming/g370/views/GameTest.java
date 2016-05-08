@@ -10,8 +10,6 @@ import android.graphics.Point;
 
 //import android.app.FragmentTransaction;
 
-
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,10 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import Game.Board;
-import Game.BoardView;
 import Game.Game;
-import Game.Point_XY;
 
 public class GameTest extends AppCompatActivity {
 
@@ -77,14 +72,8 @@ public class GameTest extends AppCompatActivity {
             fragmentLayout.bringToFront();
         else if(debug)System.out.println("VIEW ERROR fragment bring to foreground failed");
 
-//<<<<<<< HEAD
-
     //    loadfragment();
-        FrameLayout fragmentlayout = (FrameLayout)findViewById(R.id.fragmentlayout);
-        fragmentlayout.bringToFront();
-//=======
         game.getView().setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-//>>>>>>> tylerBoardGame
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
@@ -115,97 +104,51 @@ public class GameTest extends AppCompatActivity {
         zoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//<<<<<<< HEAD
-//                if (debug) System.out.println("BUTTON zoom in");
-//                board.resize(10);
-//                boardView.invalidate();  // force a redraw
-//=======
                 if(debug)System.out.println("BUTTON zoom in");
                 game.resize(10);
-//>>>>>>> tylerBoardGame
             }
         });
         zoomOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//<<<<<<< HEAD
-//                if (debug) System.out.println("BUTTON zoom out");
-//                board.resize(-10);
-//                boardView.invalidate();  // force a redraw
-//=======
                 if(debug)System.out.println("BUTTON zoom out");
                 game.resize(-10);
-//>>>>>>> tylerBoardGame
             }
         });
         zoomLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//<<<<<<< HEAD
-//                if (debug) System.out.println("BUTTON move left");
-//                board.move(-10, 0);
-//                boardView.invalidate();  // force a redraw
-//=======
                 if(debug)System.out.println("BUTTON move left");
                 game.move(-10, 0);
-//>>>>>>> tylerBoardGame
             }
         });
         zoomRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//<<<<<<< HEAD
-//                if (debug) System.out.println("BUTTON move right");
-//                board.move(10, 0);
-//                boardView.invalidate();  // force a redraw
-//=======
                 if(debug)System.out.println("BUTTON move right");
                 game.move(10, 0);
-//                game.setBuildState(Game.BUILD.ROAD);
-//>>>>>>> tylerBoardGame
             }
         });
         zoomUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//<<<<<<< HEAD
-//                if (debug) System.out.println("BUTTON move up");
-//                board.move(0, -10);
-//                boardView.invalidate();  // force a redraw
-//=======
                 if(debug)System.out.println("BUTTON move up");
                 game.move(0, -10);
-//                game.setBuildState(Game.BUILD.CITY);
-//>>>>>>> tylerBoardGame
             }
         });
         zoomDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//<<<<<<< HEAD
-//                if (debug) System.out.println("BUTTON move down");
-//                board.move(0, 10);
-//                boardView.invalidate();  // force a redraw
-//=======
                 if(debug)System.out.println("BUTTON move down");
                 game.move(0, 10);
-//>>>>>>> tylerBoardGame
             }
         });
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//<<<<<<< HEAD
-//                if (debug) System.out.println("BUTTON reset zoom");
-//                board.setHexSize(default_hex_size);
-//                board.setCenter(default_center);
-//                boardView.invalidate();  // force a redraw
-//                boardView.nextTurn();
-//=======
                 if(debug)System.out.println("BUTTON reset zoom");
                 game.resetZoom();
                 game.nextTurn();
-//>>>>>>> tylerBoardGame
 
             }
         });
@@ -245,8 +188,6 @@ public class GameTest extends AppCompatActivity {
             }
         });
 
-
-        // TODO if the transaction buttons can be made to work here they're fairly easy
     }
 
 
