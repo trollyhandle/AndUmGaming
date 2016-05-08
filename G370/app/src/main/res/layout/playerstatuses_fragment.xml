@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/brickint"
-            android:text="@string/brick_f"
+            android:text="@string/res_empty"
             android:gravity="left"
             android:layout_weight="0.0" />
 
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/lumberint"
-            android:text="@string/brick_f"
+            android:text="@string/res_empty"
             android:gravity="left"
             android:layout_weight="0.0" />
 
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/woolint"
-            android:text="@string/sheep_f"
+            android:text="@string/res_empty"
             android:gravity="left"
             android:layout_weight="0.0" />
 
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/grainint"
-            android:text="@string/wheat_f"
+            android:text="@string/res_empty"
             android:gravity="left"
             android:layout_weight="0.0" />
 
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/oreint"
-            android:text="@string/ore_f"
+            android:text="@string/res_empty"
             android:gravity="left"
             android:layout_weight="0.10" />
 
