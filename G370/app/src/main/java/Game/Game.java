@@ -97,7 +97,7 @@ public class Game {
 
         initResourceTabs(parent);
         setupTouchListener();
-
+        System.out.println(board);
         // TODO initialize players[], and at some point (maybe not here) call to server
 
     }

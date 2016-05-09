@@ -119,9 +119,19 @@ public class Board {
             if (debug) System.out.println("BOARD cannot settle there!");
             return false;
         }
-        if (debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
-
-        // TODO check that none of Vertex(q, r)'s neighbors are occupied
+        //this checks the neighbors to make sure no other settlement is within 1 tile.
+        for (int i= 0; i < 6; i++){
+            //if the next Q,R is a hex, just ignore!
+            if (isHex(s.getNeighbor(i))) {continue;}
+            //we now cast the next QR onto a vertex, if it is null ignore, otherwise see if it's owned.
+            Shape shape = getShape(s.getNeighbor(i));
+            if (((Vertex)shape)==null){continue;}
+            if (((Vertex)shape).isOwned()){
+                if (debug) System.out.println("BOARD cannot settle there!");
+                return false;
+            }
+        }
+        if(debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
 
         ((Vertex)s).setOwner(player);
         ((Vertex)s).setLevel(1);
@@ -267,6 +277,14 @@ public class Board {
         }
         return null;  // a and b are not adjacent
     }
+
+    private Shape getShape(Point_QR pt){
+        if(!isValid(pt))
+            return null;
+        return vertices[aib(pt.q())][aib(pt.r())];
+    }
+
+
 
     private void initBoard()
     {
