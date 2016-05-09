@@ -149,8 +149,6 @@ public class GameTest extends AppCompatActivity {
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON reset zoom");
                 game.resetZoom();
-                game.nextTurn();
-
             }
         });
 /*
@@ -204,7 +202,6 @@ public class GameTest extends AppCompatActivity {
                     v.getBackground().clearColorFilter();
                     v.invalidate();
                 }
-
             }
         });
         EndTurn.setOnClickListener(new View.OnClickListener() {
