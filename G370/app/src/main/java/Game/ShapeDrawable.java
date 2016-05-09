@@ -46,8 +46,9 @@ public class ShapeDrawable {
     {
         c.drawPath(s, p);
 
-        if (hasText) {
+        if (hasText && !text.equals("0")) {
             p.setTextSize(textSize);
+            p.setColor((text.equals("6") || text.equals("8"))? Game.TEXT_COLORS.RED.col: Game.TEXT_COLORS.WHITE.col);
             if (text.length() == 2)
                 c.drawText(text, pt_x-(textSize/2), pt_y+(textSize/3), p);
             else

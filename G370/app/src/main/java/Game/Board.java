@@ -1,7 +1,6 @@
 package Game;
 
 import java.util.Random;
-import java.util.StringTokenizer;
 
 /**
  * Board.java
@@ -12,14 +11,14 @@ public class Board {
     private boolean debug = true;
 
     private static final int MIN_SIZE = 80;
-    private static final int MAX_SIZE = 840;
+    private static final int MAX_SIZE = 940;
 
     private int rings, arraySize;
     private int[][] extra_vertices;
     private ShapeDrawable[] shapes;
 
     private Point_XY center;
-    private int hex_size, board_size;
+    private int hex_size;
 
 
     private Shape[][] vertices;

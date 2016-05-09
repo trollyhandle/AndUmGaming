@@ -41,6 +41,10 @@ public class Game {
             case 3: return THREE.col; case 4: return FOUR.col;
         } return NONE.col; }
     }
+    public enum TEXT_COLORS {
+        WHITE(0xffFFFFFF), RED(0xffFF0F00), BLACK(0x00000000);
+        public final int col; TEXT_COLORS(int value) { col = value; }
+    }
 
     public enum BUILD {
         NONE, ROAD, SETTLEMENT, CITY; //, KNIGHT;

@@ -1,7 +1,6 @@
 package Game;
 
 import android.graphics.Path;
-import android.provider.Settings;
 
 /**
  * Hexagon.java
