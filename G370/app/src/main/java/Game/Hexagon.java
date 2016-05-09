@@ -33,7 +33,6 @@ public class Hexagon extends Shape {
 
         path.rewind();
         path.addCircle(shape_center.x(), shape_center.y(), poly_size/4, Path.Direction.CCW);
-        System.out.println(poly_size/4);
         path.moveTo(pt.x(), pt.y());
 
         for (int i = 0; i <= 360; i += 60) {

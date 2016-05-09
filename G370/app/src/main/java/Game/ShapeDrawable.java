@@ -13,8 +13,7 @@ public class ShapeDrawable {
     private Path s;
     private Paint p;
     private String text;
-    private int pt_x;
-    private int pt_y;
+    private int pt_x, pt_y;
     private int textSize;
     private boolean hasText;
 
