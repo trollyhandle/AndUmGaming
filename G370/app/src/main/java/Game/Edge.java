@@ -36,6 +36,7 @@ public class Edge {
     public Point_QR getSource() { return source; }
     public Point_QR getDestination() { return dest; }
 
+    public boolean isOwned() { return owner != 0; }
     public int getOwner() { return owner; }
     public void setOwner(int player) { owner = player; }
 

@@ -145,14 +145,30 @@ public class Board {
         update = true;
         return true;
     }
+
+    private Shape getShape(Point_QR pt){
+        if(!isValid(pt))
+            return null;
+        return vertices[aib(pt.q())][aib(pt.r())];
+    }
+
     public boolean buildRoad(Point_QR src, Point_QR dst, int player)
     {
         Edge e = getEdge(src, dst);
+
         if (e == null) // no such edge
             return false;
 
-        // TODO check that this edge is not already owned!
-        // TODO check that player owns at least one of [src, dst]
+        if(e.isOwned()) {
+            if (debug) System.out.println("BOARD someone else already built a road there!");
+            return false;
+        }
+
+        // TODO allow player to build a road through an unsettled vertex if they have an adjacent road
+        if(getShape(src) != null && (((Vertex)getShape(src)).isOwned() || ((Vertex)getShape(dst)).isOwned()) == false) {
+            if (debug) System.out.println("BOARD player does not own an vertex!");
+            return false;
+        }
 
         e.setOwner(player);
         if(debug) System.out.println("BOARD setting ownership of road " + e + " to " + player);
@@ -355,5 +371,4 @@ public class Board {
             }
         }
     }
-
 }
