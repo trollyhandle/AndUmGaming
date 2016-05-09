@@ -18,8 +18,10 @@ public class Game {
 
     // RESOURCE PAINT_COLOR LOOKUP
     public enum RESOURCES {
-        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
-        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
+        BLANK   (0xffffffff), WHEAT   (0xffE9AA13), WOOD    (0xff5D1803),
+        ORE     (0xff4E656A), BRICK   (0xffB20D0E), SHEEP   (0xff1CBC00);
+//        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
+//        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
         private int col; RESOURCES(int color) { col = color; }
         static int getColor(int i) { switch(i) {
             case 1: return WHEAT.col; case 2: return WOOD.col;
@@ -32,9 +34,11 @@ public class Game {
     }
     // PLAYER PAINT_COLOR LOOKUP
     public enum PLAYERS {
-        NONE (0xffFFFFFF)/*WHITE*/,
-        ONE (0xffFF0800)/*RED*/,    TWO(0xff00FF00)/*GREEN*/,
-        THREE(0xff1C1CF0)/*BLUE*/,  FOUR(0xffBF00FF)/*VIOLET*/;
+        NONE    (0xffFFFFFF)/*WHITE*/,
+        ONE     (0xff3AF2A9), TWO   (0xffD65466),
+        THREE   (0xff9835F1), FOUR  (0xffFD6D27);
+//        ONE     (0xffFF0800), TWO   (0xff00FF00),
+//        THREE   (0xff1C1CF0), FOUR  (0xffBF00FF);
         private int col; PLAYERS(int value) { col = value; }
         static int getColor(int i) { switch(i) {
             case 1: return ONE.col; case 2: return TWO.col;
