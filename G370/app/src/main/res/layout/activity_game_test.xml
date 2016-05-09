@@ -105,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:id="@+id/game_container"
+            android:orientation="horizontal"
             android:layout_gravity="bottom|center_horizontal"
             android:weightSum="1">
 

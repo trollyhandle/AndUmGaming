@@ -10,6 +10,7 @@ import android.graphics.Point;
 
 //import android.app.FragmentTransaction;
 
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -86,6 +87,10 @@ public class GameTest extends AppCompatActivity {
         if(debug)System.out.println("TEST Window size: " + width + " by " + height);
     }
 
+    private void clearbuttonfilters() {
+    //    BuyRoad.
+    }
+
     private void loadButtons() {
         zoomIn = (Button) findViewById(R.id.zoomIn);
         zoomOut = (Button) findViewById(R.id.zoomOut);
@@ -160,23 +165,65 @@ public class GameTest extends AppCompatActivity {
             }
         });
 */
+
+
+
+
+
+
         BuyRoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.setBuildState(Game.BUILD.ROAD);
+                //if build state isnt road
+                if (game.getBuild() != Game.BUILD.ROAD) {
+                    game.setBuildState(Game.BUILD.ROAD);
+                    if (game.getBuild() == Game.BUILD.ROAD) {
+                        BuyHouse.getBackground().clearColorFilter();
+                        BuyCity.getBackground().clearColorFilter();
+
+                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                    }
+                }
+                //if build state IS road, unclick
+                else {
+                    game.setBuildState(Game.BUILD.NONE);
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                }
 
             }
         });
         BuyHouse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.setBuildState(Game.BUILD.SETTLEMENT);
+                //if build state isnt settlement
+                if (game.getBuild() != Game.BUILD.SETTLEMENT) {
+                    game.setBuildState(Game.BUILD.SETTLEMENT);
+                    if (game.getBuild() == Game.BUILD.SETTLEMENT) {
+                        BuyRoad.getBackground().clearColorFilter();
+                        BuyCity.getBackground().clearColorFilter();
+
+                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                    }
+                }
+                //if build state IS settlement, unclick
+                else {
+                    game.setBuildState(Game.BUILD.NONE);
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                }
 
             }
         });
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                BuyCity.getBackground().clearColorFilter();
+                BuyHouse.getBackground().clearColorFilter();
+                BuyRoad.getBackground().clearColorFilter();
+
                 game.nextTurn();
             }
         });
@@ -184,7 +231,23 @@ public class GameTest extends AppCompatActivity {
         BuyCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                game.setBuildState(Game.BUILD.CITY);
+                //if build state isnt city
+                if (game.getBuild() != Game.BUILD.CITY) {
+                    game.setBuildState(Game.BUILD.CITY);
+                    if (game.getBuild() == Game.BUILD.CITY) {
+                        BuyRoad.getBackground().clearColorFilter();
+                        BuyHouse.getBackground().clearColorFilter();
+
+                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                        v.invalidate();
+                    }
+                }
+                //if build state IS city, unclick
+                else {
+                    game.setBuildState(Game.BUILD.NONE);
+                    v.getBackground().clearColorFilter();
+                    v.invalidate();
+                }
             }
         });
 

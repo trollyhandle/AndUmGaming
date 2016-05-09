@@ -45,6 +45,10 @@ public class Game {
     public enum BUILD {
         NONE, ROAD, SETTLEMENT, CITY; //, KNIGHT;
     }
+
+    private BUILD getBuild;
+
+
     private BUILD build;
     private Point_QR firstRoadPt;
     private int turn;
@@ -64,6 +68,12 @@ public class Game {
     private final int dist_to_begin_move = 10;
     private int touch_x, touch_y, pinch_distance;
     private boolean moving, zooming;
+
+
+    ////////////////////
+    public BUILD getBuild(){
+        return build;
+    }
 
     public Game(Activity parent, int width, int height)
     {
