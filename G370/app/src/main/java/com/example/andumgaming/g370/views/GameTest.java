@@ -87,10 +87,6 @@ public class GameTest extends AppCompatActivity {
         if(debug)System.out.println("TEST Window size: " + width + " by " + height);
     }
 
-    private void clearbuttonfilters() {
-    //    BuyRoad.
-    }
-
     private void loadButtons() {
         zoomIn = (Button) findViewById(R.id.zoomIn);
         zoomOut = (Button) findViewById(R.id.zoomOut);
@@ -165,12 +161,6 @@ public class GameTest extends AppCompatActivity {
             }
         });
 */
-
-
-
-
-
-
         BuyRoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +214,26 @@ public class GameTest extends AppCompatActivity {
                 BuyHouse.getBackground().clearColorFilter();
                 BuyRoad.getBackground().clearColorFilter();
 
+                if (game.getTurn() == 0) {
+                    EndTurn.getBackground().setColorFilter(0xffFF0800, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                }
+                if (game.getTurn() == 1) {
+                    EndTurn.getBackground().setColorFilter(0xff00FF00, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                }
+                if (game.getTurn() == 2) {
+                    EndTurn.getBackground().setColorFilter(0xff1C1CF0, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                }
+                if (game.getTurn() == 3) {
+                    EndTurn.getBackground().setColorFilter(0xffBF00FF, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                }
+                if (game.getTurn() == 4) {
+                    EndTurn.getBackground().setColorFilter(0xffFF0800, PorterDuff.Mode.SRC_ATOP);
+                    v.invalidate();
+                }
                 game.nextTurn();
             }
         });
@@ -252,8 +262,4 @@ public class GameTest extends AppCompatActivity {
         });
 
     }
-
-
-
-
 }
