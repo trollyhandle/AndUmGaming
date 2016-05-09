@@ -7,7 +7,6 @@ package Game;
 public class Player {
 
     private int resources[];
-    
 
     private int knights_played, roads_placed;
 
@@ -30,40 +29,44 @@ public class Player {
     // TODO lots of things.. mostly coordinate with server status
 
 
-	public boolean buyRoad(){
-	if(resources[0] >= lookup[0][0] && resources[1] >= lookup[0][1]){
-		
-		resources[0] -= lookup[0][0];
-		resources[1] -= lookup[0][1];
-		return true;}
-	else
-		return false;
+	public boolean buyRoad()
+    {
+        if(resources[0] >= lookup[0][0] && resources[1] >= lookup[0][1]) {
+
+            resources[0] -= lookup[0][0];
+            resources[1] -= lookup[0][1];
+            return true;}
+        else
+            return false;
 	}
     	
-	public boolean buySettlement(){
-	if(resources[0] >= lookup[1][0] && resources[1] >= lookup[1][1]
-			&& resources[2] >= lookup[1][2] && resources[3] >= lookup[1][3]){
-		resources[0] -= lookup[1][0];
-		resources[1] -= lookup[1][1];
-		resources[2] -= lookup[1][2];
-		resources[3] -= lookup[1][3];
-		return true;		
-	}
-	else 
-		return false;
-	}
-
-	public boolean buyCity(){
-	if(resources[3] >=lookup[2][3] && resources[4] >= lookup[2][4]){
-		resources[3] -= lookup[2][3];
-		resources[4] -= lookup[2][4];
-		return true;
-	}
-	else
-		return false;
+	public boolean buySettlement()
+    {
+        if(resources[0] >= lookup[1][0] && resources[1] >= lookup[1][1]
+                && resources[2] >= lookup[1][2] && resources[3] >= lookup[1][3]) {
+            resources[0] -= lookup[1][0];
+            resources[1] -= lookup[1][1];
+            resources[2] -= lookup[1][2];
+            resources[3] -= lookup[1][3];
+            return true;
+        }
+        else
+            return false;
 	}
 
-    public boolean buyDev(){
+	public boolean buyCity()
+    {
+        if(resources[3] >=lookup[2][3] && resources[4] >= lookup[2][4]) {
+            resources[3] -= lookup[2][3];
+            resources[4] -= lookup[2][4];
+            return true;
+        }
+        else
+            return false;
+	}
+
+    public boolean buyDev()
+    {
         return false;
     }
 
@@ -72,6 +75,4 @@ public class Player {
 	public int getOre() { return resources[2]; }
 	public int getBrick() { return resources[3]; }
 	public int getSheep() { return resources[4]; }
-
-
 }

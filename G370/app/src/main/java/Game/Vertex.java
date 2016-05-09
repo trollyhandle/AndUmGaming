@@ -27,7 +27,7 @@ public class Vertex extends Shape {
 
         path.rewind();
         if (level != 2)
-            path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
+            path.addCircle(shape_center.x(), shape_center.y(), poly_size/5, Path.Direction.CCW);
         path.moveTo(pt.x(), pt.y());
 
         for (int i = 30; i <= 360; i += 60) {

@@ -11,14 +11,14 @@ public class Board {
     private boolean debug = true;
 
     private static final int MIN_SIZE = 80;
-    private static final int MAX_SIZE = 840;
+    private static final int MAX_SIZE = 940;
 
     private int rings, arraySize;
     private int[][] extra_vertices;
     private ShapeDrawable[] shapes;
 
     private Point_XY center;
-    private int hex_size, board_size;
+    private int hex_size;
 
 
     private Shape[][] vertices;
@@ -53,9 +53,22 @@ public class Board {
                 s = vertices[q][r];
                 if (s != null) {
                     s.update(hex_size, center);
-                    int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
-                            Game.PLAYERS.getColor(((Vertex)s).getOwner());
-                    shapes[i++] = new ShapeDrawable(s.getPath(), color);
+
+                    if (isHex(q,r)){
+                        int color = (Game.RESOURCES.getColor(((Hexagon)s).getResource()));
+                        int txt_size = ((Hexagon)s).fontSize(hex_size);
+                        String Die = "" + ((Hexagon)s).getDie();
+                        shapes[i++] = new ShapeDrawable(s.getPath(),color, Die,((Hexagon)s).getCenter(hex_size,center), txt_size);
+                    }
+                    else {
+                        int color = Game.PLAYERS.getColor(((Vertex)s).getOwner());
+                        shapes[i++] = new ShapeDrawable(s.getPath(), color);
+
+                    }
+
+
+                    //int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
+                    //        Game.PLAYERS.getColor(((Vertex)s).getOwner());
                 }
             }
         }
