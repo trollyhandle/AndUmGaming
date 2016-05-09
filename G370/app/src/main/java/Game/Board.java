@@ -1,6 +1,7 @@
 package Game;
 
 import java.util.Random;
+import java.util.StringTokenizer;
 
 /**
  * Board.java
@@ -53,9 +54,22 @@ public class Board {
                 s = vertices[q][r];
                 if (s != null) {
                     s.update(hex_size, center);
-                    int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
-                            Game.PLAYERS.getColor(((Vertex)s).getOwner());
-                    shapes[i++] = new ShapeDrawable(s.getPath(), color);
+
+                    if (isHex(q,r)){
+                        int color = (Game.RESOURCES.getColor(((Hexagon)s).getResource()));
+                        int txt_size = ((Hexagon)s).fontSize(hex_size);
+                        String Die = "" + ((Hexagon)s).getDie();
+                        shapes[i++] = new ShapeDrawable(s.getPath(),color, Die,((Hexagon)s).getCenter(hex_size,center), txt_size);
+                    }
+                    else {
+                        int color = Game.PLAYERS.getColor(((Vertex)s).getOwner());
+                        shapes[i++] = new ShapeDrawable(s.getPath(), color);
+
+                    }
+
+
+                    //int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
+                    //        Game.PLAYERS.getColor(((Vertex)s).getOwner());
                 }
             }
         }
