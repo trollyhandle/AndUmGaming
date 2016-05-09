@@ -119,6 +119,7 @@ public class Board {
             if (debug) System.out.println("BOARD cannot settle there!");
             return false;
         }
+
         if (debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
 
         // TODO check that none of Vertex(q, r)'s neighbors are occupied
@@ -128,6 +129,8 @@ public class Board {
         update = true;
         return true;
     }
+
+
     public boolean buildCity(int q, int r, int player)
     {
         Shape s = vertices[aib(q)][aib(r)];
@@ -160,9 +163,9 @@ public class Board {
         return true;
     }
 
-    public boolean isValid(Point_QR hex)
+    public boolean isValid(Point_QR hex) { return isHex(hex.q(), hex.r()); }
+    public boolean isValid(int q, int r)
     {
-        int q = hex.q(), r = hex.r();
         if (Math.max(Math.max(Math.abs(q), Math.abs(r)), Math.abs((-q-r))) <= rings)
             return true;
         for (int[] pair: extra_vertices)
@@ -247,8 +250,8 @@ public class Board {
     {  // array-index boundary
         return (i+arraySize) % arraySize;
     }
-    private boolean isHex(int q, int r) { return Math.abs(q-r) % 3 == 0; }
-    private boolean isHex(Point_QR hex) { return Math.abs(hex.q()-hex.r()) % 3 == 0; }
+    private boolean isHex(int q, int r) { return isValid(q, r) && Math.abs(q-r) % 3 == 0; }
+    private boolean isHex(Point_QR hex) { return isValid(hex) && Math.abs(hex.q()-hex.r()) % 3 == 0; }
     private Edge getEdge(Point_QR a, Point_QR b)
     {
         if (isHex(a) || isHex(b))
@@ -266,6 +269,29 @@ public class Board {
                     return e;
         }
         return null;  // a and b are not adjacent
+    }
+
+    private boolean hasRoadOwnedBy(Point_QR vertex, int player_owner)
+    {
+        Shape s, centre = getShape(vertex);
+        if (centre == null) return false;
+        Edge e;
+        for (int i = 0; i < 6; i++) {
+            // if is valid point and isn't a hex (therefore a valid vertex)
+            if (isValid(centre.getNeighbor(i)) && !isHex(centre.getNeighbor(i))) {
+                e = getEdge(vertex, centre.getNeighbor(i));
+                if (e != null && e.getOwner() == player_owner)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private Shape getShape(Point_QR pt)
+    {
+        if (!isValid(pt))
+            return null;
+        return vertices[aib(pt.q())][aib(pt.r())];
     }
 
     private void initBoard()
