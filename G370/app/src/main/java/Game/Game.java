@@ -2,6 +2,7 @@ package Game;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -99,7 +100,7 @@ public class Game {
         setupTouchListener();
         System.out.println(board);
         // TODO initialize players[], and at some point (maybe not here) call to server
-
+        if (debug) System.out.println(board);
     }
 
 
