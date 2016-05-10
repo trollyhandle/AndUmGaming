@@ -7,19 +7,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.andumgaming.g370.R;
-import com.example.andumgaming.g370.views.asynctask.LoginAsyncTask;
+import com.example.andumgaming.g370.views.asynctask.SignupAsyncTask;
 
 /**
  * Created by ross on 5/5/2016.
  */
-public class LoginActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity {
     private EditText usernameField,passwordField;
     private TextView status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.signup_activity);
 
         usernameField = (EditText)findViewById(R.id.editText1);
         passwordField = (EditText)findViewById(R.id.editText2);
@@ -27,12 +27,12 @@ public class LoginActivity extends AppCompatActivity {
         status = (TextView)findViewById(R.id.textView7);
     }
 
-    public void loginPost(View view){
+    public void signupPost(View view){
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
 
         status = (TextView)findViewById(R.id.textView7);
 
-        new LoginAsyncTask(this,status).execute(username,password);
+        new SignupAsyncTask(this,status).execute(username,password);
     }
 }
