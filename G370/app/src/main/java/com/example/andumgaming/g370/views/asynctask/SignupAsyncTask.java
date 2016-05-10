@@ -41,11 +41,13 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... arg0) {
 
         try{
-            String username = (String)arg0[0];
-            String password = (String)arg0[1];
+            String email = (String)arg0[0];
+            String username = (String)arg0[1];
+            String password = (String)arg0[2];
 
             String link="http://g370.duckdns.org/register.php";
-            String data  = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+            String data  = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+            data += "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
             URL url = new URL(link);
@@ -73,12 +75,6 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
         catch(Exception e){
             return new String("Exception: " + e.getMessage());
         }
-    }
-
-    public class JsonObject {
-        int success;
-        String message;
-
     }
 
     @Override

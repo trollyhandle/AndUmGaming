@@ -82,11 +82,6 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
-    public class JsonObject {
-        int success;
-        String message;
-
-    }
 
     @Override
     protected void onPostExecute(String result) {
