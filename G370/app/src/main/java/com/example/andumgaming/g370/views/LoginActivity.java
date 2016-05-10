@@ -8,13 +8,14 @@ import android.widget.TextView;
 
 import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.asynctask.LoginAsyncTask;
+import com.example.andumgaming.g370.views.asynctask.SignupAsyncTask;
 
 /**
  * Created by ross on 5/5/2016.
  */
 public class LoginActivity extends AppCompatActivity {
     private EditText usernameField,passwordField;
-    private TextView status,method;
+    private TextView status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,15 @@ public class LoginActivity extends AppCompatActivity {
 
         status = (TextView)findViewById(R.id.textView7);
 
-        new LoginAsyncTask(this,status,1).execute(username,password);
+        new LoginAsyncTask(this,status).execute(username,password);
+    }
+
+    public void signupPost (View view) {
+        String username = usernameField.getText().toString();
+        String password = passwordField.getText().toString();
+
+        status = (TextView)findViewById(R.id.textView7);
+
+        new SignupAsyncTask(this,status).execute(username,password);
     }
 }

@@ -26,6 +26,7 @@
     <string name="Username">Username</string>
     <string name="Password">Password</string>
     <string name="login_button_text">Login</string>
+    <string name="signup_button_text">Sign Up</string>
     <string name="login_text">Login to Polygonia</string>
     <string name="LoginStatus">Login Status</string>
     <string name="Loginstatus">Login status</string>
