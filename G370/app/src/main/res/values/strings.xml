@@ -7,6 +7,7 @@
     <string name="back">Back</string>
     <string name="loading">loading</string>
 
+    <bool name="debug">true</bool>
 
     <!--
     Strings for menu_fragment

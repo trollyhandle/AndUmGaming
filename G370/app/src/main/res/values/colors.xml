@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="black">#000000</color>
 
     <color name="buy_highlight">#e0f47521</color>
     <integer name="buy_highlight">0xe0f47521</integer>

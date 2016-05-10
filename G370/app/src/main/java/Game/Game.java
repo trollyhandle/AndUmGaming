@@ -20,8 +20,6 @@ public class Game {
     public enum RESOURCES {
         BLANK   (0xffffffff), WHEAT   (0xffE9AA13), WOOD    (0xff83440D),
         ORE     (0xff4E656A), BRICK   (0xffCB0501), SHEEP   (0xff1CBC00);
-//        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
-//        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
         public final int col; RESOURCES(int color) { col = color; }
         static int getColor(int i) { switch(i) {
             case 1: return WHEAT.col; case 2: return WOOD.col;
@@ -32,19 +30,19 @@ public class Game {
             case ORE: return 3; case BRICK: return 4;
             case SHEEP: return 5; } return 0; }
     }
+
     // PLAYER PAINT_COLOR LOOKUP
     public enum PLAYERS {
         NONE    (0xffFFFFFF),
         ONE     (0xff3AF2A9), TWO   (0xffD65466),
         THREE   (0xff9835F1), FOUR  (0xffFD6D27);
-//        ONE     (0xffFF0800), TWO   (0xff00FF00),
-//        THREE   (0xff1C1CF0), FOUR  (0xffBF00FF);
         public final int col; PLAYERS(int value) { col = value; }
         static int getColor(int i) { switch(i) {
             case 1: return ONE.col; case 2: return TWO.col;
             case 3: return THREE.col; case 4: return FOUR.col;
         } return NONE.col; }
     }
+
     public enum TEXT_COLORS {
         WHITE(0xffFFFFFF), RED(0xffFF0F00), BLACK(0x00000000);
         public final int col; TEXT_COLORS(int value) { col = value; }
@@ -93,6 +91,11 @@ public class Game {
         if(debug)System.out.println("GAME creating BoardView");
         view = new BoardView(parent, board);
 
+        players[0] = new Player();
+        players[1] = new Player();
+        players[2] = new Player();
+        players[3] = new Player();
+
         turn = 0;
         build = BUILD.NONE;
 
@@ -111,7 +114,7 @@ public class Game {
         build = BUILD.NONE;
 
         // set resources to the current player's stats
-//        refreshResourceCounts();  // dont do this till players are implemented
+        refreshResourceCounts();  // dont do this till players are implemented
 
         // set cards too
 
@@ -133,10 +136,11 @@ public class Game {
         // this is where decisions will be made
         if (debug) System.out.println("GAME click at " + hex);
         if (debug) System.out.println("GAME build state: " + build);
+        boolean success = false;
 
         // are we placing a settlement?
         if (build == BUILD.SETTLEMENT) {
-            board.placeSettlement(hex.q(), hex.r(), turn);
+            success = board.buildSettlement(hex.q(), hex.r(), turn);
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
@@ -145,16 +149,21 @@ public class Game {
 
         // are we placing a road?
         else if (build == BUILD.ROAD) {
-            if (firstRoadPt == null) // no source selected yet
+            if (firstRoadPt == null) {  // no source selected yet
                 firstRoadPt = hex;
+                // TODO visual feedback on selected/highlighted vertex
+            }
             else {
                 if (debug) System.out.println("Road from " + firstRoadPt + " to " + hex);
-                board.buildRoad(firstRoadPt, hex, turn);
+                success = board.buildRoad(firstRoadPt, hex, turn);
                 firstRoadPt = null;  // reset for next road
             }
         }
         // are we playing a card?
         // are we moving the robber?
+
+//        if (success)
+//            System.out.println();
     }
 
 

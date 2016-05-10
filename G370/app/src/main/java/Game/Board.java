@@ -453,5 +453,7 @@ public class Board {
                 }
             }
         }
+        // swap desert into middle hex
+
     }
 }

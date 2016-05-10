@@ -23,7 +23,8 @@ public class Player {
 
 	public Player()
     {
-
+        resources = new int[] {0, 0, 0, 0, 0};
+        cards = new int[] {0, 0, 0, 0};
     }
 
     // TODO lots of things.. mostly coordinate with server status
@@ -35,9 +36,9 @@ public class Player {
 
             resources[0] -= lookup[0][0];
             resources[1] -= lookup[0][1];
-            return true;}
-        else
-            return false;
+            return true;
+        }
+        return false;
 	}
     	
 	public boolean buySettlement()
@@ -50,8 +51,7 @@ public class Player {
             resources[3] -= lookup[1][3];
             return true;
         }
-        else
-            return false;
+        return false;
 	}
 
 	public boolean buyCity()
@@ -61,8 +61,7 @@ public class Player {
             resources[4] -= lookup[2][4];
             return true;
         }
-        else
-            return false;
+        return false;
 	}
 
     public boolean buyDev()
@@ -70,9 +69,9 @@ public class Player {
         return false;
     }
 
-	public int getWheat() { return resources[0]; }
-	public int getWood() { return resources[1]; }
-	public int getOre() { return resources[2]; }
-	public int getBrick() { return resources[3]; }
-	public int getSheep() { return resources[4]; }
+	public int getWheat()   { return resources[0]; }
+	public int getWood()    { return resources[1]; }
+	public int getOre()     { return resources[2]; }
+	public int getBrick()   { return resources[3]; }
+	public int getSheep()   { return resources[4]; }
 }
