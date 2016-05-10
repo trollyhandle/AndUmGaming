@@ -40,8 +40,11 @@
     <!--
     Strings for play_fragment
     -->
-    <string name="play_new">New Game</string>
-    <string name="play_continue">Continue</string>
+    <string name="gametype_selection">Play Polygonia!</string>
+    <string name="create_game">Create Game</string>
+    <string name="join_game">Join Game</string>
+    <string name="watch_game">Watch Other People Play</string>
+
 
     <!--
     Strings for settings_fragment
