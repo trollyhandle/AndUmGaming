@@ -34,9 +34,6 @@ public class Edge {
     }
 
 
-
-
-
     public Point_QR getSource() { return source; }
     public Point_QR getDestination() { return dest; }
 

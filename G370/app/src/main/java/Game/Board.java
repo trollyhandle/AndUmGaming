@@ -188,6 +188,22 @@ public class Board {
         update = true;
         return true;
     }
+    public void selectSettlement(Point_QR hex) { selectSettlement(hex.q(), hex.r()); }
+    public void selectSettlement(int q, int r)
+    {
+        if (isValid(q, r) && !isHex(q, r)) {
+            ((Vertex)vertices[aib(q)][aib(r)]).setSelected(true);
+            update = true;
+        }
+    }
+    public void deselectSettlement(Point_QR hex) { deselectSettlement(hex.q(), hex.r()); }
+    public void deselectSettlement(int q, int r)
+    {
+        if (isValid(q, r) && !isHex(q, r)) {
+            ((Vertex)vertices[aib(q)][aib(r)]).setSelected(false);
+            update = true;
+        }
+    }
 
     public boolean buildCity(int q, int r, int player)
     {
@@ -449,6 +465,7 @@ public class Board {
                 if (isHex(q, r) && s != null) {
                     int which = rand.nextInt(shufsize);
                     ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
+                    ((Hexagon)s).setDie(rand.nextInt(10)+2);  // value interval [2, 12]
                     shuffle[which] = shuffle[--shufsize];
                 }
             }

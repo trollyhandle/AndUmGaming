@@ -47,12 +47,13 @@ public class ShapeDrawable {
 
         if (hasText && !text.equals("0")) {
             p.setTextSize(textSize);
+            int def_color = p.getColor();
             p.setColor((text.equals("6") || text.equals("8"))? Game.TEXT_COLORS.RED.col: Game.TEXT_COLORS.WHITE.col);
             if (text.length() == 2)
                 c.drawText(text, pt_x-(textSize/2), pt_y+(textSize/3), p);
             else
                 c.drawText(text, pt_x-(textSize/3), pt_y+(textSize/3), p);
-
+            p.setColor(def_color);
         }
     }
 }

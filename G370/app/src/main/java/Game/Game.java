@@ -71,6 +71,7 @@ public class Game {
     private final int dist_to_begin_move = 10;
     private int touch_x, touch_y, pinch_distance;
     private boolean moving, zooming;
+    private Point_QR selected;
 
 
     public Game(Activity parent, int width, int height)
@@ -91,10 +92,12 @@ public class Game {
         if(debug)System.out.println("GAME creating BoardView");
         view = new BoardView(parent, board);
 
-        players[0] = new Player();
+        players = new Player[5];
+        // player 0 is the nobody player
         players[1] = new Player();
         players[2] = new Player();
         players[3] = new Player();
+        players[4] = new Player();
 
         turn = 0;
         build = BUILD.NONE;
@@ -140,7 +143,7 @@ public class Game {
 
         // are we placing a settlement?
         if (build == BUILD.SETTLEMENT) {
-            success = board.buildSettlement(hex.q(), hex.r(), turn);
+            success = board.placeSettlement(hex.q(), hex.r(), turn);
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
@@ -151,12 +154,14 @@ public class Game {
         else if (build == BUILD.ROAD) {
             if (firstRoadPt == null) {  // no source selected yet
                 firstRoadPt = hex;
+                board.selectSettlement(selected = hex);
                 // TODO visual feedback on selected/highlighted vertex
             }
             else {
                 if (debug) System.out.println("Road from " + firstRoadPt + " to " + hex);
                 success = board.buildRoad(firstRoadPt, hex, turn);
                 firstRoadPt = null;  // reset for next road
+                board.deselectSettlement(selected);
             }
         }
         // are we playing a card?
