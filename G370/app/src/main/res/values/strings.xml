@@ -28,9 +28,8 @@
     <string name="login_button_text">Login</string>
     <string name="login_text">Login to Polygonia</string>
     <string name="LoginStatus">Login Status</string>
-    <string name="LoginRole">Login Role</string>
-    <string name="Status">Not logged in</string>
-    <string name="Role">Not assigned</string>
+    <string name="Loginstatus">Login status</string>
+    <string name="status">Not logged in</string>
     <string name="method">Login Method</string>
     <string name="Choose">Choose Method</string>
 

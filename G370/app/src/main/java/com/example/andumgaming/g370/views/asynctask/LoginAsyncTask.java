@@ -24,19 +24,19 @@ import android.support.v4.app.Fragment;
 import com.example.andumgaming.g370.views.FullscreenActivity;
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
 import com.example.andumgaming.g370.R;
+import com.google.gson.Gson;
 //TODO fix GSON
 //import com.google.gson.Gson;
 
 public class LoginAsyncTask extends AsyncTask<String,Void,String> {
-    private TextView statusField,roleField;
+    private TextView statusField;
     private Context context;
     private int byGetOrPost = 0;
 
     //flag 0 means get and 1 means post.(By default it is get.)
-    public LoginAsyncTask(Context context, TextView statusField, TextView roleField, int flag) {
+    public LoginAsyncTask(Context context, TextView statusField, int flag) {
         this.context = context;
         this.statusField = statusField;
-        this.roleField = roleField;
         byGetOrPost = flag;
     }
 
@@ -85,14 +85,14 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
         //TODO fix gson
-        //Gson gson = new Gson();
-        if (true) {
+        Gson gson = new Gson();
+        if (false) {
             Intent i = new Intent(context, FullscreenActivity.class);
             context.startActivity(i);
             ((Activity)context).finish();
 
 
         } else
-            this.roleField.setText("INVALID LOGIN");
+            this.statusField.setText(result);
     }
 }
