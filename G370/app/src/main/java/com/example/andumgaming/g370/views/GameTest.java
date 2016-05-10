@@ -211,27 +211,28 @@ public class GameTest extends AppCompatActivity {
                 BuyHouse.getBackground().clearColorFilter();
                 BuyRoad.getBackground().clearColorFilter();
 
+                game.nextTurn();
+
                 if (game.getTurn() == 0) {
-                    EndTurn.getBackground().setColorFilter(0xffFF0800, PorterDuff.Mode.SRC_ATOP);
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
                     v.invalidate();
                 }
                 if (game.getTurn() == 1) {
-                    EndTurn.getBackground().setColorFilter(0xff00FF00, PorterDuff.Mode.SRC_ATOP);
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
                     v.invalidate();
                 }
                 if (game.getTurn() == 2) {
-                    EndTurn.getBackground().setColorFilter(0xff1C1CF0, PorterDuff.Mode.SRC_ATOP);
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
                     v.invalidate();
                 }
                 if (game.getTurn() == 3) {
-                    EndTurn.getBackground().setColorFilter(0xffBF00FF, PorterDuff.Mode.SRC_ATOP);
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
                     v.invalidate();
                 }
                 if (game.getTurn() == 4) {
-                    EndTurn.getBackground().setColorFilter(0xffFF0800, PorterDuff.Mode.SRC_ATOP);
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
                     v.invalidate();
                 }
-                game.nextTurn();
             }
         });
 

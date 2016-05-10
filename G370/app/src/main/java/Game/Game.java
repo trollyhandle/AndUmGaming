@@ -23,7 +23,7 @@ public class Game {
         ORE     (0xff4E656A), BRICK   (0xffB20D0E), SHEEP   (0xff1CBC00);
 //        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
 //        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
-        private int col; RESOURCES(int color) { col = color; }
+        public final int col; RESOURCES(int color) { col = color; }
         static int getColor(int i) { switch(i) {
             case 1: return WHEAT.col; case 2: return WOOD.col;
             case 3: return ORE.col; case 4: return BRICK.col;
@@ -35,12 +35,12 @@ public class Game {
     }
     // PLAYER PAINT_COLOR LOOKUP
     public enum PLAYERS {
-        NONE    (0xffFFFFFF)/*WHITE*/,
+        NONE    (0xffFFFFFF),
         ONE     (0xff3AF2A9), TWO   (0xffD65466),
         THREE   (0xff9835F1), FOUR  (0xffFD6D27);
 //        ONE     (0xffFF0800), TWO   (0xff00FF00),
 //        THREE   (0xff1C1CF0), FOUR  (0xffBF00FF);
-        private int col; PLAYERS(int value) { col = value; }
+        public final int col; PLAYERS(int value) { col = value; }
         static int getColor(int i) { switch(i) {
             case 1: return ONE.col; case 2: return TWO.col;
             case 3: return THREE.col; case 4: return FOUR.col;
@@ -106,7 +106,6 @@ public class Game {
 
         initResourceTabs(parent);
         setupTouchListener();
-        System.out.println(board);
         // TODO initialize players[], and at some point (maybe not here) call to server
         if (debug) System.out.println(board);
     }

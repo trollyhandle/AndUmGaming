@@ -9,6 +9,7 @@ import java.util.Random;
  */
 public class Board {
     private boolean debug = true;
+    private boolean DEBUG = false;  // for serious debugging time
 
     private static final int MIN_SIZE = 80;
     private static final int MAX_SIZE = 940;
@@ -152,7 +153,6 @@ public class Board {
         return true;
     }
 
-
     public boolean buildCity(int q, int r, int player)
     {
         Shape s = vertices[aib(q)][aib(r)];
@@ -197,7 +197,7 @@ public class Board {
         return true;
     }
 
-    public boolean isValid(Point_QR hex) { return isHex(hex.q(), hex.r()); }
+    public boolean isValid(Point_QR hex) { return isValid(hex.q(), hex.r()); }
     public boolean isValid(int q, int r)
     {
         if (Math.max(Math.max(Math.abs(q), Math.abs(r)), Math.abs((-q-r))) <= rings)
@@ -284,8 +284,8 @@ public class Board {
     {  // array-index boundary
         return (i+arraySize) % arraySize;
     }
-    private boolean isHex(int q, int r) { return isValid(q, r) && Math.abs(q-r) % 3 == 0; }
-    private boolean isHex(Point_QR hex) { return isValid(hex) && Math.abs(hex.q()-hex.r()) % 3 == 0; }
+    private boolean isHex(int q, int r) { return Math.abs(q-r) % 3 == 0; }
+    private boolean isHex(Point_QR hex) { return Math.abs(hex.q()-hex.r()) % 3 == 0; }
     private Edge getEdge(Point_QR a, Point_QR b)
     {
         if (isHex(a) || isHex(b))
@@ -356,18 +356,21 @@ public class Board {
     private void initEdges()
     {
         Shape v;
+        int edgesMade = 0;
+        if(DEBUG) System.out.println("EDGEINIT Making edges...");
         for (int q = -rings; q < rings+1; q++) {
             for (int r = Math.max(-rings, -q-rings); r < Math.min(rings, -q+rings)+1; r++) {
                 v = vertices[aib(q)][aib(r)];
+                if(DEBUG) System.out.println("EDGEINIT selected a vertex");
                 if (((q - r) + 1) % 3 == 0 && v != null) {  // necessary for larger boards
                     if (isValid(v.getNeighbor(0))) {
-                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0);
+                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0); edgesMade++;
                     }
                     if (isValid(v.getNeighbor(2))) {
-                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4);
+                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4); edgesMade++;
                     }
                     if (isValid(v.getNeighbor(4))) {
-                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2);
+                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); edgesMade++;
                     }
                 }
             }
@@ -378,17 +381,18 @@ public class Board {
                 v = vertices[aib(q)][aib(r)];
                 if (v != null) {
                     if (isValid(v.getNeighbor(0))) {
-                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0);
+                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0); edgesMade++;
                     }
                     if (isValid(v.getNeighbor(2))) {
-                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4);
+                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4); edgesMade++;
                     }
                     if (isValid(v.getNeighbor(4))) {
-                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2);
+                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); edgesMade++;
                     }
                 }
             }
         }
+        if(DEBUG) System.out.println("EDGEINIT Edges made: " + edgesMade);
     }
 
     private void fillTiles()
