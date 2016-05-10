@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andumgaming.g370.views.FullscreenActivity;
 
@@ -79,18 +80,22 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
+        int duration = Toast.LENGTH_SHORT;
         try {
             JSONObject jObject = new JSONObject(result);
             int aJsonInteger = jObject.getInt("success");
 
             if (aJsonInteger == 1) {
+                Toast.makeText(context, "Successfully Signed Up!", duration).show();
                 Intent i = new Intent(context, FullscreenActivity.class);
                 context.startActivity(i);
                 ((Activity)context).finish();
 
 
             } else
-                this.statusField.setText(result);
+                Toast.makeText(context, "Sign Up Unsuccessful", duration).show();
+            // uncomment to debug JSON
+            // this.statusField.setText(result);
         }
         catch (JSONException e) {
             Log.i("error", "Error!");
