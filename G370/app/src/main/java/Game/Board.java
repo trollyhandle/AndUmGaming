@@ -66,10 +66,6 @@ public class Board {
                         shapes[i++] = new ShapeDrawable(s.getPath(), color);
 
                     }
-
-
-                    //int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
-                    //        Game.PLAYERS.getColor(((Vertex)s).getOwner());
                 }
             }
         }
@@ -125,25 +121,65 @@ public class Board {
         update = true;
     }
 
-
-    public boolean buildSettlement(int q, int r, int player)
+    /**
+     * Places a settlement at (q, r) owned by player.
+     * WARNING: Use buildSettlement() instead. placeSettlement() employs reduced validity checking.
+     * This should only be used at beginning of a new game.
+     * @param q q-coordinate of build request site
+     * @param r r-coordinate of build request site
+     * @param player id of player requesting build
+     * @return true if settlement successfully built
+     */
+    public boolean placeSettlement(int q, int r, int player)
     {
-        Shape s = vertices[aib(q)][aib(r)];
-        if (isHex(q,r) || ((Vertex)s).isOwned()) {  // is a Hexagon, or is already owned
+        Shape stl = getShape(q, r);
+        if (stl == null || isHex(q,r) || ((Vertex)stl).isOwned()) {  // is a Hexagon, or is already owned
             if (debug) System.out.println("BOARD cannot settle there!");
             return false;
         }
         //this checks the neighbors to make sure no other settlement is within 1 tile.
-        for (int i= 0; i < 6; i++){
-            //if the next Q,R is a hex, just ignore!
-            if (isHex(s.getNeighbor(i))) {continue;}
-            //we now cast the next QR onto a vertex, if it is null ignore, otherwise see if it's owned.
-            Shape shape = getShape(s.getNeighbor(i));
-            if (((Vertex)shape)==null){continue;}
-            if (((Vertex)shape).isOwned()){
-                if (debug) System.out.println("BOARD cannot settle there!");
+        for (int i = 0; i < 6; i++){
+            // if the next Q,R is invalid or a hex, just ignore!
+            if (!isValid(stl.getNeighbor(i)) || isHex(stl.getNeighbor(i)))
+                continue;
+            // we now cast the next QR onto a vertex, if it is null ignore, otherwise see if it's owned.
+            Shape s = getShape(stl.getNeighbor(i));
+            if (s != null && ((Vertex)s).isOwned()) {
+                if (debug) System.out.println("BOARD too close to another settlement!");
                 return false;
             }
+        }
+        if (debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
+
+        ((Vertex)stl).setOwner(player);
+        ((Vertex)stl).setLevel(1);
+        update = true;
+        return true;
+    }
+
+
+    public boolean buildSettlement(int q, int r, int player)
+    {
+        Shape s = getShape(q, r);
+        if (s == null || isHex(q,r) || ((Vertex)s).isOwned()) {  // is a Hexagon, or is already owned
+            if (debug) System.out.println("BOARD cannot settle there!");
+            return false;
+        }
+        //this checks the neighbors to make sure no other settlement is within 1 tile.
+        for (int i = 0; i < 6; i++){
+            // if the next Q,R is invalid or a hex, just ignore!
+            if (!isValid(s.getNeighbor(i)) || isHex(s.getNeighbor(i)))
+                continue;
+            // we now cast the next QR onto a vertex, if it is null ignore, otherwise see if it's owned.
+            Shape shape = getShape(s.getNeighbor(i));
+            if (shape != null && ((Vertex)shape).isOwned()){
+                if (debug) System.out.println("BOARD too close to another settlement!");
+                return false;
+            }
+        }
+        if (!hasRoadOwnedBy(new Point_QR(q, r), player)) {
+            if (debug) System.out.println("BOARD no connection!");
+            return false;
         }
         if (debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
 
@@ -155,8 +191,8 @@ public class Board {
 
     public boolean buildCity(int q, int r, int player)
     {
-        Shape s = vertices[aib(q)][aib(r)];
-        if (isHex(q,r) || ((Vertex)s).getLevel() != 1) {  // is a Hexagon, or is not a settlement
+        Shape s = getShape(q, r);
+        if (s == null || isHex(q,r) || ((Vertex)s).getLevel() != 1) {  // is a Hexagon, or is not a settlement
             if (debug) System.out.println("BOARD cannot settle there!");
             return false;
         }
@@ -171,31 +207,30 @@ public class Board {
         return true;
     }
 
-    public boolean buildRoad(Point_QR src, Point_QR dst, int player)
-    {
+    public boolean buildRoad(Point_QR src, Point_QR dst, int player) {
         Edge e = getEdge(src, dst);
-
         if (e == null) // no such edge
             return false;
-
-        if(e.isOwned()) {
+        if (e.isOwned()) {
             if (debug) System.out.println("BOARD someone else already built a road there!");
             return false;
         }
 
-        // TODO allow player to build a road through an unsettled vertex if they have an adjacent road
         Shape s = getShape(src), d = getShape(dst);
-        // neither is null and also neither is owned
-        if (s != null && d != null && !(((Vertex)s).isOwned() || ((Vertex)d).isOwned())) {
-            if (debug) System.out.println("BOARD player does not own an vertex!");
+        // either vertex is (not null and owned by player)
+        boolean hasSettlement = ((s != null && ((Vertex) s).getOwner() == player)
+                || (d != null && ((Vertex) d).getOwner() == player));
+        // no settlement, and no road reaches source, and no road reaches destination
+        if (!hasSettlement && !hasRoadOwnedBy(src, player) && !hasRoadOwnedBy(dst, player)) {
+            if (debug) System.out.println("BOARD player does not own a settlement or road nearby!");
             return false;
         }
-
         e.setOwner(player);
         if(debug) System.out.println("BOARD setting ownership of road " + e + " to " + player);
         update = true;
         return true;
     }
+
 
     public boolean isValid(Point_QR hex) { return isValid(hex.q(), hex.r()); }
     public boolean isValid(int q, int r)
@@ -288,7 +323,8 @@ public class Board {
     private boolean isHex(Point_QR hex) { return Math.abs(hex.q()-hex.r()) % 3 == 0; }
     private Edge getEdge(Point_QR a, Point_QR b)
     {
-        if (isHex(a) || isHex(b))
+        // if either is invalid or a hex, there's no edge
+        if (!isValid(a) || !isValid(b) || isHex(a) || isHex(b))
             return null;
         if (((a.q() - a.r()) + 1) % 3 == 0) {
             // a is the source
@@ -306,16 +342,12 @@ public class Board {
     }
     private boolean hasRoadOwnedBy(Point_QR vertex, int player_owner)
     {
-        Shape s, centre = getShape(vertex);
-        if (centre == null) return false;
-        Edge e;
+        Shape s, src = getShape(vertex);
+        if (src == null) return false;
         for (int i = 0; i < 6; i++) {
-            // if is valid point and isn't a hex (therefore a valid vertex)
-            if (isValid(centre.getNeighbor(i)) && !isHex(centre.getNeighbor(i))) {
-                e = getEdge(vertex, centre.getNeighbor(i));
-                if (e != null && e.getOwner() == player_owner)
-                    return true;
-            }
+            Edge e = getEdge(vertex, src.getNeighbor(i));
+            if (e != null && e.getOwner() == player_owner)
+                return true;
         }
         return false;
     }
@@ -324,6 +356,11 @@ public class Board {
         if(!isValid(pt))
             return null;
         return vertices[aib(pt.q())][aib(pt.r())];
+    }
+    private Shape getShape(int q, int r){
+        if(!isValid(q, r))
+            return null;
+        return vertices[aib(q)][aib(r)];
     }
 
     private void initBoard()

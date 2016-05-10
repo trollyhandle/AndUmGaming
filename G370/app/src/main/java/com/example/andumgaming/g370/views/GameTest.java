@@ -2,10 +2,7 @@
 package com.example.andumgaming.g370.views;
 
 import com.example.andumgaming.g370.R;
-import com.example.andumgaming.g370.views.fragments.ActionPanelFragment;
-import com.example.andumgaming.g370.views.fragments.BuySubpanelFragment;
 
-import android.content.Intent;
 import android.graphics.Point;
 
 //import android.app.FragmentTransaction;
@@ -28,15 +25,13 @@ public class GameTest extends AppCompatActivity {
 
     private Game game;
 
-    private Button zoomIn;
-    private Button zoomOut;
-    private Button zoomLeft;
-    private Button zoomUp;
-    private Button zoomDown;
-    private Button zoomRight;
+    private Button zoomIn, zoomOut;
+    private Button zoomLeft, zoomRight;
+    private Button zoomUp, zoomDown;
     private Button zoomReset;
+
     private Button BuyRoad;
-    private Button BuyHouse;
+    private Button BuySettlement;
     private Button BuyCity;
     private Button EndTurn;
 
@@ -51,9 +46,10 @@ public class GameTest extends AppCompatActivity {
         //loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
 
+        newGame();
+        // TODO or load from server
+        // loadGame();
 
-
-        game = new Game(this, width, height);
 
         // add game - board and view - to layout
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
@@ -76,7 +72,58 @@ public class GameTest extends AppCompatActivity {
     //    loadfragment();
         game.getView().setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        // TODO only if starting a new game
+//        setupGame();
     }
+
+
+
+
+    private void newGame()
+    {
+        game = new Game(this, width, height);
+    }
+
+    private void loadGame()
+    {
+        // TODO get data from server and init the game with it
+        return;
+    }
+
+    private void setupGame()
+    {
+        // TODO add interactions so the user knows what's going on!!
+
+        for (int player = 1; player <= 4; player++) {
+            game.setTurn(player);
+            // if it's the phone owner's turn...
+                game.setBuildState(Game.BUILD.SETTLEMENT);
+
+                // place a settlement anywhere valid
+                // TODO user information interaction
+
+
+                // place a road anywhere next to that settlement
+
+                // post to server
+
+            // else
+                // wait for server
+
+        }
+        for (int player = 4; player >= 1; --player) {
+
+            // same as above
+
+        }
+
+        // generate resources for players based on second settlement
+
+
+    }
+
+
 
     private void findSize()
     {
@@ -96,7 +143,7 @@ public class GameTest extends AppCompatActivity {
         zoomRight = (Button) findViewById(R.id.zoomRight);
         zoomReset = (Button) findViewById(R.id.zoomReset);
         BuyRoad = (Button) findViewById(R.id.buyroad);
-        BuyHouse = (Button) findViewById(R.id.buyhouse);
+        BuySettlement = (Button) findViewById(R.id.buyhouse);
         EndTurn = (Button) findViewById(R.id.endturn);
         BuyCity = (Button) findViewById(R.id.buycity);
         //BackButton = (Button) findViewById(R.id.back);
@@ -162,102 +209,94 @@ public class GameTest extends AppCompatActivity {
         BuyRoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if build state isnt road
-                if (game.getBuild() != Game.BUILD.ROAD) {
-                    game.setBuildState(Game.BUILD.ROAD);
-                    if (game.getBuild() == Game.BUILD.ROAD) {
-                        BuyHouse.getBackground().clearColorFilter();
-                        BuyCity.getBackground().clearColorFilter();
+                BuySettlement.getBackground().clearColorFilter();
+                BuyCity.getBackground().clearColorFilter();
 
-                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                        v.invalidate();
-                    }
+                //if build state isnt road
+                if (game.getBuildState() != Game.BUILD.ROAD) {
+                    game.setBuildState(Game.BUILD.ROAD);
+                    v.getBackground()
+                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS road, unclick
                 else {
                     game.setBuildState(Game.BUILD.NONE);
                     v.getBackground().clearColorFilter();
-                    v.invalidate();
                 }
+                v.invalidate();
 
             }
         });
-        BuyHouse.setOnClickListener(new View.OnClickListener() {
+        BuySettlement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if build state isnt settlement
-                if (game.getBuild() != Game.BUILD.SETTLEMENT) {
-                    game.setBuildState(Game.BUILD.SETTLEMENT);
-                    if (game.getBuild() == Game.BUILD.SETTLEMENT) {
-                        BuyRoad.getBackground().clearColorFilter();
-                        BuyCity.getBackground().clearColorFilter();
+                BuyRoad.getBackground().clearColorFilter();
+                BuyCity.getBackground().clearColorFilter();
 
-                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                        v.invalidate();
-                    }
+                //if build state isnt settlement
+                if (game.getBuildState() != Game.BUILD.SETTLEMENT) {
+                    game.setBuildState(Game.BUILD.SETTLEMENT);
+                    v.getBackground()
+                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS settlement, unclick
                 else {
                     game.setBuildState(Game.BUILD.NONE);
                     v.getBackground().clearColorFilter();
-                    v.invalidate();
                 }
-            }
-        });
-        EndTurn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BuyCity.getBackground().clearColorFilter();
-                BuyHouse.getBackground().clearColorFilter();
-                BuyRoad.getBackground().clearColorFilter();
-
-                game.nextTurn();
-
-                if (game.getTurn() == 0) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-                    v.invalidate();
-                }
-                if (game.getTurn() == 1) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
-                    v.invalidate();
-                }
-                if (game.getTurn() == 2) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
-                    v.invalidate();
-                }
-                if (game.getTurn() == 3) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
-                    v.invalidate();
-                }
-                if (game.getTurn() == 4) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
-                    v.invalidate();
-                }
+                v.invalidate();
             }
         });
 
         BuyCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //if build state isnt city
-                if (game.getBuild() != Game.BUILD.CITY) {
-                    game.setBuildState(Game.BUILD.CITY);
-                    if (game.getBuild() == Game.BUILD.CITY) {
-                        BuyRoad.getBackground().clearColorFilter();
-                        BuyHouse.getBackground().clearColorFilter();
+                BuyRoad.getBackground().clearColorFilter();
+                BuySettlement.getBackground().clearColorFilter();
 
-                        v.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
-                        v.invalidate();
-                    }
+                //if build state isnt city
+                if (game.getBuildState() != Game.BUILD.CITY) {
+                    game.setBuildState(Game.BUILD.CITY);
+                    v.getBackground()
+                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS city, unclick
                 else {
                     game.setBuildState(Game.BUILD.NONE);
                     v.getBackground().clearColorFilter();
-                    v.invalidate();
                 }
+                v.invalidate();
             }
         });
+
+        EndTurn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BuyCity.getBackground().clearColorFilter();
+                BuySettlement.getBackground().clearColorFilter();
+                BuyRoad.getBackground().clearColorFilter();
+
+                game.nextTurn();
+
+                if (game.getTurn() == 0)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 1)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 2)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 3)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 4)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+                v.invalidate();
+            }
+        });
+
+
 
     }
 }

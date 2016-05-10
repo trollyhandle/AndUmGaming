@@ -6,6 +6,9 @@
 
     <color name="black_overlay">#66000000</color>
 
+    <color name="buy_highlight">#e0f47521</color>
+    <integer name="buy_highlight">0xe0f47521</integer>
+
     <integer name="DESERT">0xffffffff</integer>
     <integer name="WHEAT" >0xffFFDF00</integer>
     <integer name="WOOD"  >0xff014421</integer>

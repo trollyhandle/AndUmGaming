@@ -2,7 +2,6 @@ package Game;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.provider.Settings;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -19,8 +18,8 @@ public class Game {
 
     // RESOURCE PAINT_COLOR LOOKUP
     public enum RESOURCES {
-        BLANK   (0xffffffff), WHEAT   (0xffE9AA13), WOOD    (0xff5D1803),
-        ORE     (0xff4E656A), BRICK   (0xffB20D0E), SHEEP   (0xff1CBC00);
+        BLANK   (0xffffffff), WHEAT   (0xffE9AA13), WOOD    (0xff83440D),
+        ORE     (0xff4E656A), BRICK   (0xffCB0501), SHEEP   (0xff1CBC00);
 //        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
 //        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
         public final int col; RESOURCES(int color) { col = color; }
@@ -55,9 +54,6 @@ public class Game {
         NONE, ROAD, SETTLEMENT, CITY; //, KNIGHT;
     }
 
-    private BUILD getBuild;
-
-
     private BUILD build;
     private Point_QR firstRoadPt;
     private int turn;
@@ -79,15 +75,11 @@ public class Game {
     private boolean moving, zooming;
 
 
-    ////////////////////
-    public BUILD getBuild(){
-        return build;
-    }
-
     public Game(Activity parent, int width, int height)
     {
         r = parent.getResources();
         this.width = width; this.height = height;
+
         // width/9 is a good initial hex size.
         // I determined this after multiple iterations of a complex modeling algorithm...
         //      just kidding, guess and check!
@@ -126,11 +118,17 @@ public class Game {
     }
 
     public int getTurn() { return turn; }
+    public void setTurn(int turn) { this.turn = turn; }
 
     public void setBuildState(BUILD type) {
+        if (turn == 0) return;  // if no player currently ready
         build = type;
         firstRoadPt = null; // just to make sure
     }
+    public BUILD getBuildState(){
+        return build;
+    }
+
     public void click(Point_QR hex) {
         // this is where decisions will be made
         if (debug) System.out.println("GAME click at " + hex);
@@ -138,14 +136,14 @@ public class Game {
 
         // are we placing a settlement?
         if (build == BUILD.SETTLEMENT) {
-            board.buildSettlement(hex.q(), hex.r(), turn);
+            board.placeSettlement(hex.q(), hex.r(), turn);
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
             board.buildCity(hex.q(), hex.r(), turn);
         }
 
-//        // are we placing a road?
+        // are we placing a road?
         else if (build == BUILD.ROAD) {
             if (firstRoadPt == null) // no source selected yet
                 firstRoadPt = hex;
