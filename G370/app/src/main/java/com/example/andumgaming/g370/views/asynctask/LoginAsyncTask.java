@@ -85,7 +85,6 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     public class JsonObject {
         int success;
         String message;
-
     }
 
     @Override
@@ -98,7 +97,6 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
                 Intent i = new Intent(context, FullscreenActivity.class);
                 context.startActivity(i);
                 ((Activity)context).finish();
-
 
             } else
                 this.statusField.setText(result);

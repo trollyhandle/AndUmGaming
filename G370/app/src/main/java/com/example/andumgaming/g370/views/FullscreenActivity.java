@@ -152,10 +152,10 @@ public class FullscreenActivity extends AppCompatActivity {
 
         /* Login Activity */
 
-        usernameField = (EditText)findViewById(R.id.editText1);
-        passwordField = (EditText)findViewById(R.id.editText2);
+        usernameField = (EditText)findViewById(R.id.username);
+        passwordField = (EditText)findViewById(R.id.password);
 
-        status = (TextView)findViewById(R.id.textView7);
+        status = (TextView)findViewById(R.id.loginstatus);
 
 
         mContentView = findViewById(R.id.container);

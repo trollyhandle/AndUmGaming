@@ -23,14 +23,14 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
             android:ems="10" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -39,14 +39,14 @@
         </EditText>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="loginPost"
             android:text="@string/login_button_text" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="signupPost"
@@ -55,7 +55,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/loginstatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/status"

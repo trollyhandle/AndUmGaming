@@ -66,15 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="20"
             android:layout_gravity="center" />
-        <Button
-            android:id="@+id/Exit"
-            android:text="@string/exit_text"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="20"
-            android:layout_gravity="center" />
-        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

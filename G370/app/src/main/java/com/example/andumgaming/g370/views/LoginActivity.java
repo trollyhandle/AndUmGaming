@@ -2,6 +2,7 @@ package com.example.andumgaming.g370.views;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ButtonBarLayout;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -21,17 +22,17 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        usernameField = (EditText)findViewById(R.id.editText1);
-        passwordField = (EditText)findViewById(R.id.editText2);
+        usernameField = (EditText)findViewById(R.id.username);
+        passwordField = (EditText)findViewById(R.id.password);
 
-        status = (TextView)findViewById(R.id.textView7);
+        status = (TextView)findViewById(R.id.loginstatus);
     }
 
     public void loginPost(View view){
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
 
-        status = (TextView)findViewById(R.id.textView7);
+        status = (TextView)findViewById(R.id.loginstatus);
 
         new LoginAsyncTask(this,status).execute(username,password);
     }
