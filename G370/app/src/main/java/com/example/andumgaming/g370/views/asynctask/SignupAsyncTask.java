@@ -4,14 +4,6 @@ package com.example.andumgaming.g370.views.asynctask;
  * Created by ross on 5/4/2016.
  */
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,23 +11,24 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.Fragment;
-
 import com.example.andumgaming.g370.views.FullscreenActivity;
-import com.example.andumgaming.g370.views.fragments.MenuFragment;
-import com.example.andumgaming.g370.R;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginAsyncTask extends AsyncTask<String,Void,String> {
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
+public class SignupAsyncTask extends AsyncTask<String,Void,String> {
     private TextView statusField;
     private Context context;
 
     //flag 0 means get and 1 means post.(By default it is get.)
-    public LoginAsyncTask(Context context, TextView statusField) {
+    public SignupAsyncTask(Context context, TextView statusField) {
         this.context = context;
         this.statusField = statusField;
     }
@@ -51,7 +44,7 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
             String username = (String)arg0[0];
             String password = (String)arg0[1];
 
-            String link="http://g370.duckdns.org/login.php";
+            String link="http://g370.duckdns.org/register.php";
             String data  = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
