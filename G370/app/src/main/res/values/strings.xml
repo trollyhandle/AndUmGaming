@@ -32,9 +32,9 @@
     <string name="signup_button_text">Sign Up</string>
     <string name="login_text">Login to Polygonia</string>
     <string name="signup_text">Sign Up for Polygonia!</string>
+    <string name="signout_text">Sign Out</string>
     <string name="login_status">Login Status</string>
     <string name="status">Not logged in</string>
-    <string name="method">Login Method</string>
 
     <!--
     Strings for play_fragment
@@ -95,6 +95,7 @@
     <string name="player4">Player4</string>
     <string name="player5">Player5</string>
 
-
+    <!-- Strings for exit -->
+    <string name="exit_text">Exit</string>
 
 </resources>
