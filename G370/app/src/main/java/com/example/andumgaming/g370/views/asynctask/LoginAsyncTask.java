@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.TextView;
 
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +26,9 @@ import com.example.andumgaming.g370.views.FullscreenActivity;
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
 import com.example.andumgaming.g370.R;
 import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 //TODO fix GSON
 //import com.google.gson.Gson;
 
@@ -82,17 +86,30 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
+    public class JsonObject {
+        int success;
+        String message;
+
+    }
+
     @Override
     protected void onPostExecute(String result) {
-        //TODO fix gson
-        Gson gson = new Gson();
-        if (false) {
-            Intent i = new Intent(context, FullscreenActivity.class);
-            context.startActivity(i);
-            ((Activity)context).finish();
+        try {
+            JSONObject jObject = new JSONObject(result);
+            int aJsonInteger = jObject.getInt("success");
+
+            if (aJsonInteger == 1) {
+                Intent i = new Intent(context, FullscreenActivity.class);
+                context.startActivity(i);
+                ((Activity)context).finish();
 
 
-        } else
-            this.statusField.setText(result);
+            } else
+                this.statusField.setText(result);
+        }
+        catch (JSONException e) {
+            Log.i("error", "Error!");
+           return;
+        }
     }
 }
