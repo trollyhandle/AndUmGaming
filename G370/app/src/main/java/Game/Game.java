@@ -104,7 +104,8 @@ public class Game {
 
         initResourceTabs(parent);
         setupTouchListener();
-        // TODO initialize players[], and at some point (maybe not here) call to server
+
+        // TODO initialize players[], and at some point (maybe here, maybe not) call to server
         if (debug) System.out.println(board);
     }
 
@@ -174,31 +175,27 @@ public class Game {
 
     /* *********************** */
     // Board Manipulation Functions
+    public void invalidate() { view.invalidate(); }
     public void move(int dx, int dy)
     {
         board.move(dx, dy);
-        view.invalidate();
     }
     public void setCenter(Point_XY newCenter)
     {
         board.setCenter(newCenter);
-        view.invalidate();
     }
     public void resize(int ds)
     {
         board.resize(ds);
-        view.invalidate();
     }
     public void setSize(int size)
     {
         board.setHexSize(size);
-        view.invalidate();
     }
     public void resetZoom()
     {
         board.setHexSize(default_hexsize);
         board.setCenter(default_center);
-        view.invalidate();
     }
 
 
@@ -239,7 +236,7 @@ public class Game {
                         int y1 = (int) event.getY(0), y2 = (int) event.getY(1);
                         int distance = (int) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
                         if (pinch_distance > 0) {
-                            board.resize((distance - pinch_distance) / 2);
+                            resize((distance - pinch_distance) / 2);
                             view.invalidate();
                         }
                         pinch_distance = distance;
@@ -247,7 +244,7 @@ public class Game {
                         int drag_x = (int) event.getX(), drag_y = (int) event.getY();
                         int dx = Math.abs(drag_x - touch_x), dy = Math.abs(drag_y - touch_y);
                         if (moving || (dx > dist_to_begin_move || dy > dist_to_begin_move)) {
-                            board.move(drag_x - touch_x, drag_y - touch_y);
+                            move(drag_x - touch_x, drag_y - touch_y);
                             view.invalidate();
                             moving = true;
                             touch_x = drag_x;

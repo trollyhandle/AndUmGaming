@@ -4,6 +4,7 @@
     android:id="@+id/game_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/gamebkg"
     tools:context="com.example.andumgaming.g370.views.GameTest">
 
     <!-- Removed these from layout: the padding caused offset errors in board drawing stage -->

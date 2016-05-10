@@ -35,6 +35,7 @@ public class Point_XY {
         return new Point_XY(new_x, new_y);
     }
 
+
     public Point_XY jump_hex(int q, int r, int hex_size)
     {
         int qr_x = (r * hex_size) + (q * hex_size / 2);   // q * sin(30)
