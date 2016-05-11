@@ -1,6 +1,8 @@
 
 package com.example.andumgaming.g370.views;
 
+
+
 import com.example.andumgaming.g370.R;
 
 import android.graphics.Point;
@@ -16,14 +18,20 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+import android.content.res.Resources;
 
 import Game.Game;
 
-public class GameTest extends AppCompatActivity {
+
+
+public class GameTest extends AppCompatActivity implements ToastListener{
 
     private boolean debug = true;
 
     private Game game;
+   // private Board board;
+
 
     private Button zoomIn, zoomOut;
     private Button zoomLeft, zoomRight;
@@ -72,6 +80,8 @@ public class GameTest extends AppCompatActivity {
     //    loadfragment();
         game.getView().setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        game.getBoard().setListener(this);
 
         // TODO only if starting a new game
 //        setupGame();
@@ -134,6 +144,15 @@ public class GameTest extends AppCompatActivity {
         if(debug)System.out.println("TEST Window size: " + width + " by " + height);
     }
 
+
+    public void ToastMessage(String message) {
+        int duration=Toast.LENGTH_SHORT;
+        Toast toast= Toast.makeText(this,message,duration);
+        toast.show();
+    }
+
+
+
     private void loadButtons() {
         zoomIn = (Button) findViewById(R.id.zoomIn);
         zoomOut = (Button) findViewById(R.id.zoomOut);
@@ -146,8 +165,6 @@ public class GameTest extends AppCompatActivity {
         BuySettlement = (Button) findViewById(R.id.buyhouse);
         EndTurn = (Button) findViewById(R.id.endturn);
         BuyCity = (Button) findViewById(R.id.buycity);
-        //BackButton = (Button) findViewById(R.id.back);
-
 
         zoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +241,6 @@ public class GameTest extends AppCompatActivity {
                     v.getBackground().clearColorFilter();
                 }
                 v.invalidate();
-
             }
         });
         BuySettlement.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.GameTest;
 
 
 /**
@@ -61,6 +62,7 @@ public class Game {
 
 
     private Board board;
+    //private GameTest gametest;
 
     private BoardView view;
     private int width, height;
@@ -73,6 +75,10 @@ public class Game {
     private boolean moving, zooming;
     private Point_QR selected;
 
+
+    public Board getBoard() {
+        return board;
+    }
 
     public Game(Activity parent, int width, int height)
     {
