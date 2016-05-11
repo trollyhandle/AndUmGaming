@@ -92,12 +92,12 @@ public class TutorialActivity extends AppCompatActivity {
         mTutorialPagerAdapter = new TutorialPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mTutorialPagerAdapter);
-
+/*
         if(getIntent().getBooleanExtra("isMusicPlaying",false)) {
             Intent music = new Intent();
             music.setClass(this, MusicService.class);
             startService(music);
-        }
+        }*/
 
     }
 
@@ -127,7 +127,7 @@ public class TutorialActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-
+/*
     @Override
     protected void onPause() {
         super.onPause();
@@ -150,5 +150,5 @@ public class TutorialActivity extends AppCompatActivity {
         MusicService.mPlayer.release();
         super.onDestroy();
     }
-
+*/
 }

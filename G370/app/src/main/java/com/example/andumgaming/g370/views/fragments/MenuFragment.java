@@ -95,7 +95,7 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
             public void onClick(View v) {
                 TutorialActivity newFragment = new TutorialActivity();
                 Intent i = new Intent(getActivity().getApplicationContext(), TutorialActivity.class);
-                i.putExtra("isMusicPlaying", MusicService.mPlayer.isPlaying());
+//                i.putExtra("isMusicPlaying", MusicService.mPlayer.isPlaying());
                 getActivity().startActivity(i);
             }
         });
