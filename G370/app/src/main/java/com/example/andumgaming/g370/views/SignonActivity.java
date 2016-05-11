@@ -22,9 +22,9 @@ public class SignonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signon_activity);
 
-        usernameField = (EditText)findViewById(R.id.editText1);
-        passwordField = (EditText)findViewById(R.id.editText2);
-        emailField = (EditText)findViewById(R.id.editText3);
+        usernameField = (EditText)findViewById(R.id.username);
+        passwordField = (EditText)findViewById(R.id.password);
+        emailField = (EditText)findViewById(R.id.email);
 
         status = (TextView)findViewById(R.id.textView7);
     }
