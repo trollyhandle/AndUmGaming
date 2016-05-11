@@ -15,6 +15,9 @@ public class BoardTest {
 
         System.out.println("printing board:\n" + testBoard);
 
+
+
+
         System.out.println("tests complete");
     }
 

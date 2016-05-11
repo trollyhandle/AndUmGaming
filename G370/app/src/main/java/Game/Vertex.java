@@ -8,9 +8,12 @@ import android.graphics.Path;
  * Represents a vertex in the game board
  */
 public class Vertex extends Shape {
-    private int owner;
-    private int level;
 
+    // TO SERIALIZE
+    private int owner;  // player who has built upon this Vertex
+    private int level;  // level of building upgrades: 0-none, 1-settlement, 2-city
+
+    // NOT SERIALIZE
     private boolean selected;
 
     public Vertex(int q, int r)
@@ -22,45 +25,36 @@ public class Vertex extends Shape {
 
     public String type() { return "Vertex"; }
 
-    public void update(int hex_size, Point_XY boardCenter)
+    public int getLevel() { return level; }
+    public void setLevel(int level) { this.level = level; }
+
+    public int getOwner() { return owner; }
+    public void setOwner(int player) { owner = player; }
+
+    public boolean isOwned() { return owner != 0; }
+
+    public boolean getSelected() { return selected; }
+    public void setSelected(boolean select) { selected = select; }
+
+    public void updatePath(int hex_size, Point_XY boardCenter)
     {
-        int poly_size = hex_size / 4;
+        int poly_size = hex_size / 4;  // size of actual drawn hexagon
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(330, poly_size);
 
-        path.rewind();
-        if (selected)
+        path.rewind();  // clears path but leaves internal structure intact (faster readding)
+        if (selected)  // if selected, put a giant gaping hole
             path.addCircle(shape_center.x(), shape_center.y(), poly_size/2, Path.Direction.CCW);
-
-        else if (level != 2)
+        else if (level != 2)  // if not a city, add small circle
             path.addCircle(shape_center.x(), shape_center.y(), poly_size/5, Path.Direction.CCW);
-        path.moveTo(pt.x(), pt.y());
 
+        // make the hexagon shape
+        path.moveTo(pt.x(), pt.y());
         for (int i = 30; i <= 360; i += 60) {
             pt = shape_center.jump_linear(i, poly_size);
             path.lineTo(pt.x(), pt.y());
         }
         path.close();
-    }
-
-
-    public boolean isOwned() { return owner != 0; }
-    public int getOwner() { return owner; }
-    public void setOwner(int player) { owner = player; }
-    public int getLevel() { return level; }
-    public void setLevel(int level) { this.level = level; }
-
-    public boolean isSelected() { return selected; }
-    public void setSelected(boolean select) { selected = select; }
-
-    public String serialize()
-    {
-        String json = "{\"shape\":{";
-        json += "\"type\":\"" + type() + "\",";
-        json += "\"coord\":" + coord.serialize() + ",";
-        json += "\"owner\":" + owner + ",";
-        json += "\"level\":" + level + "}}";
-        return json;
     }
 
 }

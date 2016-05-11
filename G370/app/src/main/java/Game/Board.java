@@ -53,7 +53,7 @@ public class Board {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
                 if (s != null) {
-                    s.update(hex_size, center);
+                    s.updatePath(hex_size, center);
 
                     if (isHex(q,r)){
                         int color = (Game.RESOURCES.getColor(((Hexagon)s).getResource()));
@@ -291,42 +291,40 @@ public class Board {
         return prt + "Edges: " + numEdges + '\n';
     }
 
-    public String serialize()
-    {
-        Shape s;
-        String json = "{\"board\":{";
-        json += "\"vertices\":[";
-        for (int q = 0; q < arraySize; q++) {
-            for (int r = 0; r < arraySize; r++) {
-                s = vertices[q][r];
-                if (s != null) {
-                    json += s.serialize() + ",";
-                }
-            }
-        }
-        // remove trailing comma
-        json = json.substring(0, json.length()-1) + "],";
-        Edge e;
-        json += "\"edges\":[";
-        for (int q = 0; q < arraySize; q++) {
-            for (int r = 0; r < arraySize; r++) {
-                for (int k = 0; k < 3; k++) {
-                    e = edges[q][r][k];
-                    if (e != null) {
-                        json += e.serialize() + ",";
-                    }
-                }
-            }
-        }
-        // remove trailing comma
-        json = json.substring(0, json.length()-1) + "]}}";
+//    public String serialize()
+//    {
+//        Shape s;
+//        String json = "{\"board\":{";
+//        json += "\"vertices\":[";
+//        for (int q = 0; q < arraySize; q++) {
+//            for (int r = 0; r < arraySize; r++) {
+//                s = vertices[q][r];
+//                if (s != null) {
+//                    json += s.serialize() + ",";
+//                }
+//            }
+//        }
+//        // remove trailing comma
+//        json = json.substring(0, json.length()-1) + "],";
+//        Edge e;
+//        json += "\"edges\":[";
+//        for (int q = 0; q < arraySize; q++) {
+//            for (int r = 0; r < arraySize; r++) {
+//                for (int k = 0; k < 3; k++) {
+//                    e = edges[q][r][k];
+//                    if (e != null) {
+//                        json += e.serialize() + ",";
+//                    }
+//                }
+//            }
+//        }
+//        // remove trailing comma
+//        json = json.substring(0, json.length()-1) + "]}}";
+//
+//        return json;
+//    }
 
-        return json;
-    }
-    public static Board deserialize(String json)
-    {
-        return null;
-    }
+
 
 // *********** PRIVATE FUNCTIONS ***********
 
