@@ -5,8 +5,9 @@
     -->
     <string name="app_name">Polygonia</string>
     <string name="back">Back</string>
-    <string name="loading">loading</string>
+    <string name="loading">Loading</string>
 
+    <bool name="debug">true</bool>
 
     <!--
     Strings for menu_fragment
@@ -69,6 +70,7 @@
     Strings for Game activity & Game support fragments
     -->
     <string name="endturn">End Turn</string>
+
     <!-- Zoom controls -->
     <string name="zoom_in">+</string>
     <string name="zoom_out">-</string>

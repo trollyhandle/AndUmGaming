@@ -7,11 +7,11 @@ resources = ["gold", "orangered", "seagreen", "orchid", "turquoise"]
 
 # WIN_SIZE = 500
 # WIN_SIZE = 800
-WIN_SIZE = 900
-# WIN_SIZE = 1100
+# WIN_SIZE = 900
+WIN_SIZE = 1100
 
-# hex_size = WIN_SIZE // 10
-hex_size = 80
+hex_size = WIN_SIZE // 10
+# hex_size = 80
 # hex_size_short = hex_size * math.sqrt(3) / 2
 
 

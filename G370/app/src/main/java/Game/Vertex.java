@@ -11,10 +11,13 @@ public class Vertex extends Shape {
     private int owner;
     private int level;
 
+    private boolean selected;
+
     public Vertex(int q, int r)
     {
         super(q, r);
         owner = level = 0;
+        selected = false;
     }
 
     public String type() { return "Vertex"; }
@@ -26,8 +29,11 @@ public class Vertex extends Shape {
         Point_XY pt = shape_center.jump_linear(330, poly_size);
 
         path.rewind();
-        if (level != 2)
-            path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
+        if (selected)
+            path.addCircle(shape_center.x(), shape_center.y(), poly_size/2, Path.Direction.CCW);
+
+        else if (level != 2)
+            path.addCircle(shape_center.x(), shape_center.y(), poly_size/5, Path.Direction.CCW);
         path.moveTo(pt.x(), pt.y());
 
         for (int i = 30; i <= 360; i += 60) {
@@ -43,6 +49,9 @@ public class Vertex extends Shape {
     public void setOwner(int player) { owner = player; }
     public int getLevel() { return level; }
     public void setLevel(int level) { this.level = level; }
+
+    public boolean isSelected() { return selected; }
+    public void setSelected(boolean select) { selected = select; }
 
     public String serialize()
     {

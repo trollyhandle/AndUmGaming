@@ -18,9 +18,9 @@ public class Game {
 
     // RESOURCE PAINT_COLOR LOOKUP
     public enum RESOURCES {
-        BLANK   (0xffffffff), WHEAT   (0xffFFDF00), WOOD    (0xff014421),
-        ORE     (0xff8A7F80), BRICK   (0xffCB4154), SHEEP   (0xff98FF98);
-        private int col; RESOURCES(int color) { col = color; }
+        BLANK   (0xffffffff), WHEAT   (0xffE9AA13), WOOD    (0xff83440D),
+        ORE     (0xff4E656A), BRICK   (0xffCB0501), SHEEP   (0xff1CBC00);
+        public final int col; RESOURCES(int color) { col = color; }
         static int getColor(int i) { switch(i) {
             case 1: return WHEAT.col; case 2: return WOOD.col;
             case 3: return ORE.col; case 4: return BRICK.col;
@@ -30,21 +30,28 @@ public class Game {
             case ORE: return 3; case BRICK: return 4;
             case SHEEP: return 5; } return 0; }
     }
+
     // PLAYER PAINT_COLOR LOOKUP
     public enum PLAYERS {
-        NONE (0xffFFFFFF)/*WHITE*/,
-        ONE (0xffFF0800)/*RED*/,    TWO(0xff00FF00)/*GREEN*/,
-        THREE(0xff1C1CF0)/*BLUE*/,  FOUR(0xffBF00FF)/*VIOLET*/;
-        private int col; PLAYERS(int value) { col = value; }
+        NONE    (0xffFFFFFF),
+        ONE     (0xff3AF2A9), TWO   (0xffD65466),
+        THREE   (0xff9835F1), FOUR  (0xffFD6D27);
+        public final int col; PLAYERS(int value) { col = value; }
         static int getColor(int i) { switch(i) {
             case 1: return ONE.col; case 2: return TWO.col;
             case 3: return THREE.col; case 4: return FOUR.col;
         } return NONE.col; }
     }
 
+    public enum TEXT_COLORS {
+        WHITE(0xffFFFFFF), RED(0xffFF0F00), BLACK(0x00000000);
+        public final int col; TEXT_COLORS(int value) { col = value; }
+    }
+
     public enum BUILD {
         NONE, ROAD, SETTLEMENT, CITY; //, KNIGHT;
     }
+
     private BUILD build;
     private Point_QR firstRoadPt;
     private int turn;
@@ -64,11 +71,14 @@ public class Game {
     private final int dist_to_begin_move = 10;
     private int touch_x, touch_y, pinch_distance;
     private boolean moving, zooming;
+    private Point_QR selected;
+
 
     public Game(Activity parent, int width, int height)
     {
         r = parent.getResources();
         this.width = width; this.height = height;
+
         // width/9 is a good initial hex size.
         // I determined this after multiple iterations of a complex modeling algorithm...
         //      just kidding, guess and check!
@@ -82,14 +92,21 @@ public class Game {
         if(debug)System.out.println("GAME creating BoardView");
         view = new BoardView(parent, board);
 
+        players = new Player[5];
+        // player 0 is the nobody player
+        players[1] = new Player();
+        players[2] = new Player();
+        players[3] = new Player();
+        players[4] = new Player();
+
         turn = 0;
         build = BUILD.NONE;
 
         initResourceTabs(parent);
         setupTouchListener();
 
-        // TODO initialize players[], and at some point (maybe not here) call to server
-
+        // TODO initialize players[], and at some point (maybe here, maybe not) call to server
+        if (debug) System.out.println(board);
     }
 
 
@@ -101,74 +118,84 @@ public class Game {
         build = BUILD.NONE;
 
         // set resources to the current player's stats
-//        refreshResourceCounts();  // dont do this till players are implemented
+        refreshResourceCounts();  // dont do this till players are implemented
 
         // set cards too
 
     }
 
     public int getTurn() { return turn; }
+    public void setTurn(int turn) { this.turn = turn; }
 
     public void setBuildState(BUILD type) {
+        if (turn == 0) return;  // if no player currently ready
         build = type;
         firstRoadPt = null; // just to make sure
     }
+    public BUILD getBuildState(){
+        return build;
+    }
+
     public void click(Point_QR hex) {
         // this is where decisions will be made
         if (debug) System.out.println("GAME click at " + hex);
         if (debug) System.out.println("GAME build state: " + build);
+        boolean success = false;
 
         // are we placing a settlement?
         if (build == BUILD.SETTLEMENT) {
-            board.buildSettlement(hex.q(), hex.r(), turn);
+            success = board.placeSettlement(hex.q(), hex.r(), turn);
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
             board.buildCity(hex.q(), hex.r(), turn);
         }
 
-//        // are we placing a road?
+        // are we placing a road?
         else if (build == BUILD.ROAD) {
-            if (firstRoadPt == null) // no source selected yet
+            if (firstRoadPt == null) {  // no source selected yet
                 firstRoadPt = hex;
+                board.selectSettlement(selected = hex);
+                // TODO visual feedback on selected/highlighted vertex
+            }
             else {
                 if (debug) System.out.println("Road from " + firstRoadPt + " to " + hex);
-                board.buildRoad(firstRoadPt, hex, turn);
+                success = board.buildRoad(firstRoadPt, hex, turn);
                 firstRoadPt = null;  // reset for next road
+                board.deselectSettlement(selected);
             }
         }
         // are we playing a card?
         // are we moving the robber?
+
+//        if (success)
+//            System.out.println();
     }
 
 
     /* *********************** */
     // Board Manipulation Functions
+    public void invalidate() { view.invalidate(); }
     public void move(int dx, int dy)
     {
         board.move(dx, dy);
-        view.invalidate();
     }
     public void setCenter(Point_XY newCenter)
     {
         board.setCenter(newCenter);
-        view.invalidate();
     }
     public void resize(int ds)
     {
         board.resize(ds);
-        view.invalidate();
     }
     public void setSize(int size)
     {
         board.setHexSize(size);
-        view.invalidate();
     }
     public void resetZoom()
     {
         board.setHexSize(default_hexsize);
         board.setCenter(default_center);
-        view.invalidate();
     }
 
 
@@ -209,7 +236,7 @@ public class Game {
                         int y1 = (int) event.getY(0), y2 = (int) event.getY(1);
                         int distance = (int) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
                         if (pinch_distance > 0) {
-                            board.resize((distance - pinch_distance) / 2);
+                            resize((distance - pinch_distance) / 2);
                             view.invalidate();
                         }
                         pinch_distance = distance;
@@ -217,7 +244,7 @@ public class Game {
                         int drag_x = (int) event.getX(), drag_y = (int) event.getY();
                         int dx = Math.abs(drag_x - touch_x), dy = Math.abs(drag_y - touch_y);
                         if (moving || (dx > dist_to_begin_move || dy > dist_to_begin_move)) {
-                            board.move(drag_x - touch_x, drag_y - touch_y);
+                            move(drag_x - touch_x, drag_y - touch_y);
                             view.invalidate();
                             moving = true;
                             touch_x = drag_x;

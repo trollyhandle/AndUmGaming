@@ -9,16 +9,17 @@ import java.util.Random;
  */
 public class Board {
     private boolean debug = true;
+    private boolean DEBUG = false;  // for serious debugging time
 
     private static final int MIN_SIZE = 80;
-    private static final int MAX_SIZE = 840;
+    private static final int MAX_SIZE = 940;
 
     private int rings, arraySize;
     private int[][] extra_vertices;
     private ShapeDrawable[] shapes;
 
     private Point_XY center;
-    private int hex_size, board_size;
+    private int hex_size;
 
 
     private Shape[][] vertices;
@@ -53,9 +54,18 @@ public class Board {
                 s = vertices[q][r];
                 if (s != null) {
                     s.update(hex_size, center);
-                    int color = isHex(q,r)? (Game.RESOURCES.getColor(((Hexagon)s).getResource())):
-                            Game.PLAYERS.getColor(((Vertex)s).getOwner());
-                    shapes[i++] = new ShapeDrawable(s.getPath(), color);
+
+                    if (isHex(q,r)){
+                        int color = (Game.RESOURCES.getColor(((Hexagon)s).getResource()));
+                        int txt_size = ((Hexagon)s).fontSize(hex_size);
+                        String Die = "" + ((Hexagon)s).getDie();
+                        shapes[i++] = new ShapeDrawable(s.getPath(),color, Die,((Hexagon)s).getCenter(hex_size,center), txt_size);
+                    }
+                    else {
+                        int color = Game.PLAYERS.getColor(((Vertex)s).getOwner());
+                        shapes[i++] = new ShapeDrawable(s.getPath(), color);
+
+                    }
                 }
             }
         }
@@ -111,27 +121,94 @@ public class Board {
         update = true;
     }
 
-
-    public boolean buildSettlement(int q, int r, int player)
+    /**
+     * Places a settlement at (q, r) owned by player.
+     * WARNING: Use buildSettlement() instead. placeSettlement() employs reduced validity checking.
+     * This should only be used at beginning of a new game.
+     * @param q q-coordinate of build request site
+     * @param r r-coordinate of build request site
+     * @param player id of player requesting build
+     * @return true if settlement successfully built
+     */
+    public boolean placeSettlement(int q, int r, int player)
     {
-        Shape s = vertices[aib(q)][aib(r)];
-        if (isHex(q,r) || ((Vertex)s).isOwned()) {  // is a Hexagon, or is already owned
+        Shape stl = getShape(q, r);
+        if (stl == null || isHex(q,r) || ((Vertex)stl).isOwned()) {  // is a Hexagon, or is already owned
             if (debug) System.out.println("BOARD cannot settle there!");
             return false;
         }
+        //this checks the neighbors to make sure no other settlement is within 1 tile.
+        for (int i = 0; i < 6; i++){
+            // if the next Q,R is invalid or a hex, just ignore!
+            if (!isValid(stl.getNeighbor(i)) || isHex(stl.getNeighbor(i)))
+                continue;
+            // we now cast the next QR onto a vertex, if it is null ignore, otherwise see if it's owned.
+            Shape s = getShape(stl.getNeighbor(i));
+            if (s != null && ((Vertex)s).isOwned()) {
+                if (debug) System.out.println("BOARD too close to another settlement!");
+                return false;
+            }
+        }
         if (debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
 
-        // TODO check that none of Vertex(q, r)'s neighbors are occupied
+        ((Vertex)stl).setOwner(player);
+        ((Vertex)stl).setLevel(1);
+        update = true;
+        return true;
+    }
+
+
+    public boolean buildSettlement(int q, int r, int player)
+    {
+        Shape s = getShape(q, r);
+        if (s == null || isHex(q,r) || ((Vertex)s).isOwned()) {  // is a Hexagon, or is already owned
+            if (debug) System.out.println("BOARD cannot settle there!");
+            return false;
+        }
+        //this checks the neighbors to make sure no other settlement is within 1 tile.
+        for (int i = 0; i < 6; i++){
+            // if the next Q,R is invalid or a hex, just ignore!
+            if (!isValid(s.getNeighbor(i)) || isHex(s.getNeighbor(i)))
+                continue;
+            // we now cast the next QR onto a vertex, if it is null ignore, otherwise see if it's owned.
+            Shape shape = getShape(s.getNeighbor(i));
+            if (shape != null && ((Vertex)shape).isOwned()){
+                if (debug) System.out.println("BOARD too close to another settlement!");
+                return false;
+            }
+        }
+        if (!hasRoadOwnedBy(new Point_QR(q, r), player)) {
+            if (debug) System.out.println("BOARD no connection!");
+            return false;
+        }
+        if (debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
 
         ((Vertex)s).setOwner(player);
         ((Vertex)s).setLevel(1);
         update = true;
         return true;
     }
+    public void selectSettlement(Point_QR hex) { selectSettlement(hex.q(), hex.r()); }
+    public void selectSettlement(int q, int r)
+    {
+        if (isValid(q, r) && !isHex(q, r)) {
+            ((Vertex)vertices[aib(q)][aib(r)]).setSelected(true);
+            update = true;
+        }
+    }
+    public void deselectSettlement(Point_QR hex) { deselectSettlement(hex.q(), hex.r()); }
+    public void deselectSettlement(int q, int r)
+    {
+        if (isValid(q, r) && !isHex(q, r)) {
+            ((Vertex)vertices[aib(q)][aib(r)]).setSelected(false);
+            update = true;
+        }
+    }
+
     public boolean buildCity(int q, int r, int player)
     {
-        Shape s = vertices[aib(q)][aib(r)];
-        if (isHex(q,r) || ((Vertex)s).getLevel() != 1) {  // is a Hexagon, or is not a settlement
+        Shape s = getShape(q, r);
+        if (s == null || isHex(q,r) || ((Vertex)s).getLevel() != 1) {  // is a Hexagon, or is not a settlement
             if (debug) System.out.println("BOARD cannot settle there!");
             return false;
         }
@@ -145,24 +222,35 @@ public class Board {
         update = true;
         return true;
     }
-    public boolean buildRoad(Point_QR src, Point_QR dst, int player)
-    {
+
+    public boolean buildRoad(Point_QR src, Point_QR dst, int player) {
         Edge e = getEdge(src, dst);
         if (e == null) // no such edge
             return false;
+        if (e.isOwned()) {
+            if (debug) System.out.println("BOARD someone else already built a road there!");
+            return false;
+        }
 
-        // TODO check that this edge is not already owned!
-        // TODO check that player owns at least one of [src, dst]
-
+        Shape s = getShape(src), d = getShape(dst);
+        // either vertex is (not null and owned by player)
+        boolean hasSettlement = ((s != null && ((Vertex) s).getOwner() == player)
+                || (d != null && ((Vertex) d).getOwner() == player));
+        // no settlement, and no road reaches source, and no road reaches destination
+        if (!hasSettlement && !hasRoadOwnedBy(src, player) && !hasRoadOwnedBy(dst, player)) {
+            if (debug) System.out.println("BOARD player does not own a settlement or road nearby!");
+            return false;
+        }
         e.setOwner(player);
         if(debug) System.out.println("BOARD setting ownership of road " + e + " to " + player);
         update = true;
         return true;
     }
 
-    public boolean isValid(Point_QR hex)
+
+    public boolean isValid(Point_QR hex) { return isValid(hex.q(), hex.r()); }
+    public boolean isValid(int q, int r)
     {
-        int q = hex.q(), r = hex.r();
         if (Math.max(Math.max(Math.abs(q), Math.abs(r)), Math.abs((-q-r))) <= rings)
             return true;
         for (int[] pair: extra_vertices)
@@ -251,7 +339,8 @@ public class Board {
     private boolean isHex(Point_QR hex) { return Math.abs(hex.q()-hex.r()) % 3 == 0; }
     private Edge getEdge(Point_QR a, Point_QR b)
     {
-        if (isHex(a) || isHex(b))
+        // if either is invalid or a hex, there's no edge
+        if (!isValid(a) || !isValid(b) || isHex(a) || isHex(b))
             return null;
         if (((a.q() - a.r()) + 1) % 3 == 0) {
             // a is the source
@@ -266,6 +355,28 @@ public class Board {
                     return e;
         }
         return null;  // a and b are not adjacent
+    }
+    private boolean hasRoadOwnedBy(Point_QR vertex, int player_owner)
+    {
+        Shape s, src = getShape(vertex);
+        if (src == null) return false;
+        for (int i = 0; i < 6; i++) {
+            Edge e = getEdge(vertex, src.getNeighbor(i));
+            if (e != null && e.getOwner() == player_owner)
+                return true;
+        }
+        return false;
+    }
+
+    private Shape getShape(Point_QR pt){
+        if(!isValid(pt))
+            return null;
+        return vertices[aib(pt.q())][aib(pt.r())];
+    }
+    private Shape getShape(int q, int r){
+        if(!isValid(q, r))
+            return null;
+        return vertices[aib(q)][aib(r)];
     }
 
     private void initBoard()
@@ -298,18 +409,21 @@ public class Board {
     private void initEdges()
     {
         Shape v;
+        int edgesMade = 0;
+        if(DEBUG) System.out.println("EDGEINIT Making edges...");
         for (int q = -rings; q < rings+1; q++) {
             for (int r = Math.max(-rings, -q-rings); r < Math.min(rings, -q+rings)+1; r++) {
                 v = vertices[aib(q)][aib(r)];
+                if(DEBUG) System.out.println("EDGEINIT selected a vertex");
                 if (((q - r) + 1) % 3 == 0 && v != null) {  // necessary for larger boards
                     if (isValid(v.getNeighbor(0))) {
-                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0);
+                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0); edgesMade++;
                     }
                     if (isValid(v.getNeighbor(2))) {
-                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4);
+                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4); edgesMade++;
                     }
                     if (isValid(v.getNeighbor(4))) {
-                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2);
+                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); edgesMade++;
                     }
                 }
             }
@@ -320,17 +434,18 @@ public class Board {
                 v = vertices[aib(q)][aib(r)];
                 if (v != null) {
                     if (isValid(v.getNeighbor(0))) {
-                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0);
+                        edges[aib(q) / 3][aib(r)][0] = new Edge(new Point_QR(q, r), v.getNeighbor(0), 0); edgesMade++;
                     }
                     if (isValid(v.getNeighbor(2))) {
-                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4);
+                        edges[aib(q) / 3][aib(r)][1] = new Edge(new Point_QR(q, r), v.getNeighbor(2), 4); edgesMade++;
                     }
                     if (isValid(v.getNeighbor(4))) {
-                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2);
+                        edges[aib(q) / 3][aib(r)][2] = new Edge(new Point_QR(q, r), v.getNeighbor(4), 2); edgesMade++;
                     }
                 }
             }
         }
+        if(DEBUG) System.out.println("EDGEINIT Edges made: " + edgesMade);
     }
 
     private void fillTiles()
@@ -350,10 +465,12 @@ public class Board {
                 if (isHex(q, r) && s != null) {
                     int which = rand.nextInt(shufsize);
                     ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
+                    ((Hexagon)s).setDie(rand.nextInt(10)+2);  // value interval [2, 12]
                     shuffle[which] = shuffle[--shufsize];
                 }
             }
         }
-    }
+        // swap desert into middle hex
 
+    }
 }
