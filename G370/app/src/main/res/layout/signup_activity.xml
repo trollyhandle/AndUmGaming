@@ -6,64 +6,58 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".views.LoginActivity"
     android:id="@+id/A">
-
-
-    <!-- PLZ DONT LABEL THEM editText1 editText2 etc... -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login_text"
-            android:layout_gravity="center"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/signup_text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center"/>
 
         <EditText
             android:id="@+id/editText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/Username" >
-            <requestFocus android:layout_width="wrap_content" />
-        </EditText>
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="loginPost"
-            android:text="@string/login_button_text" />
+            android:hint="@string/email"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:ems="10" />
 
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/Password"
-            android:inputType="textPassword" >
-        </EditText>
+            android:ems="10"
+            android:hint="@string/username"
+            android:inputType="textPassword"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
-
-        <!--<Button-->
-            <!--android:id="@+id/button2"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:onClick="loginPost"-->
-            <!--android:drawable="@android:color/black"-->
-            <!--android:text="@string/login_button_text" />-->
-
+        <EditText
+            android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/editText1"
+            android:hint="@string/password"
+            android:ems="10"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="signupPost"
-            android:drawable="@android:color/black"
             android:text="@string/signon_button_text" />
 
     </LinearLayout>
@@ -74,6 +68,9 @@
         android:layout_height="wrap_content"
         android:text="@string/status"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_alignParentBottom="true"/>
+        android:textSize="15sp"
+        android:textColor="#ffffff"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
