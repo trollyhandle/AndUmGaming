@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import com.example.andumgaming.g370.views.FullscreenActivity;
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
@@ -82,26 +83,25 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
-    public class JsonObject {
-        int success;
-        String message;
-
-    }
 
     @Override
     protected void onPostExecute(String result) {
+        int duration = Toast.LENGTH_SHORT;
         try {
             JSONObject jObject = new JSONObject(result);
             int aJsonInteger = jObject.getInt("success");
 
             if (aJsonInteger == 1) {
+                Toast.makeText(context, "Successfully Logged In!", duration).show();
                 Intent i = new Intent(context, FullscreenActivity.class);
                 context.startActivity(i);
                 ((Activity)context).finish();
 
 
             } else
-                this.statusField.setText(result);
+                Toast.makeText(context, "Invalid Username/Password", duration).show();
+            // uncomment to debug JSON
+            // this.statusField.setText(result);
         }
         catch (JSONException e) {
             Log.i("error", "Error!");

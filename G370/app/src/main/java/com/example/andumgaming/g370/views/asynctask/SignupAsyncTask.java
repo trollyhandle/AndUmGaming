@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.andumgaming.g370.views.FullscreenActivity;
 
@@ -41,11 +42,13 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... arg0) {
 
         try{
-            String username = (String)arg0[0];
-            String password = (String)arg0[1];
+            String email = (String)arg0[0];
+            String username = (String)arg0[1];
+            String password = (String)arg0[2];
 
             String link="http://g370.duckdns.org/register.php";
-            String data  = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
+            String data  = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
+            data += "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
 
             URL url = new URL(link);
@@ -75,26 +78,24 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
-    public class JsonObject {
-        int success;
-        String message;
-
-    }
-
     @Override
     protected void onPostExecute(String result) {
+        int duration = Toast.LENGTH_SHORT;
         try {
             JSONObject jObject = new JSONObject(result);
             int aJsonInteger = jObject.getInt("success");
 
             if (aJsonInteger == 1) {
+                Toast.makeText(context, "Successfully Signed Up!", duration).show();
                 Intent i = new Intent(context, FullscreenActivity.class);
                 context.startActivity(i);
                 ((Activity)context).finish();
 
 
             } else
-                this.statusField.setText(result);
+                Toast.makeText(context, "Sign Up Unsuccessful", duration).show();
+            // uncomment to debug JSON
+            // this.statusField.setText(result);
         }
         catch (JSONException e) {
             Log.i("error", "Error!");
