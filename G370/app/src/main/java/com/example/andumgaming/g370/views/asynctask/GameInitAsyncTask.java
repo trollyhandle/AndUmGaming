@@ -25,12 +25,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class SignupAsyncTask extends AsyncTask<String,Void,String> {
+public class GameInitAsyncTask extends AsyncTask<String,Void,String> {
     private TextView statusField;
     private Context context;
 
     //flag 0 means get and 1 means post.(By default it is get.)
-    public SignupAsyncTask(Context context, TextView statusField) {
+    public GameInitAsyncTask(Context context, TextView statusField) {
         this.context = context;
         this.statusField = statusField;
     }
@@ -47,7 +47,7 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
             String username = (String)arg0[1];
             String password = (String)arg0[2];
 
-            String link="http://g370.duckdns.org/register.php";
+            String link="http://g370.duckdns.org/gameinit.php";
             String data  = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
             data += "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
@@ -78,8 +78,7 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
             return new String("Exception: " + e.getMessage());
         }
     }
-
-    private class SignupMsg {
+    private class GameInitMsg {
         int success;
         String message;
 
@@ -96,9 +95,9 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result) {
         int duration = Toast.LENGTH_SHORT;
         Gson gson = new Gson();
-        SignupMsg signupMsg = gson.fromJson(result, SignupMsg.class);
-        Toast.makeText(context, signupMsg.getMessage(), duration).show();
-        if (signupMsg.getSuccess() == 1) {
+        GameInitMsg gameInitMsg = gson.fromJson(result, GameInitMsg.class);
+        Toast.makeText(context, gameInitMsg.getMessage(), duration).show();
+        if (gameInitMsg.getSuccess() == 1) {
             Intent i = new Intent(context, FullscreenActivity.class);
             context.startActivity(i);
             ((Activity)context).finish();

@@ -2,6 +2,7 @@ package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.content.Context;
 /* Login required */
 import android.widget.TextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.example.andumgaming.g370.R;
@@ -24,10 +26,12 @@ import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.asynctask.LoginAsyncTask;
 
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 import Interface.BackStackLisnter;
+import Interface.ICallBackListener;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -176,11 +180,41 @@ public class FullscreenActivity extends AppCompatActivity {
     private EditText usernameField,passwordField;
     private TextView status,method;
 
+
+    private class LoginMsg {
+        int success;
+        String message;
+
+        public int getSuccess() {
+            return success;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
     public void loginPost(View view){
+        ICallBackListener listener = new ICallBackListener() {
+            @Override
+            public void onCallBack(String result) {
+                int duration = Toast.LENGTH_SHORT;
+                Gson gson = new Gson();
+                LoginMsg loginMsg = gson.fromJson(result, LoginMsg.class);
+                Toast.makeText(getApplicationContext(), loginMsg.getMessage(), duration).show();
+                if (loginMsg.getSuccess() == 1) {
+                    Intent i = new Intent(getApplicationContext(), FullscreenActivity.class);
+                    getApplicationContext().startActivity(i);
+                    ((Activity)getApplicationContext()).finish();
+                }
+            }
+        };
+
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
         method.setText("Post Method");
-        new LoginAsyncTask(this,status).execute(username,password);
+        LoginAsyncTask task = new LoginAsyncTask(listener);
+        task.execute(username, password);
     }
 
 
