@@ -193,9 +193,10 @@ public class Game {
 
     public void roll()
     {
-        if (hasRolledThisTurn)
+        if (hasRolledThisTurn) {
+            listener.ToastMessage("You've already rolled!");
             return;
-
+        }
         hasRolledThisTurn = true;
         Random rand = new Random();
 

@@ -64,8 +64,9 @@
                  <Button
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
-                     android:id="@+id/roll"
-                     android:text=""/>
+                     android:id="@+id/rolldie"
+                     android:textSize="13dp"
+                     android:text="@string/die"/>
 
                  <Button
 
@@ -103,14 +104,6 @@
                      android:id="@+id/buycity"
                      android:textSize="13sp"
                      android:layout_weight=".25" />
-
-                 <Button  android:id="@+id/zoomReset"
-                    android:layout_height="40dp"
-                    android:text=""
-                    android:textAllCaps="false"
-                    android:textSize="13sp"
-                    android:layout_gravity="bottom"
-                     android:layout_width="wrap_content" />
 
              </LinearLayout>
 
@@ -238,6 +231,14 @@
                          android:layout_gravity="bottom"
                          android:text="VP:0 RD:0 KN:0"/>
                  </FrameLayout>
+
+                 <Button  android:id="@+id/zoomReset"
+                    android:layout_height="30dp"
+                    android:text="@string/zoom_reset"
+                    android:textAllCaps="false"
+                    android:textSize="10sp"
+                    android:layout_gravity="center_horizontal|bottom"
+                     android:layout_width="wrap_content" />
 
 
              </FrameLayout>
