@@ -49,7 +49,7 @@ public class Game {
     }
 
     public enum TEXT_COLORS {
-        WHITE(0xffFFFFFF), RED(0xffFF0F00), BLACK(0x00000000);
+        WHITE(0xffFFFFFF), RED(0xffFF0F00), BLACK(0xff000000);
         public final int col; TEXT_COLORS(int value) { col = value; }
     }
 

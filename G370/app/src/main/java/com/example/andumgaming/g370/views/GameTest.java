@@ -12,7 +12,9 @@ import android.graphics.Point;
 //import android.app.FragmentTransaction;
 
 import android.graphics.PorterDuff;
+import android.media.Image;
 import android.os.CountDownTimer;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import Game.Game;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -52,6 +56,18 @@ public class GameTest extends AppCompatActivity implements ToastListener {
     private Button BuySettlement;
     private Button BuyCity;
     private Button EndTurn;
+
+    private TextView CurrentPlayer;
+    private TextView playerid;
+    private TextView player1;
+    private TextView player2;
+    private TextView player3;
+    private TextView player4;
+
+    private ImageView player1image;
+    private ImageView player2image;
+    private ImageView player3image;
+    private ImageView player4image;
 
     private int width, height;
 
@@ -95,7 +111,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
             fragmentLayout.bringToFront();
         else if(debug)System.out.println("VIEW ERROR fragment bring to foreground failed");
 
-    //    loadfragment();
         game.getView().setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -103,31 +118,53 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         game.setListener(this);
         game.setiNextTurnable(new Game.INextTurnable() {
             @Override
-            public void onNextTurn()
-            {
+            public void onNextTurn() {
                 BuyCity.getBackground().clearColorFilter();
                 BuySettlement.getBackground().clearColorFilter();
                 BuyRoad.getBackground().clearColorFilter();
                 if (game.getTurn() == 0)
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-
                 else if (game.getTurn() == 1)
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
-
                 else if (game.getTurn() == 2)
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
-
                 else if (game.getTurn() == 3)
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
-
                 else if (game.getTurn() == 4)
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
             }
         });
 
+        player1 = (TextView) findViewById(R.id.player1);
+        player2 = (TextView) findViewById(R.id.player2);
+        player3 = (TextView) findViewById(R.id.player3);
+        player4 = (TextView) findViewById(R.id.player4);
+
+        player1.setText("Player 1");
+        player1.setTextColor(Game.TEXT_COLORS.BLACK.col);
+        player2.setText("Player 2");
+        player2.setTextColor(Game.TEXT_COLORS.BLACK.col);
+        player3.setText("Player 3");
+        player3.setTextColor(Game.TEXT_COLORS.BLACK.col);
+        player4.setText("Player 4");
+        player4.setTextColor(Game.TEXT_COLORS.BLACK.col);
+/*
+        player1image = (ImageView) findViewById(R.id.player1image);
+        player2image = (ImageView) findViewById(R.id.player2image);
+        player3image = (ImageView) findViewById(R.id.player3image);
+        player4image = (ImageView) findViewById(R.id.player4image);
+*/
+        player1.setBackgroundColor(Game.PLAYERS.ONE.col);
+        player2.setBackgroundColor(Game.PLAYERS.TWO.col);
+        player3.setBackgroundColor(Game.PLAYERS.THREE.col);
+        player4.setBackgroundColor(Game.PLAYERS.FOUR.col);
+
+
         // TODO only if starting a new game
 //        setupGame();
     }
+
+
 
 
     private void setupGame()
@@ -186,63 +223,18 @@ public class GameTest extends AppCompatActivity implements ToastListener {
 
 
     private void loadButtons() {
-        zoomIn = (Button) findViewById(R.id.zoomIn);
-        zoomOut = (Button) findViewById(R.id.zoomOut);
-        zoomLeft = (Button) findViewById(R.id.zoomLeft);
-        zoomUp = (Button) findViewById(R.id.zoomUp);
-        zoomDown = (Button) findViewById(R.id.zoomDown);
-        zoomRight = (Button) findViewById(R.id.zoomRight);
         zoomReset = (Button) findViewById(R.id.zoomReset);
         BuyRoad = (Button) findViewById(R.id.buyroad);
         BuySettlement = (Button) findViewById(R.id.buyhouse);
         EndTurn = (Button) findViewById(R.id.endturn);
         BuyCity = (Button) findViewById(R.id.buycity);
+
+        CurrentPlayer = (TextView) findViewById(R.id.currentplayer);
+        playerid = (TextView) findViewById(R.id.playerid);
+
         timeView = (TextView) findViewById(R.id.timeint);
 
-        zoomIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON zoom in");
-                game.resize(10);
-            }
-        });
-        zoomOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON zoom out");
-                game.resize(-10);
-            }
-        });
-        zoomLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move left");
-                game.move(-10, 0);
-//                loadSampleJSON();  // todo stole left button again
-            }
-        });
-        zoomRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move right");
-//                game.move(10, 0);
-                game.printBoard();
-            }
-        });
-        zoomUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move up");
-                game.move(0, -10);
-            }
-        });
-        zoomDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move down");
-                game.move(0, 10);
-            }
-        });
+
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -355,19 +347,31 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         BuyRoad.getBackground().clearColorFilter();
 
         game.nextTurn();
-        if (game.getTurn() == 0)
+        if (game.getTurn() == 0) {
             EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-        else if (game.getTurn() == 1)
+            playerid.setText("Player 1");
+            playerid.setTextColor(Game.PLAYERS.ONE.col);
+        }
+        else if (game.getTurn() == 1) {
             EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
-
-        else if (game.getTurn() == 2)
+            playerid.setText("Player 1");
+            playerid.setTextColor(Game.PLAYERS.ONE.col);
+        }
+        else if (game.getTurn() == 2) {
             EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
-
-        else if (game.getTurn() == 3)
+            playerid.setText("Player 2");
+            playerid.setTextColor(Game.PLAYERS.TWO.col);
+        }
+        else if (game.getTurn() == 3) {
             EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
-
-        else if (game.getTurn() == 4)
+            playerid.setText("Player 3");
+            playerid.setTextColor(Game.PLAYERS.THREE.col);
+        }
+        else if (game.getTurn() == 4) {
             EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+            playerid.setText("Player 4");
+            playerid.setTextColor(Game.PLAYERS.FOUR.col);
+        }
         view.invalidate();
         turnTimer(view, timeView);
     }
@@ -386,6 +390,7 @@ public class GameTest extends AppCompatActivity implements ToastListener {
 //        if(debug) { System.out.println("LOADed board:"); game.printBoard(); }
 //        if(debug) System.out.println("LOADed game's json:\n" + game.toJSON());
         return gson.fromJson(json, Game.class);
+
     }
     public String readJSONfile(InputStream ins)
     {

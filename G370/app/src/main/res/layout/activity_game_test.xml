@@ -25,150 +25,250 @@
          android:layout_alignParentStart="true">
 
 
-        <Button
-            android:id="@+id/zoomIn"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/zoom_in"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_weight="20"/>
+         <FrameLayout
+             android:id="@+id/fragmentlayout"
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+             android:layout_gravity="bottom"
+             android:layout_weight="20">
 
-        <Button
-            android:id="@+id/zoomLeft"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/zoom_left"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_weight="20"/>
-        <Button
-            android:id="@+id/zoomUp"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/zoom_up"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_weight="20"/>
+             <fragment
+                 android:layout_width="match_parent"
+                 android:layout_height="20dp"
+                 android:name="com.example.andumgaming.g370.views.fragments.PlayerStatusesFragment"
+                 android:id="@+id/playerstatus"
+                 tools:layout="@layout/playerstatuses_fragment"
+                 android:layout_gravity="center_horizontal|top" />
 
-        <Button
-            android:id="@+id/zoomReset"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/zoom_reset"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_weight="20"
-            android:layout_gravity="bottom" />
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="40dp"
+                 android:id="@+id/game_container"
+                 android:orientation="horizontal"
+                 android:layout_gravity="bottom|center_horizontal"
+                 android:weightSum="1">
 
-        <Button
-            android:id="@+id/zoomDown"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/zoom_down"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_weight="20"/>
-        <Button
-            android:id="@+id/zoomRight"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/zoom_right"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_weight="20"
-            android:layout_gravity="bottom" />
-        <Button
-            android:id="@+id/zoomOut"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:text="@string/zoom_out"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_weight="20" />
+     <!--
+                 <Button
+                     style="?android:attr/buttonStyleSmall"
+                     android:textAllCaps="false"
+                     android:layout_width="80dp"
+                     android:layout_height="wrap_content"
+                     android:text="@string/back"
+                     android:id="@+id/back"
+                     android:textSize="15sp"/> -->
 
-    </LinearLayout>
+                 <!-- style="?android:attr/buttonStyleSmall"-->
 
-    <FrameLayout
-        android:id="@+id/fragmentlayout"
-        android:layout_width="match_parent"
-        android:layout_height="55dp">
+                 <Button
 
-        <fragment
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:name="com.example.andumgaming.g370.views.fragments.PlayerStatusesFragment"
-            android:id="@+id/playerstatus"
-            tools:layout="@layout/playerstatuses_fragment"
-            android:layout_gravity="center_horizontal|top" />
+                     android:layout_width="wrap_content"
+                     android:layout_height="40dp"
+                     android:text="@string/endturn"
+                     android:id="@+id/endturn"
+                     android:textAllCaps="false"
+                     android:textSize="13sp"
+                     android:layout_weight=".25" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/game_container"
-            android:orientation="horizontal"
-            android:layout_gravity="bottom|center_horizontal"
-            android:weightSum="1">
+                 <Button
+                     android:layout_width="wrap_content"
+                     android:layout_height="40dp"
+                     android:text="@string/road"
+                     android:id="@+id/buyroad"
+                     android:textAllCaps="false"
+                     android:textSize="13sp"
+                     android:layout_weight=".25" />
 
+                 <Button
+                     android:layout_width="wrap_content"
+                     android:layout_height="40dp"
+                     android:text="@string/house"
+                     android:id="@+id/buyhouse"
+                     android:textAllCaps="false"
+                     android:textSize="13sp"
+                     android:layout_weight=".25" />
+
+                 <Button
+                     android:layout_width="wrap_content"
+                     android:layout_height="40dp"
+                     android:text="@string/city"
+                     android:textAllCaps="false"
+                     android:id="@+id/buycity"
+                     android:textSize="13sp"
+                     android:layout_weight=".25" />
+
+                 <Button  android:id="@+id/zoomReset"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:text="@string/zoom_reset"
+                    android:textAllCaps="false"
+                    android:textSize="13sp"
+                    android:layout_weight="20"
+                    android:layout_gravity="bottom" />
+
+             </LinearLayout>
+
+             <FrameLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="480dp"
+                 android:layout_gravity="center">
+
+                 <FrameLayout
+                     android:layout_width="100dp"
+                     android:layout_height="40dp"
+                     android:layout_gravity="left|top">
+
+                     <TextView
+                         android:layout_width="100dp"
+                         android:layout_height="20dp"
+                         android:layout_gravity="top"
+                         android:id="@+id/player1"
+                         android:text=""/>
 <!--
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:textAllCaps="false"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:text="@string/back"
-                android:id="@+id/back"
-                android:textSize="15sp"/> -->
+                     <ImageView
+                         android:layout_width="40dp"
+                         android:layout_height="40dp"
+                         android:id="@+id/player1image"
+                         android:layout_gravity="left|top" />
+-->
+                     <LinearLayout
+                         android:orientation="horizontal"
+                         android:layout_width="match_parent"
+                         android:layout_height="40dp"
+                         android:layout_gravity="bottom"/>
+                     <TextView
+                         android:layout_width="match_parent"
+                         android:layout_height="20dp"
+                         android:layout_gravity="bottom"
+                         android:text="VP:0 RD:0 KN:0"/>
+                 </FrameLayout>
 
-            <!-- style="?android:attr/buttonStyleSmall"-->
+                 <FrameLayout
+                     android:layout_width="100dp"
+                     android:layout_height="40dp"
+                     android:layout_gravity="right|top">
 
-            <Button
+                     <TextView
+                         android:layout_width="100dp"
+                         android:layout_height="20dp"
+                         android:id="@+id/player2"
+                         android:text=""
+                         android:layout_gravity="right|top"/>
+                     <!--
+                     <ImageView
+                         android:layout_width="40dp"
+                         android:layout_height="40dp"
+                         android:id="@+id/player2image"
+                         android:layout_gravity="left|top" />
+                     -->
+                     <LinearLayout
+                         android:orientation="horizontal"
+                         android:layout_width="match_parent"
+                         android:layout_height="40dp"
+                         android:layout_gravity="bottom"/>
+                     <TextView
+                         android:layout_width="match_parent"
+                         android:layout_height="20dp"
+                         android:layout_gravity="bottom"
+                         android:text="VP:0 RD:0 KN:0"/>
+                 </FrameLayout>
 
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="@string/endturn"
-                android:id="@+id/endturn"
-                android:textAllCaps="false"
-                android:textSize="15sp"
-                android:layout_weight=".25" />
+                 <FrameLayout
+                     android:layout_width="100dp"
+                     android:layout_height="40dp"
+                     android:layout_gravity="left|bottom">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="@string/road"
-                android:id="@+id/buyroad"
-                android:textAllCaps="false"
-                android:textSize="15sp"
-                android:layout_weight=".25" />
+                     <TextView
+                         android:layout_width="100dp"
+                         android:layout_height="20dp"
+                         android:id="@+id/player3"
+                         android:text=""
+                         android:layout_gravity="top"/>
+                     <!--
+                     <ImageView
+                         android:layout_width="40dp"
+                         android:layout_height="40dp"
+                         android:id="@+id/player3image"
+                         android:layout_gravity="left|top" />
+                     -->
+                     <LinearLayout
+                         android:orientation="horizontal"
+                         android:layout_width="match_parent"
+                         android:layout_height="40dp"
+                         android:layout_gravity="bottom"/>
+                     <TextView
+                         android:layout_width="match_parent"
+                         android:layout_height="20dp"
+                         android:layout_gravity="bottom"
+                         android:text="VP:0 RD:0 KN:0"/>
+                 </FrameLayout>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="@string/settlement"
-                android:id="@+id/buyhouse"
-                android:textAllCaps="false"
-                android:textSize="15sp"
-                android:layout_weight=".25" />
+                 <FrameLayout
+                     android:layout_width="100dp"
+                     android:layout_height="40dp"
+                     android:layout_gravity="right|bottom">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:text="@string/city"
-                android:textAllCaps="false"
-                android:id="@+id/buycity"
-                android:textSize="15sp"
-                android:layout_weight=".25" />
+                     <TextView
+                         android:layout_width="100dp"
+                         android:layout_height="20dp"
+                         android:id="@+id/player4"
+                         android:text=""
+                         android:layout_gravity="top"/>
+                     <!--
+                     <ImageView
+                         android:layout_width="40dp"
+                         android:layout_height="40dp"
+                         android:id="@+id/player4image"
+                         android:layout_gravity="left|top" />
+                     -->
+                     <LinearLayout
+                         android:orientation="horizontal"
+                         android:layout_width="match_parent"
+                         android:layout_height="40dp"
+                         android:layout_gravity="bottom"/>
+                     <TextView
+                         android:layout_width="match_parent"
+                         android:layout_height="20dp"
+                         android:layout_gravity="bottom"
+                         android:text="VP:0 RD:0 KN:0"/>
+                 </FrameLayout>
 
-        </LinearLayout>
-        <!--
-        <Button
-        android:text="Buy"
-        android:id="@+id/actionpanel"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="right|top" />
-        -->
 
-    </FrameLayout>
+             </FrameLayout>
+
+             <!--
+             <Button
+             android:text="Buy"
+             android:id="@+id/actionpanel"
+             android:layout_width="wrap_content"
+             android:layout_height="40dp"
+             android:layout_gravity="right|top" />
+             -->
+
+         </FrameLayout>
+
+     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/currentplayer"
+        android:text="@string/currentplayer"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal" />
+
+    <TextView
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/playerid"
+        android:layout_gravity="bottom|center_horizontal"
+        android:gravity="bottom|center_horizontal"
+        android:layout_alignBottom="@+id/currentplayer"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
