@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.andumgaming.g370.R;
-import com.example.andumgaming.g370.views.asynctask.LoginAsyncTask;
 
 /**
  * Created by ross on 5/5/2016.
@@ -34,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
         status = (TextView)findViewById(R.id.textView7);
 
-        new LoginAsyncTask().execute(username,password);
+        //new LoginAsyncTask().execute(username,password);
     }
 
     public void signupPost (View view) {
@@ -44,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         status = (TextView)findViewById(R.id.textView7);
 
         //new SignupAsyncTask(this,status).execute(username,password);
-        Intent i = new Intent(this, SignonActivity.class);
+        Intent i = new Intent(this, SignupActivity.class);
         startActivity(i);
     }
 }

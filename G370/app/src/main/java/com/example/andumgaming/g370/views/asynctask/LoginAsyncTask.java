@@ -31,14 +31,14 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import Interface.ICallBackListener;
+
 public class LoginAsyncTask extends AsyncTask<String,Void,String> {
-    private TextView statusField;
-    private Context context;
+    private ICallBackListener listener;
 
-    //flag 0 means get and 1 means post.(By default it is get.)
-
-    protected void onPreExecute(){
-
+    public LoginAsyncTask (ICallBackListener listener)
+    {
+        this.listener = listener;
     }
 
     @Override
@@ -80,29 +80,8 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     }
 
 
-    private class LoginMsg {
-        int success;
-        String message;
-
-        public int getSuccess() {
-            return success;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    };
-
     @Override
     protected void onPostExecute(String result) {
-        int duration = Toast.LENGTH_SHORT;
-        Gson gson = new Gson();
-        LoginMsg loginMsg = gson.fromJson(result, LoginMsg.class);
-        Toast.makeText(context, loginMsg.getMessage(), duration).show();
-        if (loginMsg.getSuccess() == 1) {
-            Intent i = new Intent(context, FullscreenActivity.class);
-            context.startActivity(i);
-            ((Activity)context).finish();
-        }
+        listener.onCallBack(result);
     }
 }
