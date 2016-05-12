@@ -144,7 +144,7 @@ public class Game {
         initResourceTabs(parent);
         setupTouchListener();
 
-        // TODO initialize players[], and at some point (maybe here, maybe not) call to server
+        // TODO at some point (maybe here, maybe not) call to server
         if (debug) System.out.println(board);
 
         board.init(default_hexsize, default_center);
@@ -253,9 +253,9 @@ public class Game {
                     listener.ToastMessage("You can only place one settlement right now!");
             }
             else {
-                // todo if player has sufficient resources:
-                    success = board.buildSettlement(hex.q(),hex.r(),turn);
-                    // todo spend the player's resources if build succes
+                    success =(players[turn].canBuySettlement() && board.buildSettlement(hex.q(),hex.r(),turn));
+                    if (success)
+                        players[turn].buySettlement();
             }
 
         }
@@ -267,9 +267,9 @@ public class Game {
                     listener.ToastMessage("You cannot build a city during initial placement!");
             }
             else {
-                // todo if player has sufficient resources:
-                    success = board.buildCity(hex.q(),hex.r(),turn);
-                    // todo spend the player's resources
+                    success =(players[turn].canBuyCity() && board.buildCity(hex.q(),hex.r(),turn));
+                    if (success)
+                        players[turn].buyCity();
             }
         }
 
@@ -284,9 +284,9 @@ public class Game {
                 if(!players[turn].getFirstSettlementPlaced())
                     listener.ToastMessage("Place a settlement first!");
                 else {
-                    // todo if player has sufficient resources:
-                        success = board.buildRoad(firstRoadPt, hex, turn);
-                        // todo spend the player's resources
+                        success =(players[turn].canBuyRoad() && board.buildRoad(firstRoadPt, hex, turn));
+                        if (success)
+                            players[turn].buyRoad();
                 }
 
                 firstRoadPt = null;  // reset for next road
