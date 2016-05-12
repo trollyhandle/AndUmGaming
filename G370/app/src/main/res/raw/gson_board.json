@@ -43,11 +43,20 @@
         // and more arrays of Shapes
       ]
       // and more arrays of arrays of Shapes
-    ],
-    
+    ]
+  },
   "players": [  // array of player
     null,  // player 0 is the nobody player
     {  // player 1
+      "resources": [  // resources they possess
+        2,
+        0,
+        3,
+        1,
+        0
+      ]
+    },
+    {  // player 2
       "resources": [  // resources they possess
         0,
         0,
