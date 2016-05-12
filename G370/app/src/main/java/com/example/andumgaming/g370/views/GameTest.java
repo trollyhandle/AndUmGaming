@@ -24,7 +24,6 @@ import android.content.res.Resources;
 import Game.Game;
 
 
-
 public class GameTest extends AppCompatActivity implements ToastListener{
 
     private boolean debug = true;
@@ -44,6 +43,8 @@ public class GameTest extends AppCompatActivity implements ToastListener{
     private Button EndTurn;
 
     private int width, height;
+
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +147,11 @@ public class GameTest extends AppCompatActivity implements ToastListener{
 
 
     public void ToastMessage(String message) {
-        int duration=Toast.LENGTH_SHORT;
-        Toast toast= Toast.makeText(this,message,duration);
+        int duration = Toast.LENGTH_SHORT;
+
+        if (toast != null)
+            toast.cancel();
+        toast = Toast.makeText(this, message, duration);
         toast.show();
     }
 
