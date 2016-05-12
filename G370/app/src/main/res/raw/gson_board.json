@@ -1,103 +1,100 @@
-
 {
-  "board":  // has vertices and edges
-  {
-    "vertices":  // a 2D array of Shapes (Hexagons or Vertices)
-    [
-
-      [
-        { "shape": {
-          "type": "hexagon",
-          "coord": { "q": 0, "r": 0 },
-          "resource": 2,  // wood
-          "die": 8
-        }},
-        { "shape": {
-          "type": "vertex",
-          "coord": { "pointqr": { "q": 1, "r": 0 }},
-          "owner": 1,  // Tyler
-          "level": 1  // settlement
-        }},
-        { "shape": {
-          "type": "hexagon",
-          "coord": { "pointqr": { "q": -2, "r": -2 }},
-          "resource": 0,  // desert (none)
-          "die": 0  // desert doesn't generate resources
-        }}
-      ],
-
-      [
-        { "shape": {
-          "type": "vertex",
-          "coord": { "pointqr": { "q": 3, "r": -4 }},
-          "owner": 2,  // Jeff
-          "level": 2  // city
-        }},
-        { "shape": {
-          "type": "hexagon",
-          "coord": { "pointqr": { "q": 2, "r": 2 }},
-          "resource": 5,  // sheep
-          "die": 3
-        }},
-        { "shape": {
-          "type": "vertex",
-          "coord": { "pointqr": { "q": -2, "r": 1 }},
-          "owner": 1,  // Tyler
-          "level": 2  // city
-        }}
-      ]
-
-    ],
-
-
-    // edges are grouped by common sources, and so come in groups of three:
-    // a two-dimensional (condensed) array to lookup "source" (Vertex)Shape, and then an array
-    // within that for the three edges per each source
-    "edges":
-    [
+  "board": {
+    "edges": [
       [
         [
-          { "edge": {
-            "source":       { "pointqr": { "q": 1, "r": 0 }},
-            "destination":  { "pointqr": { "q": 0, "r": 1 }},
-            "direction": 0,
-            "owner": 0
-          }},
-          { "edge": {
-            "source":       { "pointqr": { "q": 1, "r": 0 }},
-            "destination":  { "pointqr": { "q": 1, "r": -1 }},
-            "direction": 2,  // the orientation of this road. not strictly necessary
-            "owner": 1  // Tyler
-          }},
-          { "edge": {
-            "source":       { "pointqr": { "q": 1, "r": 0 }},
-            "destination":  { "pointqr": { "q": 2, "r": 0 }},
+          {  // an edge
+            "destination": {  // coordinate of the Vertex to which this edge runs
+              "q": 2,
+              "r": 1
+            },
+            "direction": 0,  // direction of this edge (angled flat, or up-right, or down-left
+            "owner": 0,  // player who has built a road here (0 = no-one)
+            "source": {  // coordinate of the Vertex from which this edge runs
+              "q": 2,
+              "r": 0
+            }
+          },
+          {
+            "destination": {
+              "q": 1,
+              "r": 0
+            },
             "direction": 4,
-            "owner": 0
-          }}
-        ],
-        [
-          { "edge": {
-            "source":       { "pointqr": { "q": 0, "r": 0 }},
-            "destination":  { "pointqr": { "q": 0, "r": 0 }},
-            "direction": 0,
-            "owner": 0
-          }},
-          { "edge": {
-            "source":       { "pointqr": { "q": 0, "r": 0 }},
-            "destination":  { "pointqr": { "q": 0, "r": 0 }},
-            "direction": 0,
-            "owner": 0
-          }},
-          { "edge": {
-            "source":       { "pointqr": { "q": 0, "r": 0 }},
-            "destination":  { "pointqr": { "q": 0, "r": 0 }},
-            "direction": 0,
-            "owner": 0
-          }}
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": 0
+            }
+          },
+          {
+            "destination": {
+              "q": 3,
+              "r": -1
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": 0
+            }
+          }
         ]
+        // and more arrays of Shapes
       ]
+      // and more arrays of arrays of Shapes
+    ],
+    "vertices": [
+      [
+        {  // a hexagon
+          "coord": {  // coordinate point
+            "q": 0,
+            "r": 0
+          },
+          "type": "hexagon",  // shape type
+          "resource": 1,  // kind of resource
+          "die": 6  // die roll for resource generation
+        },
+        {  // a vertex
+          "coord": {
+            "q": 0,
+            "r": 1
+          },
+          "type": "vertex",
+          "owner": 0,  // player who owns this vertex
+          "level": 0  // level of development (0-none, 1-settlement, 2-city)
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": 2
+          },
+          "type": "vertex",
+          "owner": 3,
+          "level": 1
+        }
+      ]
+      // and more arrays of shapes
     ]
-  }
+  },
+  "players": [  // array of player
+    null,  // player 0 is the nobody player
+    {  // player 1
+      "cards": [  // dev cards in their hand (not implemented)
+        0,
+        0,
+        0,
+        0
+      ],
+      "resources": [  // resources they possess
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+    // more player objects
+  ],
+  "turn": 4  // whose turn it currently is
 }
-

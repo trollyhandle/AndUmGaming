@@ -31,19 +31,25 @@ public class Board {
 
     private boolean update;
 
-    public Board(int hex_size, Point_XY center)
+    public Board()
     {
         rings = 4;  // Two rings of full hexes, but vertices take more rings
         arraySize = rings*2+1;
         vertices = new Shape[arraySize][arraySize];
         edges = new Edge[(arraySize)/3][arraySize][3];
-        this.center = center;
-        this.hex_size = hex_size;
         //                          vertices/hexes     +        edges
         shapes = new ShapeDrawable[arraySize*arraySize + ((arraySize)/3)*(arraySize)*3];
         extra_vertices = new int[12][];
         initBoard();
         fillTiles();
+        update = true;
+        // init with some default values
+        init(40, new Point_XY(0, 0));
+    }
+    public void init(int hex_size, Point_XY center)
+    {
+        this.hex_size = hex_size;
+        this.center = center;
         update = true;
     }
 
@@ -270,7 +276,7 @@ public class Board {
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
-                prt += (s == null? "   ..   ": s + " ");
+                prt += (s == null? "      .    .      ": s + " ");
             }
             prt += '\n';
         }
@@ -280,11 +286,12 @@ public class Board {
         for (int q = 0; q < arraySize/3; q++) {
             prt += "q:" + q;
             for (int r = 0; r < arraySize; r++) {
-                prt += "\tr:" + r;
+                if (r != 0) prt += "\t";
+                prt += "r:" + r;
                 for (int i = 0; i < 3; i++) {
                     prt += "[";
                     e = edges[q][r][i];
-                    prt += (e == null ? "       .   .       " : e + " ");
+                    prt += (e == null ? "       .    .       " : e + " ");
                     numEdges += e == null? 0: 1;
                     prt += "]";
                 }
@@ -295,38 +302,6 @@ public class Board {
         return prt + "Edges: " + numEdges + '\n';
     }
 
-//    public String serialize()
-//    {
-//        Shape s;
-//        String json = "{\"board\":{";
-//        json += "\"vertices\":[";
-//        for (int q = 0; q < arraySize; q++) {
-//            for (int r = 0; r < arraySize; r++) {
-//                s = vertices[q][r];
-//                if (s != null) {
-//                    json += s.serialize() + ",";
-//                }
-//            }
-//        }
-//        // remove trailing comma
-//        json = json.substring(0, json.length()-1) + "],";
-//        Edge e;
-//        json += "\"edges\":[";
-//        for (int q = 0; q < arraySize; q++) {
-//            for (int r = 0; r < arraySize; r++) {
-//                for (int k = 0; k < 3; k++) {
-//                    e = edges[q][r][k];
-//                    if (e != null) {
-//                        json += e.serialize() + ",";
-//                    }
-//                }
-//            }
-//        }
-//        // remove trailing comma
-//        json = json.substring(0, json.length()-1) + "]}}";
-//
-//        return json;
-//    }
 
 
 
@@ -467,7 +442,10 @@ public class Board {
                 if (isHex(q, r) && s != null) {
                     int which = rand.nextInt(shufsize);
                     ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
-                    ((Hexagon)s).setDie(rand.nextInt(10)+2);  // value interval [2, 12]
+                    if (((Hexagon)s).getResource() == 0) // desert
+                        ((Hexagon)s).setDie(0);
+                    else
+                        ((Hexagon)s).setDie(rand.nextInt(9)+1);  // value interval [2, 12]  // todo
                     shuffle[which] = shuffle[--shufsize];
                 }
             }

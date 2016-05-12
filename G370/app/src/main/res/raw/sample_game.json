@@ -1,0 +1,1688 @@
+{
+  "board": {
+    "edges": [
+      [
+        [
+          {
+            "destination": {
+              "q": 2,
+              "r": 1
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": 0
+            }
+          },
+          {
+            "destination": {
+              "q": 1,
+              "r": 0
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": 0
+            }
+          },
+          {
+            "destination": {
+              "q": 3,
+              "r": -1
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": 0
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 0,
+              "r": 2
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 0,
+              "r": 1
+            }
+          },
+          {
+            "destination": {
+              "q": -1,
+              "r": 1
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 0,
+              "r": 1
+            }
+          },
+          {
+            "destination": {
+              "q": 1,
+              "r": 0
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 0,
+              "r": 1
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 1,
+              "r": 3
+            },
+            "direction": 0,
+            "owner": 3,
+            "source": {
+              "q": 1,
+              "r": 2
+            }
+          },
+          {
+            "destination": {
+              "q": 0,
+              "r": 2
+            },
+            "direction": 4,
+            "owner": 3,
+            "source": {
+              "q": 1,
+              "r": 2
+            }
+          },
+          {
+            "destination": {
+              "q": 2,
+              "r": 1
+            },
+            "direction": 2,
+            "owner": 3,
+            "source": {
+              "q": 1,
+              "r": 2
+            }
+          }
+        ],
+        [
+          null,
+          {
+            "destination": {
+              "q": 1,
+              "r": 3
+            },
+            "direction": 4,
+            "owner": 3,
+            "source": {
+              "q": 2,
+              "r": 3
+            }
+          },
+          {
+            "destination": {
+              "q": 3,
+              "r": 2
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": 3
+            }
+          }
+        ],
+        [
+          null,
+          {
+            "destination": {
+              "q": -1,
+              "r": 4
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 0,
+              "r": 4
+            }
+          },
+          {
+            "destination": {
+              "q": 1,
+              "r": 3
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 0,
+              "r": 4
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 1,
+              "r": -3
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 1,
+              "r": -4
+            }
+          },
+          {
+            "destination": {
+              "q": 0,
+              "r": -4
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 1,
+              "r": -4
+            }
+          },
+          {
+            "destination": {
+              "q": 2,
+              "r": -5
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 1,
+              "r": -4
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 2,
+              "r": -2
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": -3
+            }
+          },
+          {
+            "destination": {
+              "q": 1,
+              "r": -3
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": -3
+            }
+          },
+          {
+            "destination": {
+              "q": 3,
+              "r": -4
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": -3
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 0,
+              "r": -1
+            },
+            "direction": 0,
+            "owner": 2,
+            "source": {
+              "q": 0,
+              "r": -2
+            }
+          },
+          {
+            "destination": {
+              "q": -1,
+              "r": -2
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 0,
+              "r": -2
+            }
+          },
+          {
+            "destination": {
+              "q": 1,
+              "r": -3
+            },
+            "direction": 2,
+            "owner": 2,
+            "source": {
+              "q": 0,
+              "r": -2
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 1,
+              "r": 0
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 1,
+              "r": -1
+            }
+          },
+          {
+            "destination": {
+              "q": 0,
+              "r": -1
+            },
+            "direction": 4,
+            "owner": 2,
+            "source": {
+              "q": 1,
+              "r": -1
+            }
+          },
+          {
+            "destination": {
+              "q": 2,
+              "r": -2
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 1,
+              "r": -1
+            }
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "destination": {
+              "q": -4,
+              "r": 1
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -4,
+              "r": 0
+            }
+          },
+          null,
+          {
+            "destination": {
+              "q": -3,
+              "r": -1
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -4,
+              "r": 0
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 3,
+              "r": 2
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 3,
+              "r": 1
+            }
+          },
+          {
+            "destination": {
+              "q": 2,
+              "r": 1
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 3,
+              "r": 1
+            }
+          },
+          {
+            "destination": {
+              "q": 4,
+              "r": 0
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 3,
+              "r": 1
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -5,
+              "r": 3
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -5,
+              "r": 2
+            }
+          },
+          null,
+          {
+            "destination": {
+              "q": -4,
+              "r": 1
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -5,
+              "r": 2
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -4,
+              "r": 4
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -4,
+              "r": 3
+            }
+          },
+          {
+            "destination": {
+              "q": -5,
+              "r": 3
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -4,
+              "r": 3
+            }
+          },
+          {
+            "destination": {
+              "q": -3,
+              "r": 2
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -4,
+              "r": 3
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 3,
+              "r": -4
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 3,
+              "r": -5
+            }
+          },
+          {
+            "destination": {
+              "q": 2,
+              "r": -5
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 3,
+              "r": -5
+            }
+          },
+          null
+        ],
+        [
+          {
+            "destination": {
+              "q": 4,
+              "r": -3
+            },
+            "direction": 0,
+            "owner": 4,
+            "source": {
+              "q": 4,
+              "r": -4
+            }
+          },
+          {
+            "destination": {
+              "q": 3,
+              "r": -4
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 4,
+              "r": -4
+            }
+          },
+          null
+        ],
+        [
+          {
+            "destination": {
+              "q": 5,
+              "r": -2
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 5,
+              "r": -3
+            }
+          },
+          {
+            "destination": {
+              "q": 4,
+              "r": -3
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 5,
+              "r": -3
+            }
+          },
+          null
+        ],
+        [
+          {
+            "destination": {
+              "q": 3,
+              "r": -1
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 3,
+              "r": -2
+            }
+          },
+          {
+            "destination": {
+              "q": 2,
+              "r": -2
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 3,
+              "r": -2
+            }
+          },
+          {
+            "destination": {
+              "q": 4,
+              "r": -3
+            },
+            "direction": 2,
+            "owner": 4,
+            "source": {
+              "q": 3,
+              "r": -2
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": 4,
+              "r": 0
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": 4,
+              "r": -1
+            }
+          },
+          {
+            "destination": {
+              "q": 3,
+              "r": -1
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 4,
+              "r": -1
+            }
+          },
+          {
+            "destination": {
+              "q": 5,
+              "r": -2
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 4,
+              "r": -1
+            }
+          }
+        ]
+      ],
+      [
+        [
+          {
+            "destination": {
+              "q": -1,
+              "r": 1
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": 0
+            }
+          },
+          {
+            "destination": {
+              "q": -2,
+              "r": 0
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": 0
+            }
+          },
+          {
+            "destination": {
+              "q": 0,
+              "r": -1
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": 0
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -3,
+              "r": 2
+            },
+            "direction": 0,
+            "owner": 1,
+            "source": {
+              "q": -3,
+              "r": 1
+            }
+          },
+          {
+            "destination": {
+              "q": -4,
+              "r": 1
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -3,
+              "r": 1
+            }
+          },
+          {
+            "destination": {
+              "q": -2,
+              "r": 0
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -3,
+              "r": 1
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -2,
+              "r": 3
+            },
+            "direction": 0,
+            "owner": 1,
+            "source": {
+              "q": -2,
+              "r": 2
+            }
+          },
+          {
+            "destination": {
+              "q": -3,
+              "r": 2
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -2,
+              "r": 2
+            }
+          },
+          {
+            "destination": {
+              "q": -1,
+              "r": 1
+            },
+            "direction": 2,
+            "owner": 1,
+            "source": {
+              "q": -2,
+              "r": 2
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -1,
+              "r": 4
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": 3
+            }
+          },
+          {
+            "destination": {
+              "q": -2,
+              "r": 3
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": 3
+            }
+          },
+          {
+            "destination": {
+              "q": 0,
+              "r": 2
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": 3
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -3,
+              "r": 5
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -3,
+              "r": 4
+            }
+          },
+          {
+            "destination": {
+              "q": -4,
+              "r": 4
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -3,
+              "r": 4
+            }
+          },
+          {
+            "destination": {
+              "q": -2,
+              "r": 3
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -3,
+              "r": 4
+            }
+          }
+        ],
+        [
+          null,
+          {
+            "destination": {
+              "q": -3,
+              "r": 5
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -2,
+              "r": 5
+            }
+          },
+          {
+            "destination": {
+              "q": -1,
+              "r": 4
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -2,
+              "r": 5
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -1,
+              "r": -2
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": -3
+            }
+          },
+          {
+            "destination": {
+              "q": -2,
+              "r": -3
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": -3
+            }
+          },
+          {
+            "destination": {
+              "q": 0,
+              "r": -4
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -1,
+              "r": -3
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -3,
+              "r": -1
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -3,
+              "r": -2
+            }
+          },
+          null,
+          {
+            "destination": {
+              "q": -2,
+              "r": -3
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -3,
+              "r": -2
+            }
+          }
+        ],
+        [
+          {
+            "destination": {
+              "q": -2,
+              "r": 0
+            },
+            "direction": 0,
+            "owner": 0,
+            "source": {
+              "q": -2,
+              "r": -1
+            }
+          },
+          {
+            "destination": {
+              "q": -3,
+              "r": -1
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": -2,
+              "r": -1
+            }
+          },
+          {
+            "destination": {
+              "q": -1,
+              "r": -2
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": -2,
+              "r": -1
+            }
+          }
+        ]
+      ]
+    ],
+    "vertices": [
+      [
+        {
+          "coord": {
+            "q": 0,
+            "r": 0
+          },
+          "type": "hexagon",
+          "resource": 1,
+          "die": 6
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": 1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": 2
+          },
+          "type": "vertex",
+          "owner": 3,
+          "level": 1
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": 3
+          },
+          "type": "hexagon",
+          "resource": 3,
+          "die": 8
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": 4
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": -4
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": -3
+          },
+          "type": "hexagon",
+          "resource": 4,
+          "die": 8
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": -2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": -1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        }
+      ],
+      [
+        {
+          "coord": {
+            "q": 1,
+            "r": 0
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 1,
+            "r": 1
+          },
+          "type": "hexagon",
+          "resource": 1,
+          "die": 4
+        },
+        {
+          "coord": {
+            "q": 1,
+            "r": 2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 1,
+            "r": 3
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        null,
+        {
+          "coord": {
+            "q": 1,
+            "r": -4
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 1,
+            "r": -3
+          },
+          "type": "vertex",
+          "owner": 2,
+          "level": 1
+        },
+        {
+          "coord": {
+            "q": 1,
+            "r": -2
+          },
+          "type": "hexagon",
+          "resource": 5,
+          "die": 7
+        },
+        {
+          "coord": {
+            "q": 1,
+            "r": -1
+          },
+          "type": "vertex",
+          "owner": 2,
+          "level": 1
+        }
+      ],
+      [
+        {
+          "coord": {
+            "q": 2,
+            "r": 0
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 2,
+            "r": 1
+          },
+          "type": "vertex",
+          "owner": 3,
+          "level": 2
+        },
+        {
+          "coord": {
+            "q": 2,
+            "r": 2
+          },
+          "type": "hexagon",
+          "resource": 2,
+          "die": 7
+        },
+        {
+          "coord": {
+            "q": 2,
+            "r": 3
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 2,
+            "r": -5
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 2,
+            "r": -4
+          },
+          "type": "hexagon",
+          "resource": 1,
+          "die": 6
+        },
+        {
+          "coord": {
+            "q": 2,
+            "r": -3
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 2,
+            "r": -2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 2,
+            "r": -1
+          },
+          "type": "hexagon",
+          "resource": 5,
+          "die": 7
+        }
+      ],
+      [
+        {
+          "coord": {
+            "q": 3,
+            "r": 0
+          },
+          "type": "hexagon",
+          "resource": 1,
+          "die": 9
+        },
+        {
+          "coord": {
+            "q": 3,
+            "r": 1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 3,
+            "r": 2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        null,
+        {
+          "coord": {
+            "q": 3,
+            "r": -5
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 3,
+            "r": -4
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 3,
+            "r": -3
+          },
+          "type": "hexagon",
+          "resource": 4,
+          "die": 4
+        },
+        {
+          "coord": {
+            "q": 3,
+            "r": -2
+          },
+          "type": "vertex",
+          "owner": 4,
+          "level": 1
+        },
+        {
+          "coord": {
+            "q": 3,
+            "r": -1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        }
+      ],
+      [
+        {
+          "coord": {
+            "q": 4,
+            "r": 0
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        null,
+        {
+          "coord": {
+            "q": -5,
+            "r": 2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -5,
+            "r": 3
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        null,
+        {
+          "coord": {
+            "q": 4,
+            "r": -4
+          },
+          "type": "vertex",
+          "owner": 4,
+          "level": 1
+        },
+        {
+          "coord": {
+            "q": 4,
+            "r": -3
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": 4,
+            "r": -2
+          },
+          "type": "hexagon",
+          "resource": 2,
+          "die": 3
+        },
+        {
+          "coord": {
+            "q": 4,
+            "r": -1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        }
+      ],
+      [
+        {
+          "coord": {
+            "q": -4,
+            "r": 0
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -4,
+            "r": 1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -4,
+            "r": 2
+          },
+          "type": "hexagon",
+          "resource": 2,
+          "die": 11
+        },
+        {
+          "coord": {
+            "q": -4,
+            "r": 3
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -4,
+            "r": 4
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        null,
+        {
+          "coord": {
+            "q": 5,
+            "r": -3
+          },
+          "type": "vertex",
+          "owner": 4,
+          "level": 1
+        },
+        {
+          "coord": {
+            "q": 5,
+            "r": -2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        null
+      ],
+      [
+        {
+          "coord": {
+            "q": -3,
+            "r": 0
+          },
+          "type": "hexagon",
+          "resource": 3,
+          "die": 9
+        },
+        {
+          "coord": {
+            "q": -3,
+            "r": 1
+          },
+          "type": "vertex",
+          "owner": 1,
+          "level": 1
+        },
+        {
+          "coord": {
+            "q": -3,
+            "r": 2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -3,
+            "r": 3
+          },
+          "type": "hexagon",
+          "resource": 0,
+          "die": 4
+        },
+        {
+          "coord": {
+            "q": -3,
+            "r": 4
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -3,
+            "r": 5
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        null,
+        {
+          "coord": {
+            "q": -3,
+            "r": -2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -3,
+            "r": -1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        }
+      ],
+      [
+        {
+          "coord": {
+            "q": -2,
+            "r": 0
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -2,
+            "r": 1
+          },
+          "type": "hexagon",
+          "resource": 3,
+          "die": 2
+        },
+        {
+          "coord": {
+             "q": -2,
+             "r": 2
+           },
+           "type": "vertex",
+           "owner": 1,
+           "level": 1
+         },
+         {
+           "coord": {
+             "q": -2,
+             "r": 3
+           },
+           "type": "vertex",
+           "owner": 0,
+           "level": 0
+         },
+         {
+           "coord": {
+             "q": -2,
+             "r": 4
+           },
+           "type": "hexagon",
+           "resource": 5,
+           "die": 6
+         },
+         {
+           "coord": {
+             "q": -2,
+             "r": 5
+           },
+           "type": "vertex",
+           "owner": 0,
+           "level": 0
+         },
+         {
+           "coord": {
+             "q": -2,
+             "r": -3
+           },
+           "type": "vertex",
+           "owner": 0,
+           "level": 0
+         },
+         {
+           "coord": {
+             "q": -2,
+             "r": -2
+           },
+           "type": "hexagon",
+           "resource": 2,
+           "die": 5
+         },
+         {
+           "coord": {
+            "q": -2,
+            "r": -1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        }
+      ],
+      [
+        {
+          "coord": {
+            "q": -1,
+            "r": 0
+          },
+          "type": "vertex",
+          "owner": 1,
+          "level": 1
+        },
+        {
+          "coord": {
+            "q": -1,
+            "r": 1
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -1,
+            "r": 2
+          },
+          "type": "hexagon",
+          "resource": 4,
+          "die": 10
+        },
+        {
+          "coord": {
+            "q": -1,
+            "r": 3
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -1,
+            "r": 4
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        null,
+        {
+          "coord": {
+            "q": -1,
+            "r": -3
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -1,
+            "r": -2
+          },
+          "type": "vertex",
+          "owner": 0,
+          "level": 0
+        },
+        {
+          "coord": {
+            "q": -1,
+            "r": -1
+          },
+          "type": "hexagon",
+          "resource": 5,
+          "die": 2
+        }
+      ]
+    ]
+  },
+  "players": [
+    null,
+    {
+      "cards": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "resources": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "cards": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "resources": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "cards": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "resources": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "cards": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "resources": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "turn": 4
+}

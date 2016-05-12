@@ -1,4 +1,4 @@
-package GsonRuntimeAdapter;
+package Game;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -16,7 +16,9 @@ import Game.Shape;
 import Game.Vertex;
 
 /**
- * Created by Tyler on 5/11/16.
+ * ShapeAdapter.java
+ * Author: Tyler Holland
+ * Gson serializer helper class. Properly (de)serializes inherited classes Hexagon and Vertex.
  */
 class ShapeAdapter implements JsonSerializer<Shape>, JsonDeserializer<Shape> {
 
@@ -26,12 +28,12 @@ class ShapeAdapter implements JsonSerializer<Shape>, JsonDeserializer<Shape> {
         result.add("coord", context.serialize(shape.getCoord(), Point_QR.class));
         result.add("type", context.serialize(shape.type(), String.class));
         if (shape instanceof Hexagon) {
-            result.add("resource", context.serialize(((Hexagon) shape).getResource(), Shape.class));
-            result.add("die", context.serialize(((Hexagon) shape).getDie(), Shape.class));
+            result.add("resource", context.serialize(((Hexagon) shape).getResource(), int.class));
+            result.add("die", context.serialize(((Hexagon) shape).getDie(), int.class));
         }
         if (shape instanceof Vertex) {
-            result.add("owner", context.serialize(((Vertex) shape).getOwner(), Shape.class));
-            result.add("level", context.serialize(((Vertex) shape).getLevel(), Shape.class));
+            result.add("owner", context.serialize(((Vertex) shape).getOwner(), int.class));
+            result.add("level", context.serialize(((Vertex) shape).getLevel(), int.class));
         }
         return result;
     }

@@ -9,18 +9,7 @@ import android.widget.TextView;
 import com.example.andumgaming.g370.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
-
-import java.lang.reflect.Type;
-
-import GsonRuntimeAdapter.RuntimeTypeAdapterFactory;
 
 
 /**
@@ -89,6 +78,11 @@ public class Game {
 
     public Game(Activity parent, int width, int height)
     {
+        board = new Board();
+        init(parent, width, height, null);
+    }
+    public void init(Activity parent, int width, int height, View existingView)
+    {
         r = parent.getResources();
         this.width = width; this.height = height;
 
@@ -100,10 +94,15 @@ public class Game {
 
         if(debug)System.out.println("GAME creating Board");
         if(debug)System.out.printf("GAME center at (%1$2d,%2$2d)\n", width / 2, height / 2);
-        board = new Board(default_hexsize, default_center);
 
-        if(debug)System.out.println("GAME creating BoardView");
-        view = new BoardView(parent, board);
+
+
+        if (existingView != null && existingView instanceof BoardView)
+            view = (BoardView)existingView;
+        else {
+            if(debug)System.out.println("GAME creating BoardView");
+            view = new BoardView(parent, board);
+        }
 
         players = new Player[5];
         // player 0 is the nobody player
@@ -120,8 +119,9 @@ public class Game {
 
         // TODO initialize players[], and at some point (maybe here, maybe not) call to server
         if (debug) System.out.println(board);
-    }
 
+        board.init(default_hexsize, default_center);
+    }
 
 
 
@@ -144,7 +144,8 @@ public class Game {
         if (turn == 0) return;  // if no player currently ready
         build = type;
         firstRoadPt = null; // just to make sure
-        board.deselectSettlement(selected);
+        if (selected != null)
+            board.deselectSettlement(selected);
     }
     public BUILD getBuildState(){
         return build;
@@ -290,45 +291,31 @@ public class Game {
         });
     }
 
-}
+    public String toJSON()
+    {
+        if(debug) System.out.println("JSON Testing gson de/serialization");
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeHierarchyAdapter(Shape.class, new ShapeAdapter())
+                .setPrettyPrinting()
+                .create();
 
-//class ShapeAdapter implements JsonSerializer<Shape>, JsonDeserializer<Shape> {
-//
-//    @Override public JsonElement serialize(Shape shape, Type typeOfSrc,
-//                                           JsonSerializationContext context) {
-//        JsonObject result = new JsonObject();
-//        result.add("coord", context.serialize(shape.getCoord(), Point_QR.class));
-//        result.add("type", context.serialize(shape.type(), String.class));
-//        if (shape instanceof Hexagon) {
-//            result.add("resource", context.serialize(((Hexagon) shape).getResource(), int.class));
-//            result.add("die", context.serialize(((Hexagon) shape).getDie(), int.class));
-//        }
-//        if (shape instanceof Vertex) {
-//            result.add("owner", context.serialize(((Vertex) shape).getOwner(), int.class));
-//            result.add("level", context.serialize(((Vertex) shape).getLevel(), int.class));
-//        }
-//        return result;
-//    }
-//
-//    @Override public Shape deserialize(JsonElement json, Type typeOfT,
-//                                       JsonDeserializationContext context) throws JsonParseException {
-//        JsonObject object = json.getAsJsonObject();
-//        Shape result = null;
-//
-//        String type = context.deserialize(object.get("type"), String.class);
-//        Point_QR coord = context.deserialize(object.get("coord"), Point_QR.class);
-//
-//        if (type.equals("hexagon")) {
-//            result = new Hexagon(coord.q(), coord.r());
-//            ((Hexagon)result).setResource(object.get("resource").getAsInt());
-//            ((Hexagon)result).setDie(object.get("die").getAsInt());
-//        }
-//        else if (type.equals("vertex")) {
-//            result = new Vertex(coord.q(), coord.r());
-//            ((Vertex)result).setOwner(object.get("owner").getAsInt());
-//            ((Vertex)result).setLevel(object.get("level").getAsInt());
-//        }
-//
-//        return result;
-//    }
-//}
+        String b_json = gson.toJson(this, Game.class);
+        if(debug) System.out.println("JSON Board JSON   :\n " + b_json);
+
+        return b_json;
+    }
+
+    public static Gson getGson()
+    {
+        return new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeHierarchyAdapter(Shape.class, new ShapeAdapter())
+                .setPrettyPrinting()
+                .create();
+    }
+    public void printBoard()
+    {
+        System.out.println(board);
+    }
+}

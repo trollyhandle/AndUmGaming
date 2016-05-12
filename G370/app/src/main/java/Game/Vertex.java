@@ -43,6 +43,7 @@ public class Vertex extends Shape {
 
     public void updatePath(int hex_size, Point_XY boardCenter)
     {
+        if (path == null) path = new Path();
         int poly_size = hex_size / 4;  // size of actual drawn hexagon
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(330, poly_size);
@@ -65,9 +66,9 @@ public class Vertex extends Shape {
 //    public String type() { return type = "vertex"; }
     public String type() { return "vertex"; }
 
-//    public String toString()
-//    {
-//        return type() + ":" + coord + "|" + owner + level;
-//    }
+    public String toString()
+    {
+        return type() + ":" + coord + "|" + owner + level;
+    }
 
 }

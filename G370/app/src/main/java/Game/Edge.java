@@ -45,6 +45,8 @@ public class Edge {
     public Path getPath() { return path; }
     public void update(int hex_size, Point_XY boardCenter)
     {
+        if (path == null)
+            path = new Path();
         Point_XY src_pt = boardCenter.jump_hex(source.q(), source.r(), hex_size);
         Point_XY dst_pt = boardCenter.jump_hex(destination.q(), destination.r(), hex_size);
 

@@ -34,6 +34,7 @@ public class Hexagon extends Shape {
 
     public void updatePath(int hex_size, Point_XY boardCenter)
     {
+        if (path == null) path = new Path();
         int poly_size = (int)(hex_size/1.3);  // size of actual drawn polygon
         Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
         Point_XY pt = shape_center.jump_linear(0, poly_size);
@@ -62,8 +63,8 @@ public class Hexagon extends Shape {
 //    public String type() { return type = "hexagon"; }
     public String type() { return "hexagon"; }
 
-//    public String toString()
-//    {
-//        return type() + ":" + coord + "|" + resource + die;
-//    }
+    public String toString()
+    {
+        return "hxagon" + ":" + coord + "|" + resource + die;
+    }
 }
