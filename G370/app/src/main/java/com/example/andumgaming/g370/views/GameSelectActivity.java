@@ -13,7 +13,7 @@ public class GameSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_select);
 
         
-        Intent i = new Intent(getApplicationContext(), GameTest.class);
+        Intent i = new Intent(getApplicationContext(), GameActivity.class);
         startActivity(i);
 
     }
