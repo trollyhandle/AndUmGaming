@@ -150,7 +150,7 @@ public class Game {
         initResourceTabs(parent);
         setupTouchListener();
 
-        // TODO initialize players[], and at some point (maybe here, maybe not) call to server
+        // TODO at some point (maybe here, maybe not) call to server
         if (debug) System.out.println(board);
 
         board.init(default_hexsize, default_center);
