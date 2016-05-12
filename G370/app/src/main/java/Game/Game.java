@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.GameTest;
-import com.example.andumgaming.g370.views.ToastListener;
+
+import Interface.ToastListener;
 
 
 /**
@@ -363,4 +364,7 @@ public class Game {
             }
         });
     }
+
+
+
 }

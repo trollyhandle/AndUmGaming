@@ -1,4 +1,4 @@
-package com.example.andumgaming.g370.views;
+package Interface;
 
 /**
  * Created by Andre on 5/10/2016.

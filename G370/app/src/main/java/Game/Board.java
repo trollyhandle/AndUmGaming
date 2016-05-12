@@ -1,15 +1,9 @@
 package Game;
 
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.os.CountDownTimer;
 
-import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.GameTest;
-import com.example.andumgaming.g370.views.ToastListener;
+import Interface.ToastListener;
 
 import java.util.Random;
 
@@ -41,6 +35,7 @@ public class Board {
 
     private GameTest gametest;
     private ToastListener listener;
+
 
 
 
@@ -532,4 +527,3 @@ public class Board {
 
 
 }
-
