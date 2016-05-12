@@ -5,6 +5,7 @@ package com.example.andumgaming.g370.views;
 
 import com.example.andumgaming.g370.R;
 
+import android.content.ContentUris;
 import android.graphics.Point;
 
 //import android.app.FragmentTransaction;
@@ -293,49 +294,56 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int i = 120000;
-                int j = 1000;
-
-
-                BuyCity.getBackground().clearColorFilter();
-                BuySettlement.getBackground().clearColorFilter();
-                BuyRoad.getBackground().clearColorFilter();
-
-                game.nextTurn();
-                turnTimer(i, j, timeView);
-                if (game.getTurn() == 0)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 1)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 2)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 3)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 4)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
-                v.invalidate();
+                autoEnd(v, timeView);
             }
         });
     }
 
+    private CountDownTimer turnTimer;
+    private void turnTimer(final View view, final TextView textView){
 
-    private void turnTimer(final int i, final int j, final TextView textView){
-        new CountDownTimer(i, j){
+        if (turnTimer !=null)
+            turnTimer.cancel();
+
+        turnTimer = new CountDownTimer(11000, 1000){
             public void onTick(long millisUntilFinshed){
                 //TODO Sometinh
-                textView.append(""+millisUntilFinshed/1000);
-                ToastMessage(""+millisUntilFinshed/1000);
+                textView.setText(""+millisUntilFinshed/1000);
 
             }
             public void onFinish() {
-
+            autoEnd(view, textView);
                 //TODO something else
             }
         }.start();
+    }
+
+    private void autoEnd(View view, TextView textView){
+
+
+
+        BuyCity.getBackground().clearColorFilter();
+        BuySettlement.getBackground().clearColorFilter();
+        BuyRoad.getBackground().clearColorFilter();
+
+        game.nextTurn();
+        if (game.getTurn() == 0)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
+
+        else if (game.getTurn() == 1)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
+
+        else if (game.getTurn() == 2)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
+
+        else if (game.getTurn() == 3)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
+
+        else if (game.getTurn() == 4)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+        view.invalidate();
+        turnTimer(view, timeView);
+
     }
 
 }
