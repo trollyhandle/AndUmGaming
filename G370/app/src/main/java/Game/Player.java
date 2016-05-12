@@ -41,7 +41,7 @@ public class Player {
 
 	public Player()
     {
-        resources = new int[] {0, 0, 0, 0, 0};
+        resources = new int[] {2, 2, 2, 2, 2};
         cards = new int[] {0, 0, 0, 0};
         firstSettlementPlaced = false;
     }
