@@ -40,7 +40,7 @@ import Game.Game;
 import Interface.ICallBackListener;
 import Interface.ToastListener;
 
-public class GameTest extends AppCompatActivity implements ToastListener {
+public class GameActivity extends AppCompatActivity implements ToastListener {
 
 
     private boolean debug = true;
