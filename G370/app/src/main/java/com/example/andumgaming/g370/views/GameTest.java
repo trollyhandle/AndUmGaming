@@ -18,8 +18,11 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.res.Resources;
+
+import org.w3c.dom.Text;
 
 import Game.Game;
 
@@ -42,6 +45,13 @@ public class GameTest extends AppCompatActivity implements ToastListener{
     private Button BuySettlement;
     private Button BuyCity;
     private Button EndTurn;
+
+    private TextView CurrentPlayer;
+    private TextView playerid;
+    private TextView player1;
+    private TextView player2;
+    private TextView player3;
+    private TextView player4;
 
     private int width, height;
 
@@ -154,60 +164,18 @@ public class GameTest extends AppCompatActivity implements ToastListener{
 
 
     private void loadButtons() {
-        zoomIn = (Button) findViewById(R.id.zoomIn);
-        zoomOut = (Button) findViewById(R.id.zoomOut);
-        zoomLeft = (Button) findViewById(R.id.zoomLeft);
-        zoomUp = (Button) findViewById(R.id.zoomUp);
-        zoomDown = (Button) findViewById(R.id.zoomDown);
-        zoomRight = (Button) findViewById(R.id.zoomRight);
         zoomReset = (Button) findViewById(R.id.zoomReset);
         BuyRoad = (Button) findViewById(R.id.buyroad);
         BuySettlement = (Button) findViewById(R.id.buyhouse);
         EndTurn = (Button) findViewById(R.id.endturn);
         BuyCity = (Button) findViewById(R.id.buycity);
+        CurrentPlayer = (TextView) findViewById(R.id.currentplayer);
+        playerid = (TextView) findViewById(R.id.playerid);
+        player1 = (TextView) findViewById(R.id.player1);
+        player2 = (TextView) findViewById(R.id.player2);
+        player3 = (TextView) findViewById(R.id.player3);
+        player4 = (TextView) findViewById(R.id.player4);
 
-        zoomIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON zoom in");
-                game.resize(10);
-            }
-        });
-        zoomOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON zoom out");
-                game.resize(-10);
-            }
-        });
-        zoomLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move left");
-                game.move(-10, 0);
-            }
-        });
-        zoomRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move right");
-                game.move(10, 0);
-            }
-        });
-        zoomUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move up");
-                game.move(0, -10);
-            }
-        });
-        zoomDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(debug)System.out.println("BUTTON move down");
-                game.move(0, 10);
-            }
-        });
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -294,25 +262,38 @@ public class GameTest extends AppCompatActivity implements ToastListener{
 
                 game.nextTurn();
 
-                if (game.getTurn() == 0)
+                if (game.getTurn() == 0) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 1)
+                    playerid.setText("Player 1");
+                    player1.setText("Player 1");
+                    player1.setTextColor(Game.PLAYERS.ONE.col);
+                }
+                else if (game.getTurn() == 1) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 2)
+                    playerid.setText("Player 1");
+                    player1.setText("Player 1");
+                    player1.setTextColor(Game.PLAYERS.ONE.col);
+                }
+                else if (game.getTurn() == 2) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 3)
+                    playerid.setText("Player 2");
+                    player2.setText("Player 2");
+                    player2.setTextColor(Game.PLAYERS.TWO.col);
+                }
+                else if (game.getTurn() == 3) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 4)
+                    playerid.setText("Player 3");
+                    player3.setText("Player 3");
+                    player3.setTextColor(Game.PLAYERS.THREE.col);
+                }
+                else if (game.getTurn() == 4) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+                    playerid.setText("Player 4");
+                    player4.setText("Player 4");
+                    player4.setTextColor(Game.PLAYERS.FOUR.col);
+                }
                 v.invalidate();
             }
         });
-
-
-
     }
 }
