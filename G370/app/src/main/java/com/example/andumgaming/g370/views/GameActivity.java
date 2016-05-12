@@ -84,8 +84,10 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
         //loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
 
-//        game = new Game(this, width, height);
-        game = loadFromSampleJSON();
+        // To test JSON serialized data
+        //game = loadFromSampleJSON();
+
+        game = new Game(this, width, height);
         game.init(this, width, height, null);  // null for no pre-existing view
         // todo or load from server
 
@@ -163,7 +165,7 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
 
 
         // TODO only if starting a new game
-//        setupGame();
+        setupGame();
     }
 
 
@@ -387,8 +389,10 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
 
             }
         };
-        int destQ =1, destR = 4, sourceQ = 2, sourceR = 8, direction = 5, playerID = 7;
-        new Ins2AwsGameInit(listener).execute(destQ, destR, sourceQ, sourceR, direction, playerID);
+
+        // Insertion works!
+        //int destQ =1, destR = 4, sourceQ = 2, sourceR = 8, direction = 5, playerID = 7;
+        //new Ins2AwsGameInit(listener).execute(destQ, destR, sourceQ, sourceR, direction, playerID);
 
         if(debug) System.out.println("GAMETEST loading from JSON");
         InputStream is = getResources().openRawResource(R.raw.sample_game);

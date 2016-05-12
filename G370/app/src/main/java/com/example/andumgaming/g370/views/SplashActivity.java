@@ -13,7 +13,7 @@ import com.example.andumgaming.g370.R;
 /**
  * Created by Jeff on 5/5/2016.
  */
-public class SlashActivity extends Activity {
+public class SplashActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
