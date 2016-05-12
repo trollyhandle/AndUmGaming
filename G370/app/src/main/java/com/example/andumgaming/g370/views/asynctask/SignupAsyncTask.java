@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andumgaming.g370.views.FullscreenActivity;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,14 +25,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import Interface.ICallBackListener;
+
 public class SignupAsyncTask extends AsyncTask<String,Void,String> {
-    private TextView statusField;
-    private Context context;
+    private ICallBackListener listener;
 
     //flag 0 means get and 1 means post.(By default it is get.)
-    public SignupAsyncTask(Context context, TextView statusField) {
-        this.context = context;
-        this.statusField = statusField;
+    public SignupAsyncTask(ICallBackListener listener) {
+        this.listener = listener;
     }
 
     protected void onPreExecute(){
@@ -78,28 +79,10 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
+
+
     @Override
     protected void onPostExecute(String result) {
-        int duration = Toast.LENGTH_SHORT;
-        try {
-            JSONObject jObject = new JSONObject(result);
-            int aJsonInteger = jObject.getInt("success");
-
-            if (aJsonInteger == 1) {
-                Toast.makeText(context, "Successfully Signed Up!", duration).show();
-                Intent i = new Intent(context, FullscreenActivity.class);
-                context.startActivity(i);
-                ((Activity)context).finish();
-
-
-            } else
-                Toast.makeText(context, "Sign Up Unsuccessful", duration).show();
-            // uncomment to debug JSON
-            // this.statusField.setText(result);
-        }
-        catch (JSONException e) {
-            Log.i("error", "Error!");
-           return;
-        }
+        listener.onCallBack(result);
     }
 }

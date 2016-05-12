@@ -2,6 +2,7 @@ package com.example.andumgaming.g370.views;
 
 import android.annotation.SuppressLint;
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import android.content.Context;
 /* Login required */
 import android.widget.TextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.example.andumgaming.g370.R;
@@ -24,10 +26,12 @@ import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.asynctask.LoginAsyncTask;
 
 import com.example.andumgaming.g370.views.fragments.MenuFragment;
+import com.google.gson.Gson;
 
 import java.util.List;
 
 import Interface.BackStackLisnter;
+import Interface.ICallBackListener;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -172,16 +176,9 @@ public class FullscreenActivity extends AppCompatActivity {
     */
     }
 
-    /* Login Activity */
     private EditText usernameField,passwordField;
     private TextView status,method;
 
-    public void loginPost(View view){
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
-        method.setText("Post Method");
-        new LoginAsyncTask(this,status).execute(username,password);
-    }
 
 
     @Override

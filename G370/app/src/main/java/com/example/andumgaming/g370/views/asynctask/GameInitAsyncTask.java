@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andumgaming.g370.views.FullscreenActivity;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,14 +25,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-public class GameInitialAsyncTask extends AsyncTask<String,Void,String> {
-    private TextView statusField;
-    private Context context;
+import Interface.ICallBackListener;
+
+public class GameInitAsyncTask extends AsyncTask<String,Void,String> {
+    private ICallBackListener listener;
 
     //flag 0 means get and 1 means post.(By default it is get.)
-    public GameInitialAsyncTask(Context context, TextView statusField) {
-        this.context = context;
-        this.statusField = statusField;
+    public GameInitAsyncTask(ICallBackListener listener) {
+        this.listener = listener;
     }
 
     protected void onPreExecute(){
@@ -46,7 +47,7 @@ public class GameInitialAsyncTask extends AsyncTask<String,Void,String> {
             String username = (String)arg0[1];
             String password = (String)arg0[2];
 
-            String link="http://g370.duckdns.org/gameinitial.php";
+            String link="http://g370.duckdns.org/gameinit.php";
             String data  = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
             data += "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
             data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
@@ -78,28 +79,33 @@ public class GameInitialAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
+    /******************************
+    // TODO do this wherever this asynctask is called from
+    private class GameInitMsg {
+        int success;
+        String message;
+
+        public int getSuccess() {
+            return success;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    };
+    int duration = Toast.LENGTH_SHORT;
+    Gson gson = new Gson();
+    GameInitMsg gameInitMsg = gson.fromJson(result, GameInitMsg.class);
+    Toast.makeText(context, gameInitMsg.getMessage(), duration).show();
+    if (gameInitMsg.getSuccess() == 1) {
+        Intent i = new Intent(context, FullscreenActivity.class);
+        context.startActivity(i);
+        ((Activity)context).finish();
+    }
+    ****************************** */
+
     @Override
     protected void onPostExecute(String result) {
-        int duration = Toast.LENGTH_SHORT;
-        try {
-            JSONObject jObject = new JSONObject(result);
-            int aJsonInteger = jObject.getInt("success");
-
-            if (aJsonInteger == 1) {
-                Toast.makeText(context, "Successfully Signed Up!", duration).show();
-                Intent i = new Intent(context, FullscreenActivity.class);
-                context.startActivity(i);
-                ((Activity)context).finish();
-
-
-            } else
-                Toast.makeText(context, "Sign Up Unsuccessful", duration).show();
-            // uncomment to debug JSON
-            // this.statusField.setText(result);
-        }
-        catch (JSONException e) {
-            Log.i("error", "Error!");
-           return;
-        }
+        listener.onCallBack(result);
     }
 }

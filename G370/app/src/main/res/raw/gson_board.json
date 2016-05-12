@@ -65,6 +65,15 @@
         0
       ]
     },
+    {  // player 2
+      "resources": [  // resources they possess
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
     {  // player 3
       "resources": [  // resources they possess
         0,
@@ -76,5 +85,5 @@
     }
     // more player objects
   ],
-  "turn": 0  // whose turn it currently is
+  "turn": 4  // whose turn it currently is
 }
