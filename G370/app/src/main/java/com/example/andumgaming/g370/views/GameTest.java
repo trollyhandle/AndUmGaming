@@ -10,22 +10,26 @@ import android.graphics.Point;
 //import android.app.FragmentTransaction;
 
 import android.graphics.PorterDuff;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.content.res.Resources;
+
+import org.w3c.dom.Text;
 
 import Game.Game;
+import Interface.ToastListener;
 
 
-
-public class GameTest extends AppCompatActivity implements ToastListener{
+public class GameTest extends AppCompatActivity implements ToastListener {
 
     private boolean debug = true;
 
@@ -37,7 +41,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
     private Button zoomLeft, zoomRight;
     private Button zoomUp, zoomDown;
     private Button zoomReset;
-
+    private TextView timeView;
     private Button BuyRoad;
     private Button BuySettlement;
     private Button BuyCity;
@@ -165,6 +169,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         BuySettlement = (Button) findViewById(R.id.buyhouse);
         EndTurn = (Button) findViewById(R.id.endturn);
         BuyCity = (Button) findViewById(R.id.buycity);
+        timeView = (TextView) findViewById(R.id.timeint);
 
         zoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -288,12 +293,16 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int i = 120000;
+                int j = 1000;
+
+
                 BuyCity.getBackground().clearColorFilter();
                 BuySettlement.getBackground().clearColorFilter();
                 BuyRoad.getBackground().clearColorFilter();
 
                 game.nextTurn();
-
+                turnTimer(i, j, timeView);
                 if (game.getTurn() == 0)
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
 
@@ -311,8 +320,22 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                 v.invalidate();
             }
         });
-
-
-
     }
+
+
+    private void turnTimer(final int i, final int j, final TextView textView){
+        new CountDownTimer(i, j){
+            public void onTick(long millisUntilFinshed){
+                //TODO Sometinh
+                textView.append(""+millisUntilFinshed/1000);
+                ToastMessage(""+millisUntilFinshed/1000);
+
+            }
+            public void onFinish() {
+
+                //TODO something else
+            }
+        }.start();
+    }
+
 }
