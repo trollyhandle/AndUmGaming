@@ -25,14 +25,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import Interface.ICallBackListener;
+
 public class GameInitAsyncTask extends AsyncTask<String,Void,String> {
-    private TextView statusField;
-    private Context context;
+    private ICallBackListener listener;
 
     //flag 0 means get and 1 means post.(By default it is get.)
-    public GameInitAsyncTask(Context context, TextView statusField) {
-        this.context = context;
-        this.statusField = statusField;
+    public GameInitAsyncTask(ICallBackListener listener) {
+        this.listener = listener;
     }
 
     protected void onPreExecute(){
@@ -78,6 +78,9 @@ public class GameInitAsyncTask extends AsyncTask<String,Void,String> {
             return new String("Exception: " + e.getMessage());
         }
     }
+
+    /******************************
+    // TODO do this wherever this asynctask is called from
     private class GameInitMsg {
         int success;
         String message;
@@ -90,17 +93,19 @@ public class GameInitAsyncTask extends AsyncTask<String,Void,String> {
             return message;
         }
     };
+    int duration = Toast.LENGTH_SHORT;
+    Gson gson = new Gson();
+    GameInitMsg gameInitMsg = gson.fromJson(result, GameInitMsg.class);
+    Toast.makeText(context, gameInitMsg.getMessage(), duration).show();
+    if (gameInitMsg.getSuccess() == 1) {
+        Intent i = new Intent(context, FullscreenActivity.class);
+        context.startActivity(i);
+        ((Activity)context).finish();
+    }
+    ****************************** */
 
     @Override
     protected void onPostExecute(String result) {
-        int duration = Toast.LENGTH_SHORT;
-        Gson gson = new Gson();
-        GameInitMsg gameInitMsg = gson.fromJson(result, GameInitMsg.class);
-        Toast.makeText(context, gameInitMsg.getMessage(), duration).show();
-        if (gameInitMsg.getSuccess() == 1) {
-            Intent i = new Intent(context, FullscreenActivity.class);
-            context.startActivity(i);
-            ((Activity)context).finish();
-        }
+        listener.onCallBack(result);
     }
 }
