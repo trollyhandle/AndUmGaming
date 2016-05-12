@@ -320,14 +320,19 @@ public class Board {
 
     public int countVictoryPoints(int player)
     {
+        if(player==0) //just to be sure
+            return 0;
         int points = 0;
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
-                if (isValid(q, r) && !isHex(q, r)) {
-                    Vertex v = (Vertex)vertices[aib(q)][aib(r)];
+                Shape s = vertices[aib(q)][aib(r)];
+                if (s != null && !isHex(q, r)) {
+                    Vertex v = (Vertex)s;
                     if (v.getOwner() == player)
                         points += v.getLevel();
+                    //if(debug) System.out.println(v.getLevel() + " points from " + v.getCoord());
                 }
+                //if(debug) System.out.println("Examined a vertex from" +q + " "+ r);
             }
         }
         return points;
