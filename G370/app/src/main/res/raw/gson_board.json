@@ -1,8 +1,8 @@
 
 {
-  "board":
+  "board":  // has vertices and edges
   {
-    "vertices":
+    "vertices":  // a 2D array of Shapes (Hexagons or Vertices)
     [
 
       [
@@ -50,9 +50,9 @@
     ],
 
 
-    // edges are grouped by common sources, and so come in groups of three
-    // a two-dimensional (condensed) array to lookup "source" shape, and then an array
-    // within that for the three edges per source
+    // edges are grouped by common sources, and so come in groups of three:
+    // a two-dimensional (condensed) array to lookup "source" (Vertex)Shape, and then an array
+    // within that for the three edges per each source
     "edges":
     [
       [

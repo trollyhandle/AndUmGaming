@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
  * BoardView.java
  * Author: Tyler Holland

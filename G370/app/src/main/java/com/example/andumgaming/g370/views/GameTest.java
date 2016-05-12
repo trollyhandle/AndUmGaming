@@ -3,6 +3,7 @@ package com.example.andumgaming.g370.views;
 
 import com.example.andumgaming.g370.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import android.graphics.Point;
 
@@ -197,7 +198,7 @@ public class GameTest extends AppCompatActivity {
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON reset zoom");
                 game.resetZoom();
-                game.testJSON();
+                testJSON();
             }
         });
 /*
@@ -298,9 +299,29 @@ public class GameTest extends AppCompatActivity {
             }
         });
 
-
-
     }
 
+    public void testJSON()
+    {
+        System.out.println("JSON Testing gson de/serialization");
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+//                .registerTypeHierarchyAdapter(Game.Shape.class, new Game.ShapeAdapter())
+                .registerTypeHierarchyAdapter(Game.Shape.class, null)
+                .setPrettyPrinting()
+                .create();
+
+//        testBaseClassJSON(gson);
+//        testPolymorphicJSON(gson);
+//        testArrayGeneric(gson);
+//        testArrayJSON(gson);
+
+//        String b_json = gson.toJson(board, Board.class);
+//        System.out.println("JSON Board JSON   :\n " + b_json);
+
+
+
+        System.out.println("JSON Testing done\n");
+    }
 
 }
