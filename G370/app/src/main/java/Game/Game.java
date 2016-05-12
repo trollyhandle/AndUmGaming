@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
+import java.util.Random;
+
 import Interface.ToastListener;
 
 
@@ -71,6 +73,7 @@ public class Game {
     @Expose private Player[] players;
     @Expose private Board board;
     private boolean isFirstPlacementDone;
+    private boolean hasRolledThisTurn;
 
     private BoardView view;
     private TextView wheat, wood, ore, brick, sheep;
@@ -89,6 +92,8 @@ public class Game {
 
     public void setListener(ToastListener listener) {
         this.listener = listener;
+        if (board != null)
+            board.setListener(listener);
     }
 
     public Board getBoard() {
@@ -100,12 +105,23 @@ public class Game {
         void onNextTurn();
     }
 
+
     public Game(Activity parent, int width, int height)
     {
         board = new Board();
-        init(parent, width, height, null);
+        players = new Player[5];
+        // player 0 is the nobody player
+        players[1] = new Player();
+        players[2] = new Player();
+        players[3] = new Player();
+        players[4] = new Player();
+
+        turn = 0;
+        gamestate = GAMESTATE.FIRSTTURN;
+
+        init(parent, width, height);
     }
-    public void init(Activity parent, int width, int height, View existingView)
+    public void init(Activity parent, int width, int height)
     {
         r = parent.getResources();
         this.width = width; this.height = height;
@@ -121,30 +137,15 @@ public class Game {
         if(debug)System.out.println("GAME creating Board");
         if(debug)System.out.printf("GAME center at (%1$2d,%2$2d)\n", width / 2, height / 2);
 
+        if(debug)System.out.println("GAME creating BoardView");
+        view = new BoardView(parent, board);
 
-
-        if (existingView != null && existingView instanceof BoardView)
-            view = (BoardView)existingView;
-        else {
-            if(debug)System.out.println("GAME creating BoardView");
-            view = new BoardView(parent, board);
-        }
-
-        players = new Player[5];
-        // player 0 is the nobody player
-        players[1] = new Player();
-        players[2] = new Player();
-        players[3] = new Player();
-        players[4] = new Player();
-
-        turn = 0;
         build = BUILD.NONE;
-        gamestate = GAMESTATE.FIRSTTURN;
 
         initResourceTabs(parent);
         setupTouchListener();
 
-        // TODO initialize players[], and at some point (maybe here, maybe not) call to server
+        // TODO at some point (maybe here, maybe not) call to server
         if (debug) System.out.println(board);
 
         board.init(default_hexsize, default_center);
@@ -157,12 +158,12 @@ public class Game {
 
     public void nextTurn()
     {
-        if(gamestate==GAMESTATE.FIRSTTURN && turn==4 && !isFirstPlacementDone) {
+        if(gamestate == GAMESTATE.FIRSTTURN && turn == 4 && !isFirstPlacementDone) {
             turn = 4;
             players[turn].setFirstSettlementPlaced(false);
             isFirstPlacementDone = true;
         }
-        else if(gamestate==GAMESTATE.FIRSTTURN && isFirstPlacementDone) {
+        else if(gamestate == GAMESTATE.FIRSTTURN && isFirstPlacementDone) {
             turn--;
             if(turn<=0)
             {
@@ -182,17 +183,35 @@ public class Game {
         if(gamestate != GAMESTATE.FIRSTTURN)
             refreshResourceCounts();  // dont do this till players are implemented
 
-        if(iNextTurnable!=null) //hopefully avoid nullpointerexceptions
+        if(iNextTurnable!=null) // hopefully avoid nullpointerexceptions
             iNextTurnable.onNextTurn();
 
         // set cards too
+
+        hasRolledThisTurn = false;
+    }
+
+    public void roll()
+    {
+        if (hasRolledThisTurn) {
+            listener.ToastMessage("You've already rolled!");
+            return;
+        }
+        hasRolledThisTurn = true;
+        Random rand = new Random();
+
+        int die = rand.nextInt(6) + rand.nextInt(6) + 2;
+        for (int i = 1; i < players.length; i++) {
+            int[] generatedRes = board.getGeneratedResForPlayer(i, die);
+            players[i].addResources(generatedRes);
+        }
 
     }
 
     public int getTurn() { return turn; }
     public void setTurn(int turn) {
         this.turn = turn;
-        if(iNextTurnable!=null) //hopefully avoid nullpointerexceptions
+        if(iNextTurnable!=null) // hopefully avoid nullpointerexceptions
             iNextTurnable.onNextTurn();
     }
 
@@ -202,6 +221,7 @@ public class Game {
         firstRoadPt = null; // just to make sure
         if (selected != null)
             board.deselectSettlement(selected);
+        view.invalidate();
     }
 
     public BUILD getBuildState(){
@@ -239,18 +259,24 @@ public class Game {
                 else
                     listener.ToastMessage("You can only place one settlement right now!");
             }
-            else
-                success = board.buildSettlement(hex.q(),hex.r(),turn);
+            else {
+                    success =(players[turn].canBuySettlement() && board.buildSettlement(hex.q(),hex.r(),turn));
+                    if (success)
+                        players[turn].buySettlement();
+            }
+
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
-            if(gamestate ==GAMESTATE.FIRSTTURN)
+            if(gamestate == GAMESTATE.FIRSTTURN)
             {
-                if(listener !=null)
+                if(listener != null)
                     listener.ToastMessage("You cannot build a city during initial placement!");
             }
             else {
-                success= board.buildCity(hex.q(), hex.r(), turn);
+                    success =(players[turn].canBuyCity() && board.buildCity(hex.q(),hex.r(),turn));
+                    if (success)
+                        players[turn].buyCity();
             }
         }
 
@@ -259,14 +285,17 @@ public class Game {
             if (firstRoadPt == null) {  // no source selected yet
                 firstRoadPt = hex;
                 board.selectSettlement(selected = hex);
-                // TODO visual feedback on selected/highlighted vertex
             }
             else {
                 if (debug) System.out.println("Road from " + firstRoadPt + " to " + hex);
                 if(!players[turn].getFirstSettlementPlaced())
                     listener.ToastMessage("Place a settlement first!");
-                else
-                    success = board.buildRoad(firstRoadPt, hex, turn);
+                else {
+                        success =(players[turn].canBuyRoad() && board.buildRoad(firstRoadPt, hex, turn));
+                        if (success)
+                            players[turn].buyRoad();
+                }
+
                 firstRoadPt = null;  // reset for next road
                 board.deselectSettlement(selected);
                 if(success && gamestate == GAMESTATE.FIRSTTURN)
@@ -277,9 +306,6 @@ public class Game {
         }
         // are we playing a card?
         // are we moving the robber?
-
-//        if (success)
-//            System.out.println();
 
         /*
         Check for the end of the game.

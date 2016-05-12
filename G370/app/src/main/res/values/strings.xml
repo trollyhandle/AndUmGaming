@@ -5,7 +5,6 @@
     -->
     <string name="app_name">Polygonia</string>
     <string name="back">Back</string>
-    <string name="loading">Loading</string>
 
     <bool name="debug">true</bool>
 
@@ -137,10 +136,11 @@
     <string name="zoom_up">U</string>
     <string name="zoom_down">D</string>
     <string name="zoom_right">R</string>
-    <string name="zoom_reset">*</string>
+    <string name="zoom_reset">Center Board</string>
 
     <!-- Resource transactions -->
-    <string name="buy"  >Buy</string>
+    <string name="die">Roll</string>
+    <string name="buy">Buy</string>
     <string name="settlement">Buy Settlement</string>
     <string name="house">Buy House</string>
     <string name="city">Buy City</string>

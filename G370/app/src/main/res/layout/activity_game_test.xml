@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/gamebkg"
-    tools:context="com.example.andumgaming.g370.views.GameTest">
+    tools:context="com.example.andumgaming.g370.views.GameActivity">
 
     <!-- Removed these from layout: the padding caused offset errors in board drawing stage -->
     <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
@@ -60,6 +60,14 @@
 
                  <!-- style="?android:attr/buttonStyleSmall"-->
 
+
+                 <Button
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:id="@+id/rolldie"
+                     android:textSize="13dp"
+                     android:text="@string/die"/>
+
                  <Button
 
                      android:layout_width="wrap_content"
@@ -96,15 +104,6 @@
                      android:id="@+id/buycity"
                      android:textSize="13sp"
                      android:layout_weight=".25" />
-
-                 <Button  android:id="@+id/zoomReset"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:text="@string/zoom_reset"
-                    android:textAllCaps="false"
-                    android:textSize="13sp"
-                    android:layout_weight="20"
-                    android:layout_gravity="bottom" />
 
              </LinearLayout>
 
@@ -233,6 +232,14 @@
                          android:text="VP:0 RD:0 KN:0"/>
                  </FrameLayout>
 
+                 <Button  android:id="@+id/zoomReset"
+                    android:layout_height="30dp"
+                    android:text="@string/zoom_reset"
+                    android:textAllCaps="false"
+                    android:textSize="10sp"
+                    android:layout_gravity="center_horizontal|bottom"
+                     android:layout_width="wrap_content" />
+
 
              </FrameLayout>
 
@@ -261,7 +268,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text=""
-        android:id="@+id/playerid"
+        android:id="@+id/currentplayerid"
         android:layout_gravity="bottom|center_horizontal"
         android:gravity="bottom|center_horizontal"
         android:layout_alignBottom="@+id/currentplayer"
