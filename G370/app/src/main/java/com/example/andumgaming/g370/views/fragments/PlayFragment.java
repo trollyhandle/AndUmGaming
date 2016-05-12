@@ -47,6 +47,7 @@ public class PlayFragment extends Fragment {
         create_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(getActivity(), GameSelectActivity.class);
                 getActivity().startActivity(intent);
             }

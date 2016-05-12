@@ -525,7 +525,8 @@ public class Board {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
                 if (isHex(q, r) && s != null) {
-                    int which = rand.nextInt(shufsize), whichdie = rand.nextInt(diesize);
+                    int which = rand.nextInt(shufsize);
+                    int whichdie = rand.nextInt(diesize);
                     ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
                     shuffle[which] = shuffle[--shufsize];
 

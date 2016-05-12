@@ -16,9 +16,7 @@ public class GameSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_select);
 
-
         Intent i = new Intent(getApplicationContext(), GameActivity.class);
-        startActivity(i);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getBoolean("loadJSON")) {  // then we have a json file to parse right away
