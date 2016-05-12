@@ -1,15 +1,20 @@
 package Game;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Player class.
  * Contains a player's data (resources, cards, etc)
  */
 public class Player {
 
+    @Expose
     private int resources[];
 
-    private int knights_played, roads_placed;
+    private int knights_played;
+    private int roads_placed;
 
+    @Expose
     private int cards[];
 
     private boolean firstSettlementPlaced; //used exclusively when placing the first 2 settlements.

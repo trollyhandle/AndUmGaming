@@ -2,17 +2,25 @@ package Game;
 
 import android.graphics.Path;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Shape.java
  * Author: Tyler Holland
  * Abstract class. Parent to Vertex and Hexagon
  */
 public abstract class Shape {
-    protected Point_QR coord;
-    protected Path path;
-    private boolean debug = false;
 
-    private static int[][] directions = {  // rotates CCW
+    // TO SERIALIZE
+    @Expose
+    protected Point_QR coord;
+    @Expose
+    protected String type;
+
+    // NOT SERIALIZE
+    protected Path path;
+
+    private final static int[][] directions = {  // rotates CCW
             {0,  1}, {-1,  1}, {-1, 0},
             {0, -1}, { 1, -1}, { 1, 0},
     };
@@ -23,6 +31,8 @@ public abstract class Shape {
         path = new Path();
     }
 
+    // gives the (q, r) coordinates of the neighbor Shape
+    // param: dir A direction from 0 to 5, starting to the right and going CCW
     public Point_QR getNeighbor(int dir)
     {
         int neighbor_q = coord.q() + directions[dir][0];
@@ -30,32 +40,22 @@ public abstract class Shape {
         return new Point_QR(neighbor_q, neighbor_r);
     }
 
+    public Point_QR getCoord() {
+        return coord;
+    }
+
     public Path getPath() { return path; }
 
-    public void update(int hex_size, Point_XY boardCenter)
-    {
-        if(debug)System.out.println("SHAPE Making path...");
-        Point_XY shape_center = boardCenter.jump_hex(coord.q(), coord.r(), hex_size);
-        if(debug)System.out.println("SHAPE Center at " + shape_center);
+    public abstract void updatePath(int hex_size, Point_XY boardCenter);
 
-        path.rewind();
-        path.addCircle(shape_center.x(), shape_center.y(), 6, Path.Direction.CCW);
-        if(debug)System.out.println("SHAPE path complete");
-    }
+//    public String type() { return type = "shape"; }
+    public String type() { return "shape"; }
 
-    public abstract String type();
-    public String toString()
-    {
-//        String str = this.type();
-//        str += "(" + coord + "), hex_size " + hex_size;
-//        return str;
-        return "" + coord;
-    }
+    public String toString() { return "" + coord; }
+//    public String toString()
+//    {
+//        return type() + ":" + coord + "";
+//    }
 
-    public abstract String serialize();
-    public static Shape deserialize(String json)
-    {
-        return null;
-    }
 
 }

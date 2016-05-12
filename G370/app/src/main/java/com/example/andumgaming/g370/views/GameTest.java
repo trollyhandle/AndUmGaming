@@ -4,6 +4,7 @@ package com.example.andumgaming.g370.views;
 
 
 import com.example.andumgaming.g370.R;
+import com.google.gson.Gson;
 
 import android.content.ContentUris;
 import android.graphics.Point;
@@ -25,6 +26,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import Game.Game;
 import Interface.ToastListener;
@@ -61,11 +66,17 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         //loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
 
-        newGame();
-        // TODO or load from server
-        // loadGame();
+//        game = new Game(this, width, height);
+        game = loadFromSampleJSON();
+        game.init(this, width, height, null);  // null for no pre-existing view
+        // todo or load from server
 
+        init();
 
+    }
+
+    private void init()
+    {
         // add game - board and view - to layout
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
         if (layout != null)  // calms Android Studios: should not be null, I think...
@@ -118,19 +129,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
 //        setupGame();
     }
 
-
-
-
-    private void newGame()
-    {
-        game = new Game(this, width, height);
-    }
-
-    private void loadGame()
-    {
-        // TODO get data from server and init the game with it
-        return;
-    }
 
     private void setupGame()
     {
@@ -220,13 +218,15 @@ public class GameTest extends AppCompatActivity implements ToastListener {
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON move left");
                 game.move(-10, 0);
+//                loadSampleJSON();  // todo stole left button again
             }
         });
         zoomRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON move right");
-                game.move(10, 0);
+//                game.move(10, 0);
+                game.printBoard();
             }
         });
         zoomUp.setOnClickListener(new View.OnClickListener() {
@@ -357,7 +357,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         game.nextTurn();
         if (game.getTurn() == 0)
             EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-
         else if (game.getTurn() == 1)
             EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
 
@@ -371,7 +370,47 @@ public class GameTest extends AppCompatActivity implements ToastListener {
             EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
         view.invalidate();
         turnTimer(view, timeView);
+    }
 
+    public Game loadFromSampleJSON()
+    {
+        if(debug) System.out.println("GAMETEST loading from JSON");
+        InputStream is = getResources().openRawResource(R.raw.sample_game);
+        String json = readJSONfile(is);
+        if(debug) System.out.println("LOADing json:\n" + json);
+        Gson gson = Game.getGson();
+//        View oldview = game.getView();
+//        game = gson.fromJson(json, Game.class);
+//        game.init(this, width, height, oldview);
+//        game.getView().invalidate();
+//        if(debug) { System.out.println("LOADed board:"); game.printBoard(); }
+//        if(debug) System.out.println("LOADed game's json:\n" + game.toJSON());
+        return gson.fromJson(json, Game.class);
+    }
+    public String readJSONfile(InputStream ins)
+    {
+        // File-reading code thanks to Teamnull370 (https://github.com/Teamnull370)
+        String json = "";
+        try {
+            String line;
+            StringBuffer stringBuffer = new StringBuffer();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
+
+            if (ins != null) {
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(line);
+                    stringBuffer.append("\n");
+                }
+            }
+            json = stringBuffer.toString();
+            ins.close();
+
+        }
+        catch (Exception e) {
+            //Log.e("_raws","error");
+            System.out.println("Error: " + e);
+        }
+        return json;
     }
 
 }

@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.andumgaming.g370.R;
-import com.example.andumgaming.g370.views.GameTest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
 import Interface.ToastListener;
 
@@ -64,18 +66,15 @@ public class Game {
     private GAMESTATE gamestate;
     private BUILD build;
     private Point_QR firstRoadPt;
-    private int turn;
+    @Expose private int turn;
 
+    @Expose private Player[] players;
+    @Expose private Board board;
     private boolean isFirstPlacementDone;
 
-    private Player[] players;
+    private BoardView view;
     private TextView wheat, wood, ore, brick, sheep;
 
-
-    private Board board;
-    //private GameTest gametest;
-
-    private BoardView view;
     private int width, height;
     private int default_hexsize;
     private Point_XY default_center;
@@ -103,6 +102,11 @@ public class Game {
 
     public Game(Activity parent, int width, int height)
     {
+        board = new Board();
+        init(parent, width, height, null);
+    }
+    public void init(Activity parent, int width, int height, View existingView)
+    {
         r = parent.getResources();
         this.width = width; this.height = height;
 
@@ -116,10 +120,15 @@ public class Game {
 
         if(debug)System.out.println("GAME creating Board");
         if(debug)System.out.printf("GAME center at (%1$2d,%2$2d)\n", width / 2, height / 2);
-        board = new Board(default_hexsize, default_center);
 
-        if(debug)System.out.println("GAME creating BoardView");
-        view = new BoardView(parent, board);
+
+
+        if (existingView != null && existingView instanceof BoardView)
+            view = (BoardView)existingView;
+        else {
+            if(debug)System.out.println("GAME creating BoardView");
+            view = new BoardView(parent, board);
+        }
 
         players = new Player[5];
         // player 0 is the nobody player
@@ -137,8 +146,9 @@ public class Game {
 
         // TODO initialize players[], and at some point (maybe here, maybe not) call to server
         if (debug) System.out.println(board);
-    }
 
+        board.init(default_hexsize, default_center);
+    }
 
     public void setiNextTurnable(INextTurnable i)
     {
@@ -190,6 +200,8 @@ public class Game {
         if (turn == 0) return;  // if no player currently ready
         build = type;
         firstRoadPt = null; // just to make sure
+        if (selected != null)
+            board.deselectSettlement(selected);
     }
 
     public BUILD getBuildState(){
@@ -268,27 +280,31 @@ public class Game {
 
     /* *********************** */
     // Board Manipulation Functions
-    public void invalidate() { view.invalidate(); }
     public void move(int dx, int dy)
     {
         board.move(dx, dy);
+        view.invalidate();
     }
     public void setCenter(Point_XY newCenter)
     {
         board.setCenter(newCenter);
+        view.invalidate();
     }
     public void resize(int ds)
     {
         board.resize(ds);
+        view.invalidate();
     }
     public void setSize(int size)
     {
         board.setHexSize(size);
+        view.invalidate();
     }
     public void resetZoom()
     {
         board.setHexSize(default_hexsize);
         board.setCenter(default_center);
+        view.invalidate();
     }
 
 
@@ -365,6 +381,31 @@ public class Game {
         });
     }
 
+    public String toJSON()
+    {
+        if(debug) System.out.println("JSON Testing gson de/serialization");
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeHierarchyAdapter(Shape.class, new ShapeAdapter())
+                .setPrettyPrinting()
+                .create();
 
+        String b_json = gson.toJson(this, Game.class);
+        if(debug) System.out.println("JSON Board JSON   :\n " + b_json);
 
+        return b_json;
+    }
+
+    public static Gson getGson()
+    {
+        return new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeHierarchyAdapter(Shape.class, new ShapeAdapter())
+                .setPrettyPrinting()
+                .create();
+    }
+    public void printBoard()
+    {
+        System.out.println(board);
+    }
 }
