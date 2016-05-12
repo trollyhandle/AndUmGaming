@@ -339,7 +339,8 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
 
             }
             public void onFinish() {
-                //TODO something else
+                ToastMessage("please end your turn");
+                //TODO end turn
             }
         }.start();
     }
