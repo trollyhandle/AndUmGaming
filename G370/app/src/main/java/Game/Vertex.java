@@ -16,8 +16,8 @@ public class Vertex extends Shape {
     private int owner;  // player who has built upon this Vertex
     @Expose
     private int level;  // level of building upgrades: 0-none, 1-settlement, 2-city
-    @Expose
-    private String type;
+//    @Expose
+//    private String type;
 
     // NOT SERIALIZE
     private boolean selected;
@@ -62,10 +62,12 @@ public class Vertex extends Shape {
         path.close();
     }
 
-    public String getType() { return type = "vertex"; }
-//    public String getType() { return "vertex"; }
-    public String toString()
-    {
-        return getType() + ":" + coord + "|" + owner + level;
-    }
+//    public String type() { return type = "vertex"; }
+    public String type() { return "vertex"; }
+
+//    public String toString()
+//    {
+//        return type() + ":" + coord + "|" + owner + level;
+//    }
+
 }

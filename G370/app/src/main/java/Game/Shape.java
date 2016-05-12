@@ -14,8 +14,8 @@ public abstract class Shape {
     // TO SERIALIZE
     @Expose
     protected Point_QR coord;
-//    @Expose
-//    protected String type;
+    @Expose
+    protected String type;
 
     // NOT SERIALIZE
     protected Path path;
@@ -40,16 +40,22 @@ public abstract class Shape {
         return new Point_QR(neighbor_q, neighbor_r);
     }
 
+    public Point_QR getCoord() {
+        return coord;
+    }
+
     public Path getPath() { return path; }
 
     public abstract void updatePath(int hex_size, Point_XY boardCenter);
 
-//    public String getType() { return type = "shape"; }
-    public String getType() { return "shape"; }
-    public String toString()
-    {
-        return getType() + ":" + coord + "";
-    }
+//    public String type() { return type = "shape"; }
+    public String type() { return "shape"; }
+
+    public String toString() { return "" + coord; }
+//    public String toString()
+//    {
+//        return type() + ":" + coord + "";
+//    }
 
 
 }

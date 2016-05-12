@@ -9,7 +9,16 @@ import android.widget.TextView;
 import com.example.andumgaming.g370.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
+
+import java.lang.reflect.Type;
 
 import GsonRuntimeAdapter.RuntimeTypeAdapterFactory;
 
@@ -284,22 +293,19 @@ public class Game {
     public void testJSON()
     {
         System.out.println("JSON Testing gson de/serialization");
-        RuntimeTypeAdapterFactory<Shape> adapter = RuntimeTypeAdapterFactory
-                .of(Shape.class, "type")
-                .registerSubtype(Hexagon.class, "hexagon")
-                .registerSubtype(Vertex.class, "vertex");
         Gson gson = new GsonBuilder()
                 .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapterFactory(adapter)
+                .registerTypeHierarchyAdapter(Shape.class, new ShapeAdapter())
+                .setPrettyPrinting()
                 .create();
 
-        testBaseClassJSON(gson);
-        testPolymorphicJSON(gson);
-        testArrayGeneric(gson);
-        testArrayJSON(gson);
+//        testBaseClassJSON(gson);
+//        testPolymorphicJSON(gson);
+//        testArrayGeneric(gson);
+//        testArrayJSON(gson);
 
-//        String b_json = gson.toJson(board, Board.class);
-//        System.out.println("JSON Board JSON   : " + b_json);
+        String b_json = gson.toJson(board, Board.class);
+        System.out.println("JSON Board JSON   :\n " + b_json);
 
 
 
@@ -382,10 +388,10 @@ public class Game {
         Shape test[] = new Shape[] { x1, v1, v2, x2 };
 
         String test_json = gson.toJson(test);
-        System.out.println("JSON Array        : " + stringifyArray(test));
-        System.out.println("JSON Array JSON   : " + test_json);
-//        System.out.println("JSON Array        : " + stringifyArray(gson.fromJson(test_json, Shape[].class)));
-//        System.out.println("JSON re-gson JSON : " + gson.toJson(gson.fromJson(test_json, Shape[].class)));
+        System.out.println("JSON Array        :\n " + stringifyArray(test));
+        System.out.println("JSON Array JSON   :\n " + test_json);
+        System.out.println("JSON Array        :\n " + stringifyArray(gson.fromJson(test_json, Shape[].class)));
+        System.out.println("JSON re-gson JSON :\n " + gson.toJson(gson.fromJson(test_json, Shape[].class)));
     }
     public void testArrayGeneric(Gson gson)
     {
@@ -416,5 +422,46 @@ public class Game {
                 result += s + ",";
         }
         return result.substring(0, result.length()-1) + "]";
+    }
+}
+
+class ShapeAdapter implements JsonSerializer<Shape>, JsonDeserializer<Shape> {
+
+    @Override public JsonElement serialize(Shape shape, Type typeOfSrc,
+                                           JsonSerializationContext context) {
+        JsonObject result = new JsonObject();
+        result.add("coord", context.serialize(shape.getCoord(), Point_QR.class));
+        result.add("type", context.serialize(shape.type(), String.class));
+        if (shape instanceof Hexagon) {
+            result.add("resource", context.serialize(((Hexagon) shape).getResource(), int.class));
+            result.add("die", context.serialize(((Hexagon) shape).getDie(), int.class));
+        }
+        if (shape instanceof Vertex) {
+            result.add("owner", context.serialize(((Vertex) shape).getOwner(), int.class));
+            result.add("level", context.serialize(((Vertex) shape).getLevel(), int.class));
+        }
+        return result;
+    }
+
+    @Override public Shape deserialize(JsonElement json, Type typeOfT,
+                                       JsonDeserializationContext context) throws JsonParseException {
+        JsonObject object = json.getAsJsonObject();
+        Shape result = null;
+
+        String type = context.deserialize(object.get("type"), String.class);
+        Point_QR coord = context.deserialize(object.get("coord"), Point_QR.class);
+
+        if (type.equals("hexagon")) {
+            result = new Hexagon(coord.q(), coord.r());
+            ((Hexagon)result).setResource(object.get("resource").getAsInt());
+            ((Hexagon)result).setDie(object.get("die").getAsInt());
+        }
+        else if (type.equals("vertex")) {
+            result = new Vertex(coord.q(), coord.r());
+            ((Vertex)result).setOwner(object.get("owner").getAsInt());
+            ((Vertex)result).setLevel(object.get("level").getAsInt());
+        }
+
+        return result;
     }
 }

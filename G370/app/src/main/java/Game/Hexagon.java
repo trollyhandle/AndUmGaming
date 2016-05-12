@@ -16,8 +16,8 @@ public class Hexagon extends Shape {
     private int resource;  // type of resource tile this is (brick vs ore vs etc.)
     @Expose
     private int die;  // die-roll which causes this tile to generate its resource (2-12)
-    @Expose
-    private String type;
+//    @Expose
+//    private String type;
 
     public Hexagon(int q, int r)
     {
@@ -59,10 +59,11 @@ public class Hexagon extends Shape {
         return (int)(hex_size/1.3);
     }
 
-    public String getType() { return type = "hexagon"; }
-//    public String getType() { return "hexagon"; }
-    public String toString()
-    {
-        return getType() + ":" + coord + "|" + resource + die;
-    }
+//    public String type() { return type = "hexagon"; }
+    public String type() { return "hexagon"; }
+
+//    public String toString()
+//    {
+//        return type() + ":" + coord + "|" + resource + die;
+//    }
 }
