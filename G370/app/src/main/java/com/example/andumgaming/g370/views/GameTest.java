@@ -7,6 +7,7 @@ import com.example.andumgaming.g370.R;
 import com.google.gson.Gson;
 
 import android.content.ContentUris;
+import android.content.Intent;
 import android.graphics.Point;
 
 //import android.app.FragmentTransaction;
@@ -238,6 +239,8 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(game.getGameState()==Game.GAMESTATE.GAMEEND)
+                    returnToMenu();
                 if(debug)System.out.println("BUTTON reset zoom");
                 game.resetZoom();
             }
@@ -253,6 +256,8 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         BuyRoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(game.getGameState()==Game.GAMESTATE.GAMEEND)
+                    returnToMenu();
                 BuySettlement.getBackground().clearColorFilter();
                 BuyCity.getBackground().clearColorFilter();
 
@@ -274,6 +279,8 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         BuySettlement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(game.getGameState()==Game.GAMESTATE.GAMEEND)
+                    returnToMenu();
                 BuyRoad.getBackground().clearColorFilter();
                 BuyCity.getBackground().clearColorFilter();
 
@@ -295,6 +302,8 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         BuyCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(game.getGameState()==Game.GAMESTATE.GAMEEND)
+                    returnToMenu();
                 BuyRoad.getBackground().clearColorFilter();
                 BuySettlement.getBackground().clearColorFilter();
 
@@ -316,7 +325,8 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(game.getGameState()==Game.GAMESTATE.GAMEEND)
+                    returnToMenu();
                 turnEnd(v, timeView);
             }
         });
@@ -416,6 +426,16 @@ public class GameTest extends AppCompatActivity implements ToastListener {
             System.out.println("Error: " + e);
         }
         return json;
+    }
+
+    /*
+    handles leaving the game
+    can be the place where we pass the server the end of game statistics.
+     */
+    public void returnToMenu()
+    {
+        Intent i = new Intent(getApplicationContext(),FullscreenActivity.class);
+        startActivity(i);
     }
 
 }

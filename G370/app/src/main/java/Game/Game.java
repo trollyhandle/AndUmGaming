@@ -220,6 +220,11 @@ public class Game {
         if (debug) System.out.println("GAME click at " + hex);
         if (debug) System.out.println("GAME build state: " + build);
         boolean success = false;
+        if(gamestate == GAMESTATE.GAMEEND)
+        {
+            listener.ToastMessage("Game is  over");
+            return;
+        }
 
         // are we placing a settlement?
         if (build == BUILD.SETTLEMENT) {
@@ -275,6 +280,19 @@ public class Game {
 
 //        if (success)
 //            System.out.println();
+
+        /*
+        Check for the end of the game.
+        This is done in the Click so that the game ends as soon as a player gains their 10th victory point, rather than waiting for a turn to cycle over.
+         */
+        if(debug) System.out.println("Player " + turn + "has "+ board.countVictoryPoints(turn)+ " victory points.");
+        if(board.countVictoryPoints(turn) >=10) //10 victory points is the number required to win
+        {
+            if (debug) System.out.println("Player " + turn + " has won.");
+            setGameState(GAMESTATE.GAMEEND);
+            String endMessage = "Player "+ turn + "has won! pushing any button will return you to the main menu.";
+            listener.ToastMessage(endMessage);
+        }
     }
 
 
