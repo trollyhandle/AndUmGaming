@@ -44,6 +44,7 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
     private Button BuySettlement;
     private Button BuyCity;
     private Button EndTurn;
+    private Button RollDie;
 
     private TextView CurrentPlayer;
     private TextView playerid;
@@ -196,6 +197,7 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
 
 
     private void loadButtons() {
+        RollDie = (Button) findViewById(R.id.rolldie);
         zoomReset = (Button) findViewById(R.id.zoomReset);
         BuyRoad = (Button) findViewById(R.id.buyroad);
         BuySettlement = (Button) findViewById(R.id.buyhouse);
@@ -222,6 +224,13 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
             }
         });
 */
+        RollDie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                game.roll();
+            }
+        });
+
         BuyRoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
