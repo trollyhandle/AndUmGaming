@@ -180,7 +180,7 @@ public class FullscreenActivity extends AppCompatActivity {
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
         method.setText("Post Method");
-        new LoginAsyncTask(this,status).execute(username,password);
+        new LoginAsyncTask().execute(username,password);
     }
 
 

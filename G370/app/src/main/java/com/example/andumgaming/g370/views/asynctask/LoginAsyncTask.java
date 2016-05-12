@@ -36,10 +36,6 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     private Context context;
 
     //flag 0 means get and 1 means post.(By default it is get.)
-    public LoginAsyncTask(Context context, TextView statusField) {
-        this.context = context;
-        this.statusField = statusField;
-    }
 
     protected void onPreExecute(){
 

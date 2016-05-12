@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
         status = (TextView)findViewById(R.id.textView7);
 
-        new LoginAsyncTask(this,status).execute(username,password);
+        new LoginAsyncTask().execute(username,password);
     }
 
     public void signupPost (View view) {
