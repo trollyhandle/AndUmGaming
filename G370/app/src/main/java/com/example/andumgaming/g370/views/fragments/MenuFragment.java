@@ -2,6 +2,7 @@ package com.example.andumgaming.g370.views.fragments;
 
 
 import android.content.Intent;
+import android.media.audiofx.BassBoost;
 import android.support.v4.app.FragmentTransaction;
 
 import android.content.Context;
@@ -18,6 +19,7 @@ import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.LoginActivity;
 import com.example.andumgaming.g370.views.MusicService;
 
+import com.example.andumgaming.g370.views.SettingsActivity;
 import com.example.andumgaming.g370.views.TutorialActivity;
 
 import Interface.BackStackLisnter;
@@ -69,12 +71,14 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
 
                 System.out.println("MENU : pre-add " + getFragmentManager().getBackStackEntryCount());
 
-                SettingsFragment newFragment = new SettingsFragment();
+                /*SettingsFragment newFragment = new SettingsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
                 transaction.replace(R.id.container, newFragment)
                         .addToBackStack(SettingsFragment.class
-                                .getSimpleName()).commit();
+                                .getSimpleName()).commit();*/
+                Intent i = new Intent(getActivity().getApplicationContext(), SettingsActivity.class);
+                getActivity().startActivity(i);
 
 
             }

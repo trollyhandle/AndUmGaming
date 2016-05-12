@@ -4,16 +4,21 @@ package com.example.andumgaming.g370.views;
 
 
 import com.example.andumgaming.g370.R;
+import com.google.gson.Gson;
 
+import android.content.ContentUris;
 import android.graphics.Point;
 
 //import android.app.FragmentTransaction;
 
 import android.graphics.PorterDuff;
 import android.media.Image;
+import android.os.CountDownTimer;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -22,15 +27,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.res.Resources;
 
 import org.w3c.dom.Text;
 
 import Game.Game;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import Game.Game;
+import Interface.ToastListener;
 
+public class GameTest extends AppCompatActivity implements ToastListener {
 
-public class GameTest extends AppCompatActivity implements ToastListener{
 
     private boolean debug = true;
 
@@ -42,7 +51,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
     private Button zoomLeft, zoomRight;
     private Button zoomUp, zoomDown;
     private Button zoomReset;
-
+    private TextView timeView;
     private Button BuyRoad;
     private Button BuySettlement;
     private Button BuyCity;
@@ -62,6 +71,8 @@ public class GameTest extends AppCompatActivity implements ToastListener{
 
     private int width, height;
 
+    private Toast toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +82,17 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         //loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
 
-        newGame();
-        // TODO or load from server
-        // loadGame();
+//        game = new Game(this, width, height);
+        game = loadFromSampleJSON();
+        game.init(this, width, height, null);  // null for no pre-existing view
+        // todo or load from server
 
+        init();
 
+    }
+
+    private void init()
+    {
         // add game - board and view - to layout
         RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
         if (layout != null)  // calms Android Studios: should not be null, I think...
@@ -98,6 +115,25 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         game.getBoard().setListener(this);
+        game.setListener(this);
+        game.setiNextTurnable(new Game.INextTurnable() {
+            @Override
+            public void onNextTurn() {
+                BuyCity.getBackground().clearColorFilter();
+                BuySettlement.getBackground().clearColorFilter();
+                BuyRoad.getBackground().clearColorFilter();
+                if (game.getTurn() == 0)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
+                else if (game.getTurn() == 1)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
+                else if (game.getTurn() == 2)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
+                else if (game.getTurn() == 3)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
+                else if (game.getTurn() == 4)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+            }
+        });
 
         player1 = (TextView) findViewById(R.id.player1);
         player2 = (TextView) findViewById(R.id.player2);
@@ -130,17 +166,6 @@ public class GameTest extends AppCompatActivity implements ToastListener{
 
 
 
-
-    private void newGame()
-    {
-        game = new Game(this, width, height);
-    }
-
-    private void loadGame()
-    {
-        // TODO get data from server and init the game with it
-        return;
-    }
 
     private void setupGame()
     {
@@ -187,8 +212,11 @@ public class GameTest extends AppCompatActivity implements ToastListener{
 
 
     public void ToastMessage(String message) {
-        int duration=Toast.LENGTH_SHORT;
-        Toast toast= Toast.makeText(this,message,duration);
+        int duration = Toast.LENGTH_SHORT;
+
+        if (toast != null)
+            toast.cancel();
+        toast = Toast.makeText(this, message, duration);
         toast.show();
     }
 
@@ -200,8 +228,11 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         BuySettlement = (Button) findViewById(R.id.buyhouse);
         EndTurn = (Button) findViewById(R.id.endturn);
         BuyCity = (Button) findViewById(R.id.buycity);
+
         CurrentPlayer = (TextView) findViewById(R.id.currentplayer);
         playerid = (TextView) findViewById(R.id.playerid);
+
+        timeView = (TextView) findViewById(R.id.timeint);
 
 
         zoomReset.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +260,8 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                 if (game.getBuildState() != Game.BUILD.ROAD) {
                     game.setBuildState(Game.BUILD.ROAD);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
+                    /*R.color.buy_highlight*/
                 }
                 //if build state IS road, unclick
                 else {
@@ -249,7 +281,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                 if (game.getBuildState() != Game.BUILD.SETTLEMENT) {
                     game.setBuildState(Game.BUILD.SETTLEMENT);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS settlement, unclick
                 else {
@@ -270,7 +302,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                 if (game.getBuildState() != Game.BUILD.CITY) {
                     game.setBuildState(Game.BUILD.CITY);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS city, unclick
                 else {
@@ -284,39 +316,106 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuyCity.getBackground().clearColorFilter();
-                BuySettlement.getBackground().clearColorFilter();
-                BuyRoad.getBackground().clearColorFilter();
 
-                game.nextTurn();
-
-                if (game.getTurn() == 0) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-                    playerid.setText("Player 1");
-                    playerid.setTextColor(Game.PLAYERS.ONE.col);
-                }
-                else if (game.getTurn() == 1) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
-                    playerid.setText("Player 1");
-                    playerid.setTextColor(Game.PLAYERS.ONE.col);
-                }
-                else if (game.getTurn() == 2) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
-                    playerid.setText("Player 2");
-                    playerid.setTextColor(Game.PLAYERS.TWO.col);
-                }
-                else if (game.getTurn() == 3) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
-                    playerid.setText("Player 3");
-                    playerid.setTextColor(Game.PLAYERS.THREE.col);
-                }
-                else if (game.getTurn() == 4) {
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
-                    playerid.setText("Player 4");
-                    playerid.setTextColor(Game.PLAYERS.FOUR.col);
-                }
-                v.invalidate();
+                turnEnd(v, timeView);
             }
         });
     }
+
+    private CountDownTimer turnTimer;
+    private void turnTimer(final View view, final TextView textView){
+
+        if (turnTimer !=null)
+            turnTimer.cancel();
+
+        turnTimer = new CountDownTimer(91000, 1000){
+            public void onTick(long millisUntilFinshed){
+                //prints the time
+                textView.setText(""+((millisUntilFinshed/1000)-1));
+
+            }
+            public void onFinish() {
+                //TODO something else
+            }
+        }.start();
+    }
+
+    private void turnEnd(View view, TextView textView){
+
+        BuyCity.getBackground().clearColorFilter();
+        BuySettlement.getBackground().clearColorFilter();
+        BuyRoad.getBackground().clearColorFilter();
+
+        game.nextTurn();
+        if (game.getTurn() == 0) {
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
+            playerid.setText("Player 1");
+            playerid.setTextColor(Game.PLAYERS.ONE.col);
+        }
+        else if (game.getTurn() == 1) {
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
+            playerid.setText("Player 1");
+            playerid.setTextColor(Game.PLAYERS.ONE.col);
+        }
+        else if (game.getTurn() == 2) {
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
+            playerid.setText("Player 2");
+            playerid.setTextColor(Game.PLAYERS.TWO.col);
+        }
+        else if (game.getTurn() == 3) {
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
+            playerid.setText("Player 3");
+            playerid.setTextColor(Game.PLAYERS.THREE.col);
+        }
+        else if (game.getTurn() == 4) {
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+            playerid.setText("Player 4");
+            playerid.setTextColor(Game.PLAYERS.FOUR.col);
+        }
+        view.invalidate();
+        turnTimer(view, timeView);
+    }
+
+    public Game loadFromSampleJSON()
+    {
+        if(debug) System.out.println("GAMETEST loading from JSON");
+        InputStream is = getResources().openRawResource(R.raw.sample_game);
+        String json = readJSONfile(is);
+        if(debug) System.out.println("LOADing json:\n" + json);
+        Gson gson = Game.getGson();
+//        View oldview = game.getView();
+//        game = gson.fromJson(json, Game.class);
+//        game.init(this, width, height, oldview);
+//        game.getView().invalidate();
+//        if(debug) { System.out.println("LOADed board:"); game.printBoard(); }
+//        if(debug) System.out.println("LOADed game's json:\n" + game.toJSON());
+        return gson.fromJson(json, Game.class);
+
+    }
+    public String readJSONfile(InputStream ins)
+    {
+        // File-reading code thanks to Teamnull370 (https://github.com/Teamnull370)
+        String json = "";
+        try {
+            String line;
+            StringBuffer stringBuffer = new StringBuffer();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(ins));
+
+            if (ins != null) {
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(line);
+                    stringBuffer.append("\n");
+                }
+            }
+            json = stringBuffer.toString();
+            ins.close();
+
+        }
+        catch (Exception e) {
+            //Log.e("_raws","error");
+            System.out.println("Error: " + e);
+        }
+        return json;
+    }
+
 }

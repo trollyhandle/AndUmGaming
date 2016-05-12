@@ -7,7 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.andumgaming.g370.R;
-import com.example.andumgaming.g370.views.GameTest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+
+import Interface.ToastListener;
 
 
 /**
@@ -38,7 +42,7 @@ public class Game {
         ONE     (0xff3AF2A9), TWO   (0xffD65466),
         THREE   (0xff9835F1), FOUR  (0xffFD6D27);
         public final int col; PLAYERS(int value) { col = value; }
-        static int getColor(int i) { switch(i) {
+        public static int getColor(int i) { switch(i) {
             case 1: return ONE.col; case 2: return TWO.col;
             case 3: return THREE.col; case 4: return FOUR.col;
         } return NONE.col; }
@@ -53,18 +57,24 @@ public class Game {
         NONE, ROAD, SETTLEMENT, CITY; //, KNIGHT;
     }
 
+    public enum GAMESTATE {
+        FIRSTTURN, REGULAR, GAMEEND;
+    }
+
+    private INextTurnable iNextTurnable;
+
+    private GAMESTATE gamestate;
     private BUILD build;
     private Point_QR firstRoadPt;
-    private int turn;
+    @Expose private int turn;
 
-    private Player[] players;
-    private TextView wheat, wood, ore, brick, sheep;
-
-
-    private Board board;
-    //private GameTest gametest;
+    @Expose private Player[] players;
+    @Expose private Board board;
+    private boolean isFirstPlacementDone;
 
     private BoardView view;
+    private TextView wheat, wood, ore, brick, sheep;
+
     private int width, height;
     private int default_hexsize;
     private Point_XY default_center;
@@ -75,15 +85,32 @@ public class Game {
     private boolean moving, zooming;
     private Point_QR selected;
 
+    private ToastListener listener;
+
+    public void setListener(ToastListener listener) {
+        this.listener = listener;
+    }
 
     public Board getBoard() {
         return board;
     }
 
+    public interface INextTurnable
+    {
+        void onNextTurn();
+    }
+
     public Game(Activity parent, int width, int height)
+    {
+        board = new Board();
+        init(parent, width, height, null);
+    }
+    public void init(Activity parent, int width, int height, View existingView)
     {
         r = parent.getResources();
         this.width = width; this.height = height;
+
+        isFirstPlacementDone = false;
 
         // width/9 is a good initial hex size.
         // I determined this after multiple iterations of a complex modeling algorithm...
@@ -93,10 +120,15 @@ public class Game {
 
         if(debug)System.out.println("GAME creating Board");
         if(debug)System.out.printf("GAME center at (%1$2d,%2$2d)\n", width / 2, height / 2);
-        board = new Board(default_hexsize, default_center);
 
-        if(debug)System.out.println("GAME creating BoardView");
-        view = new BoardView(parent, board);
+
+
+        if (existingView != null && existingView instanceof BoardView)
+            view = (BoardView)existingView;
+        else {
+            if(debug)System.out.println("GAME creating BoardView");
+            view = new BoardView(parent, board);
+        }
 
         players = new Player[5];
         // player 0 is the nobody player
@@ -107,39 +139,80 @@ public class Game {
 
         turn = 0;
         build = BUILD.NONE;
+        gamestate = GAMESTATE.FIRSTTURN;
 
         initResourceTabs(parent);
         setupTouchListener();
 
         // TODO initialize players[], and at some point (maybe here, maybe not) call to server
         if (debug) System.out.println(board);
+
+        board.init(default_hexsize, default_center);
     }
 
-
-
+    public void setiNextTurnable(INextTurnable i)
+    {
+        iNextTurnable = i;
+    }
 
     public void nextTurn()
     {
-        turn = turn == 4? 1: turn + 1;
+        if(gamestate==GAMESTATE.FIRSTTURN && turn==4 && !isFirstPlacementDone) {
+            turn = 4;
+            players[turn].setFirstSettlementPlaced(false);
+            isFirstPlacementDone = true;
+        }
+        else if(gamestate==GAMESTATE.FIRSTTURN && isFirstPlacementDone) {
+            turn--;
+            if(turn<=0)
+            {
+                listener.ToastMessage("All players are done with placement, good luck!");
+                setGameState(GAMESTATE.REGULAR);
+                nextTurn();
+            }
+            else
+                players[turn].setFirstSettlementPlaced(false);
+
+        }
+        else
+            turn = turn == 4? 1: turn + 1;
         build = BUILD.NONE;
 
         // set resources to the current player's stats
-        refreshResourceCounts();  // dont do this till players are implemented
+        if(gamestate != GAMESTATE.FIRSTTURN)
+            refreshResourceCounts();  // dont do this till players are implemented
+
+        if(iNextTurnable!=null) //hopefully avoid nullpointerexceptions
+            iNextTurnable.onNextTurn();
 
         // set cards too
 
     }
 
     public int getTurn() { return turn; }
-    public void setTurn(int turn) { this.turn = turn; }
+    public void setTurn(int turn) {
+        this.turn = turn;
+        if(iNextTurnable!=null) //hopefully avoid nullpointerexceptions
+            iNextTurnable.onNextTurn();
+    }
 
     public void setBuildState(BUILD type) {
         if (turn == 0) return;  // if no player currently ready
         build = type;
         firstRoadPt = null; // just to make sure
+        if (selected != null)
+            board.deselectSettlement(selected);
     }
+
     public BUILD getBuildState(){
         return build;
+    }
+
+    public GAMESTATE getGameState(){
+        return gamestate;
+    }
+    public void setGameState(GAMESTATE type) {
+        gamestate = type;
     }
 
     public void click(Point_QR hex) {
@@ -150,11 +223,30 @@ public class Game {
 
         // are we placing a settlement?
         if (build == BUILD.SETTLEMENT) {
-            success = board.placeSettlement(hex.q(), hex.r(), turn);
+            if(gamestate == GAMESTATE.FIRSTTURN) {
+                if(!players[turn].getFirstSettlementPlaced()) {
+                    success = board.placeSettlement(hex.q(), hex.r(), turn);
+                    if(success)
+                    {
+                        players[turn].setFirstSettlementPlaced(true);
+                    }
+                }
+                else
+                    listener.ToastMessage("You can only place one settlement right now!");
+            }
+            else
+                success = board.buildSettlement(hex.q(),hex.r(),turn);
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
-            board.buildCity(hex.q(), hex.r(), turn);
+            if(gamestate ==GAMESTATE.FIRSTTURN)
+            {
+                if(listener !=null)
+                    listener.ToastMessage("You cannot build a city during initial placement!");
+            }
+            else {
+                success= board.buildCity(hex.q(), hex.r(), turn);
+            }
         }
 
         // are we placing a road?
@@ -166,9 +258,16 @@ public class Game {
             }
             else {
                 if (debug) System.out.println("Road from " + firstRoadPt + " to " + hex);
-                success = board.buildRoad(firstRoadPt, hex, turn);
+                if(!players[turn].getFirstSettlementPlaced())
+                    listener.ToastMessage("Place a settlement first!");
+                else
+                    success = board.buildRoad(firstRoadPt, hex, turn);
                 firstRoadPt = null;  // reset for next road
                 board.deselectSettlement(selected);
+                if(success && gamestate == GAMESTATE.FIRSTTURN)
+                {
+                    nextTurn();
+                }
             }
         }
         // are we playing a card?
@@ -181,27 +280,31 @@ public class Game {
 
     /* *********************** */
     // Board Manipulation Functions
-    public void invalidate() { view.invalidate(); }
     public void move(int dx, int dy)
     {
         board.move(dx, dy);
+        view.invalidate();
     }
     public void setCenter(Point_XY newCenter)
     {
         board.setCenter(newCenter);
+        view.invalidate();
     }
     public void resize(int ds)
     {
         board.resize(ds);
+        view.invalidate();
     }
     public void setSize(int size)
     {
         board.setHexSize(size);
+        view.invalidate();
     }
     public void resetZoom()
     {
         board.setHexSize(default_hexsize);
         board.setCenter(default_center);
+        view.invalidate();
     }
 
 
@@ -276,5 +379,33 @@ public class Game {
                 return true;
             }
         });
+    }
+
+    public String toJSON()
+    {
+        if(debug) System.out.println("JSON Testing gson de/serialization");
+        Gson gson = new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeHierarchyAdapter(Shape.class, new ShapeAdapter())
+                .setPrettyPrinting()
+                .create();
+
+        String b_json = gson.toJson(this, Game.class);
+        if(debug) System.out.println("JSON Board JSON   :\n " + b_json);
+
+        return b_json;
+    }
+
+    public static Gson getGson()
+    {
+        return new GsonBuilder()
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeHierarchyAdapter(Shape.class, new ShapeAdapter())
+                .setPrettyPrinting()
+                .create();
+    }
+    public void printBoard()
+    {
+        System.out.println(board);
     }
 }

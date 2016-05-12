@@ -33,12 +33,6 @@
             <requestFocus android:layout_width="wrap_content" />
         </EditText>
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="loginPost"
-            android:text="@string/login_button_text" />
 
         <EditText
             android:id="@+id/editText2"
@@ -48,15 +42,12 @@
             android:inputType="textPassword" >
         </EditText>
 
-
-        <!--<Button-->
-            <!--android:id="@+id/button2"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:onClick="loginPost"-->
-            <!--android:drawable="@android:color/black"-->
-            <!--android:text="@string/login_button_text" />-->
-
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loginPost"
+            android:text="@string/login_button_text" />
 
         <Button
             android:id="@+id/button3"

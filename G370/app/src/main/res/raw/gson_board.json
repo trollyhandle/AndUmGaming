@@ -1,0 +1,100 @@
+{
+  "board": {
+    "edges": [
+      [
+        [
+          {  // an edge
+            "destination": {  // coordinate of the Vertex to which this edge runs
+              "q": 2,
+              "r": 1
+            },
+            "direction": 0,  // direction of this edge (angled flat, or up-right, or down-left
+            "owner": 0,  // player who has built a road here (0 = no-one)
+            "source": {  // coordinate of the Vertex from which this edge runs
+              "q": 2,
+              "r": 0
+            }
+          },
+          {
+            "destination": {
+              "q": 1,
+              "r": 0
+            },
+            "direction": 4,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": 0
+            }
+          },
+          {
+            "destination": {
+              "q": 3,
+              "r": -1
+            },
+            "direction": 2,
+            "owner": 0,
+            "source": {
+              "q": 2,
+              "r": 0
+            }
+          }
+        ]
+        // and more arrays of Shapes
+      ]
+      // and more arrays of arrays of Shapes
+    ],
+    "vertices": [
+      [
+        {  // a hexagon
+          "coord": {  // coordinate point
+            "q": 0,
+            "r": 0
+          },
+          "type": "hexagon",  // shape type
+          "resource": 1,  // kind of resource
+          "die": 6  // die roll for resource generation
+        },
+        {  // a vertex
+          "coord": {
+            "q": 0,
+            "r": 1
+          },
+          "type": "vertex",
+          "owner": 0,  // player who owns this vertex
+          "level": 0  // level of development (0-none, 1-settlement, 2-city)
+        },
+        {
+          "coord": {
+            "q": 0,
+            "r": 2
+          },
+          "type": "vertex",
+          "owner": 3,
+          "level": 1
+        }
+      ]
+      // and more arrays of shapes
+    ]
+  },
+  "players": [  // array of player
+    null,  // player 0 is the nobody player
+    {  // player 1
+      "cards": [  // dev cards in their hand (not implemented)
+        0,
+        0,
+        0,
+        0
+      ],
+      "resources": [  // resources they possess
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+    // more player objects
+  ],
+  "turn": 4  // whose turn it currently is
+}

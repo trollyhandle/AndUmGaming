@@ -1,16 +1,33 @@
 package Game;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Player class.
  * Contains a player's data (resources, cards, etc)
  */
 public class Player {
 
+    @Expose
     private int resources[];
 
-    private int knights_played, roads_placed;
+    private int knights_played;
+    private int roads_placed;
 
+    @Expose
     private int cards[];
+
+    private boolean firstSettlementPlaced; //used exclusively when placing the first 2 settlements.
+
+    public boolean getFirstSettlementPlaced()
+    {
+        return firstSettlementPlaced;
+    }
+
+    public void setFirstSettlementPlaced(boolean b)
+    {
+        firstSettlementPlaced = b;
+    }
 
 	public static final int lookup[][] =
 	//	[BRICK, WOOD, SHEEP, WHEAT, ORE]
@@ -25,6 +42,7 @@ public class Player {
     {
         resources = new int[] {0, 0, 0, 0, 0};
         cards = new int[] {0, 0, 0, 0};
+        firstSettlementPlaced = false;
     }
 
     // TODO lots of things.. mostly coordinate with server status

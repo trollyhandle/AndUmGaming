@@ -1,5 +1,7 @@
 package Game;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Point_QR.java
  * Author: Tyler Holland
@@ -7,7 +9,13 @@ package Game;
  */
 public class Point_QR {
 
-    private int q, r;
+    // TO SERIALIZE
+    @Expose
+    private int q;
+    @Expose
+    private int r;
+
+    public Point_QR() { q = r = 0; }
 
     public Point_QR(int q, int r)
     {
@@ -18,7 +26,8 @@ public class Point_QR {
     public int q() { return q; }
     public int r() { return r; }
 
-
+    // Calculates the (x, y) coordinates of this (q, r) point, given a centerpoint and the size of
+    // the hexagons
     public Point_XY toPixel(Point_XY center, int size)
     {
         int x = (int)(size * (r + q/2.));
@@ -35,14 +44,4 @@ public class Point_QR {
         return q == other.q && r == other.r;
     }
 
-    public String serialize()
-    {
-        String json = "\"pointqr\":";
-        json += "{\"q\":" + q + ",\"r\":" + r + "}}";
-        return json;
-    }
-    public static Point_QR deserialize(String json)
-    {
-        return null;
-    }
 }
