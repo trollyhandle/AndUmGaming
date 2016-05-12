@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.andumgaming.g370.R;
+import com.google.gson.Gson;
 
 public class RecyclerAdapter extends  RecyclerView.Adapter<RecyclerViewHolder> {
-
-    String [] name={"Androidwarriors","Stackoverflow","Developer Android","AndroidHive",
-            "Slidenerd","TheNewBoston","Truiton","HmkCode","JavaTpoint","Javapeper"};
+    Gson gson = new Gson();
+    String [] name={""};
     Context context;
     LayoutInflater inflater;
     public RecyclerAdapter(Context context) {
