@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.andumgaming.g370.R;
+
 
 public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 

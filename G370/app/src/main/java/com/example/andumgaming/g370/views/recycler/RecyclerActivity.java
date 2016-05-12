@@ -11,7 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import com.example.andumgaming.g370.R;
 
 public class RecyclerActivity extends AppCompatActivity {
-
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
