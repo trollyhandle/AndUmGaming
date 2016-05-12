@@ -71,14 +71,14 @@ public class Ins2AwsGameInit extends AsyncTask<Integer,Void,String> {
             String line = null;
 
             // Read Server Response
-            while((line = reader.readLine()) != null)
+            while ((line = reader.readLine()) != null)
             {
                 sb.append(line);
                 break;
             }
             return sb.toString();
         }
-        catch(Exception e){
+        catch (Exception e) {
             return new String("Exception: " + e.getMessage());
         }
     }

@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.GameActivity;
 import com.example.andumgaming.g370.views.GameActivity;
+import com.example.andumgaming.g370.views.GameSelectActivity;
 
 /**
  * Created by Jeff on 4/21/2016.
@@ -46,7 +47,7 @@ public class PlayFragment extends Fragment {
         create_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),GameActivity.class);
+                Intent intent = new Intent(getActivity(), GameSelectActivity.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -54,7 +55,8 @@ public class PlayFragment extends Fragment {
         join_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),GameActivity.class);
+                Intent intent = new Intent(getActivity(), GameSelectActivity.class);
+                intent.putExtra("loadJSON", true);
                 getActivity().startActivity(intent);
             }
         });
@@ -62,7 +64,7 @@ public class PlayFragment extends Fragment {
         watch_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),GameActivity.class);
+                Intent intent = new Intent(getActivity(), GameSelectActivity.class);
                 getActivity().startActivity(intent);
             }
         });

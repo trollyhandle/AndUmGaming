@@ -5,7 +5,6 @@
     -->
     <string name="app_name">Polygonia</string>
     <string name="back">Back</string>
-    <string name="loading">Loading</string>
 
     <bool name="debug">true</bool>
 
