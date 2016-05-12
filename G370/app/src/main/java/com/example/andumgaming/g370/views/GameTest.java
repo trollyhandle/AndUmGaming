@@ -66,10 +66,19 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         setContentView(R.layout.activity_game_test);
         findSize();
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {  // then we have a json file to parse right away
+            game = loadFromJSON(extras.getString("JSON"));
+            game.init(this, width, height);
+        }
+        else {
+            game = new Game(this, width, height);
+        }
+
         //loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
 
-        game = new Game(this, width, height);
+
 //        game = loadFromSampleJSON();
 //        game.init(this, width, height, null);  // null for no pre-existing view
         // todo or load from server
@@ -205,10 +214,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON reset zoom");
                 game.resetZoom();
-
-                // todo stolen functionality again
-                loadUpdatedGame();
-
             }
         });
 /*
@@ -367,11 +372,11 @@ public class GameTest extends AppCompatActivity implements ToastListener {
             currentPlayerID.bringToFront();
     }
 
-    public void loadUpdatedGame()
+    public void loadUpdatedGame(String json)
     {
-        Game newgame = loadFromSampleJSON();
+        Game newgame = loadFromJSON(json);
         View oldview = game.getView();
-        newgame.init(this, width, height, null);
+        newgame.init(this, width, height);
         game = newgame;
         game.setListener(this);
 
@@ -383,16 +388,14 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         turnEnd(game.getView());
     }
 
-    public Game loadFromSampleJSON()
+    public Game loadFromJSON(String json)
     {
         if(debug) System.out.println("GAMETEST loading from JSON");
-        InputStream is = getResources().openRawResource(R.raw.sample_game);
-        String json = readJSONfile(is);
         if(debug) System.out.println("LOADing json:\n" + json);
         Gson gson = Game.getGson();
         return gson.fromJson(json, Game.class);
-
     }
+
     public String readJSONfile(InputStream ins)
     {
         // File-reading code thanks to Teamnull370 (https://github.com/Teamnull370)

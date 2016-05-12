@@ -109,9 +109,9 @@ public class Game {
     public Game(Activity parent, int width, int height)
     {
         board = new Board();
-        init(parent, width, height, null);
+        init(parent, width, height);
     }
-    public void init(Activity parent, int width, int height, View existingView)
+    public void init(Activity parent, int width, int height)
     {
         r = parent.getResources();
         this.width = width; this.height = height;
@@ -127,14 +127,8 @@ public class Game {
         if(debug)System.out.println("GAME creating Board");
         if(debug)System.out.printf("GAME center at (%1$2d,%2$2d)\n", width / 2, height / 2);
 
-
-
-        if (existingView != null && existingView instanceof BoardView)
-            view = (BoardView)existingView;
-        else {
-            if(debug)System.out.println("GAME creating BoardView");
-            view = new BoardView(parent, board);
-        }
+        if(debug)System.out.println("GAME creating BoardView");
+        view = new BoardView(parent, board);
 
         players = new Player[5];
         // player 0 is the nobody player

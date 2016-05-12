@@ -55,6 +55,7 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), GameSelectActivity.class);
+                intent.putExtra("loadJSON", true);
                 getActivity().startActivity(intent);
             }
         });
