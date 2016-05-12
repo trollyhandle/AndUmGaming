@@ -297,6 +297,27 @@ public class Board {
         return true;
     }
 
+    public int[] getGeneratedResForPlayer(int player, int die)
+    {
+        int[] newres = {0, 0, 0, 0, 0};
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                if (isValid(q, r) && !isHex(q, r)) {
+                    Vertex v = (Vertex)vertices[aib(q)][aib(r)];
+                    if (v.getOwner() == player) {
+                        for (int k = 1; k < 6; k++) {
+                            Hexagon hx  = (Hexagon)getShape(v.getNeighbor(k));
+                            if (hx != null && hx.getDie() == die) {
+                                newres[hx.getResource()] += v.getLevel();  // cites generate 2 res
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return newres;
+    }
+
     public int countVictoryPoints(int player)
     {
         int points = 0;

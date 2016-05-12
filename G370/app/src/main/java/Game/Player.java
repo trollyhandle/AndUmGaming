@@ -17,6 +17,7 @@ public class Player {
     @Expose
     private int cards[];
 
+    @Expose
     private boolean firstSettlementPlaced; //used exclusively when placing the first 2 settlements.
 
     public boolean getFirstSettlementPlaced()
@@ -47,6 +48,11 @@ public class Player {
 
     // TODO lots of things.. mostly coordinate with server status
 
+    public void addResources(int[] newres) {
+        for (int i = 0; i < newres.length; i++) {
+            resources[i] += newres[i];
+        }
+    }
 
 	public boolean buyRoad()
     {
@@ -74,7 +80,7 @@ public class Player {
 
 	public boolean buyCity()
     {
-        if(resources[3] >=lookup[2][3] && resources[4] >= lookup[2][4]) {
+        if(resources[3] >= lookup[2][3] && resources[4] >= lookup[2][4]) {
             resources[3] -= lookup[2][3];
             resources[4] -= lookup[2][4];
             return true;

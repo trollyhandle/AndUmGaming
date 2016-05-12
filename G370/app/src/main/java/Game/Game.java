@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 
+import java.util.Random;
+
 import Interface.ToastListener;
 
 
@@ -71,6 +73,7 @@ public class Game {
     @Expose private Player[] players;
     @Expose private Board board;
     private boolean isFirstPlacementDone;
+    private boolean hasRolledThisTurn;
 
     private BoardView view;
     private TextView wheat, wood, ore, brick, sheep;
@@ -190,6 +193,23 @@ public class Game {
 
         // set cards too
 
+        hasRolledThisTurn = false;
+    }
+
+    public void roll()
+    {
+        if (hasRolledThisTurn)
+            return;
+
+        hasRolledThisTurn = true;
+        Random rand = new Random();
+
+        int die = rand.nextInt(6) + rand.nextInt(6) + 2;
+        for (int i = 1; i < players.length; i++) {
+            int[] generatedRes = board.getGeneratedResForPlayer(i, die);
+            players[i].addResources(generatedRes);
+        }
+
     }
 
     public int getTurn() { return turn; }
@@ -238,8 +258,12 @@ public class Game {
                 else
                     listener.ToastMessage("You can only place one settlement right now!");
             }
-            else
-                success = board.buildSettlement(hex.q(),hex.r(),turn);
+            else {
+                // todo if player has sufficient resources:
+                    success = board.buildSettlement(hex.q(),hex.r(),turn);
+                    // todo spend the player's resources if build succes
+            }
+
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
@@ -249,7 +273,9 @@ public class Game {
                     listener.ToastMessage("You cannot build a city during initial placement!");
             }
             else {
-                success = board.buildCity(hex.q(), hex.r(), turn);
+                // todo if player has sufficient resources:
+                    success = board.buildCity(hex.q(),hex.r(),turn);
+                    // todo spend the player's resources
             }
         }
 
@@ -258,14 +284,17 @@ public class Game {
             if (firstRoadPt == null) {  // no source selected yet
                 firstRoadPt = hex;
                 board.selectSettlement(selected = hex);
-                // TODO visual feedback on selected/highlighted vertex
             }
             else {
                 if (debug) System.out.println("Road from " + firstRoadPt + " to " + hex);
                 if(!players[turn].getFirstSettlementPlaced())
                     listener.ToastMessage("Place a settlement first!");
-                else
-                    success = board.buildRoad(firstRoadPt, hex, turn);
+                else {
+                    // todo if player has sufficient resources:
+                        success = board.buildRoad(firstRoadPt, hex, turn);
+                        // todo spend the player's resources
+                }
+
                 firstRoadPt = null;  // reset for next road
                 board.deselectSettlement(selected);
                 if(success && gamestate == GAMESTATE.FIRSTTURN)
@@ -276,9 +305,6 @@ public class Game {
         }
         // are we playing a card?
         // are we moving the robber?
-
-//        if (success)
-//            System.out.println();
     }
 
 
