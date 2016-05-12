@@ -10,12 +10,14 @@ import android.graphics.Point;
 //import android.app.FragmentTransaction;
 
 import android.graphics.PorterDuff;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,6 +55,11 @@ public class GameTest extends AppCompatActivity implements ToastListener{
     private TextView player3;
     private TextView player4;
 
+    private ImageView player1image;
+    private ImageView player2image;
+    private ImageView player3image;
+    private ImageView player4image;
+
     private int width, height;
 
     @Override
@@ -87,11 +94,35 @@ public class GameTest extends AppCompatActivity implements ToastListener{
             fragmentLayout.bringToFront();
         else if(debug)System.out.println("VIEW ERROR fragment bring to foreground failed");
 
-    //    loadfragment();
         game.getView().setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         game.getBoard().setListener(this);
+
+        player1 = (TextView) findViewById(R.id.player1);
+        player2 = (TextView) findViewById(R.id.player2);
+        player3 = (TextView) findViewById(R.id.player3);
+        player4 = (TextView) findViewById(R.id.player4);
+
+        player1.setText("Player 1");
+        player1.setTextColor(Game.TEXT_COLORS.BLACK.col);
+        player2.setText("Player 2");
+        player2.setTextColor(Game.TEXT_COLORS.BLACK.col);
+        player3.setText("Player 3");
+        player3.setTextColor(Game.TEXT_COLORS.BLACK.col);
+        player4.setText("Player 4");
+        player4.setTextColor(Game.TEXT_COLORS.BLACK.col);
+/*
+        player1image = (ImageView) findViewById(R.id.player1image);
+        player2image = (ImageView) findViewById(R.id.player2image);
+        player3image = (ImageView) findViewById(R.id.player3image);
+        player4image = (ImageView) findViewById(R.id.player4image);
+*/
+        player1.setBackgroundColor(Game.PLAYERS.ONE.col);
+        player2.setBackgroundColor(Game.PLAYERS.TWO.col);
+        player3.setBackgroundColor(Game.PLAYERS.THREE.col);
+        player4.setBackgroundColor(Game.PLAYERS.FOUR.col);
+
 
         // TODO only if starting a new game
 //        setupGame();
@@ -171,10 +202,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         BuyCity = (Button) findViewById(R.id.buycity);
         CurrentPlayer = (TextView) findViewById(R.id.currentplayer);
         playerid = (TextView) findViewById(R.id.playerid);
-        player1 = (TextView) findViewById(R.id.player1);
-        player2 = (TextView) findViewById(R.id.player2);
-        player3 = (TextView) findViewById(R.id.player3);
-        player4 = (TextView) findViewById(R.id.player4);
+
 
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,32 +293,27 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                 if (game.getTurn() == 0) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
                     playerid.setText("Player 1");
-                    player1.setText("Player 1");
-                    player1.setTextColor(Game.PLAYERS.ONE.col);
+                    playerid.setTextColor(Game.PLAYERS.ONE.col);
                 }
                 else if (game.getTurn() == 1) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
                     playerid.setText("Player 1");
-                    player1.setText("Player 1");
-                    player1.setTextColor(Game.PLAYERS.ONE.col);
+                    playerid.setTextColor(Game.PLAYERS.ONE.col);
                 }
                 else if (game.getTurn() == 2) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
                     playerid.setText("Player 2");
-                    player2.setText("Player 2");
-                    player2.setTextColor(Game.PLAYERS.TWO.col);
+                    playerid.setTextColor(Game.PLAYERS.TWO.col);
                 }
                 else if (game.getTurn() == 3) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
                     playerid.setText("Player 3");
-                    player3.setText("Player 3");
-                    player3.setTextColor(Game.PLAYERS.THREE.col);
+                    playerid.setTextColor(Game.PLAYERS.THREE.col);
                 }
                 else if (game.getTurn() == 4) {
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
                     playerid.setText("Player 4");
-                    player4.setText("Player 4");
-                    player4.setTextColor(Game.PLAYERS.FOUR.col);
+                    playerid.setTextColor(Game.PLAYERS.FOUR.col);
                 }
                 v.invalidate();
             }
