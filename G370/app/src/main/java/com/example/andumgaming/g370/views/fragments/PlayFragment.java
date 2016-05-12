@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.GameActivity;
+import com.example.andumgaming.g370.views.GameActivity;
 import com.example.andumgaming.g370.views.GameSelectActivity;
-import com.example.andumgaming.g370.views.GameTest;
 
 /**
  * Created by Jeff on 4/21/2016.
