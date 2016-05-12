@@ -94,10 +94,11 @@
     <string name="ore"  >Ore: </string>
     <string name="brick">Brick: </string>
     <string name="sheep">Sheep: </string>
-
+    <string name="time">Time:</string>
+    
     <string name="res_empty">0</string>
     <string name="res_format">%1$d</string>
-
+    
     <!-- player names (trade fragment) -->
     <string name="player1">Player1</string>
     <string name="player2">Player2</string>

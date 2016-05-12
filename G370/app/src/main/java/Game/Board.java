@@ -2,6 +2,8 @@ package Game;
 
 import com.google.gson.annotations.Expose;
 
+import Interface.ToastListener;
+
 import java.util.Random;
 
 /**
@@ -10,6 +12,7 @@ import java.util.Random;
  * The board controller. Holds hexagons, vertices(, other things).
  */
 public class Board {
+
     private boolean debug = true;
     private boolean DEBUG = false;  // for serious debugging time
 
@@ -31,6 +34,12 @@ public class Board {
 
     private boolean update;
 
+    private ToastListener listener;
+
+
+    public boolean getUpdate() {
+        return update;
+    }
     public Board()
     {
         rings = 4;  // Two rings of full hexes, but vertices take more rings
@@ -131,6 +140,7 @@ public class Board {
         update = true;
     }
 
+
     /**
      * Places a settlement at (q, r) owned by player.
      * WARNING: Use buildSettlement() instead. placeSettlement() employs reduced validity checking.
@@ -145,6 +155,9 @@ public class Board {
         Shape stl = getShape(q, r);
         if (stl == null || isHex(q,r) || ((Vertex)stl).isOwned()) {  // is a Hexagon, or is already owned
             if (debug) System.out.println("BOARD cannot settle there!");
+            if (listener != null) {
+                listener.ToastMessage("You cannot settle there!");
+            }
             return false;
         }
         //this checks the neighbors to make sure no other settlement is within 1 tile.
@@ -156,6 +169,9 @@ public class Board {
             Shape s = getShape(stl.getNeighbor(i));
             if (s != null && ((Vertex)s).isOwned()) {
                 if (debug) System.out.println("BOARD too close to another settlement!");
+                if (listener != null) {
+                    listener.ToastMessage("You cannot settle too close to another settlement!");
+                }
                 return false;
             }
         }
@@ -173,6 +189,9 @@ public class Board {
         Shape s = getShape(q, r);
         if (s == null || isHex(q,r) || ((Vertex)s).isOwned()) {  // is a Hexagon, or is already owned
             if (debug) System.out.println("BOARD cannot settle there!");
+            if (listener != null) {
+                listener.ToastMessage("You cannot settle there!");
+            }
             return false;
         }
         //this checks the neighbors to make sure no other settlement is within 1 tile.
@@ -184,11 +203,17 @@ public class Board {
             Shape shape = getShape(s.getNeighbor(i));
             if (shape != null && ((Vertex)shape).isOwned()){
                 if (debug) System.out.println("BOARD too close to another settlement!");
+                if (listener != null) {
+                    listener.ToastMessage("You cannot settle too close to another settlement!");
+                }
                 return false;
             }
         }
         if (!hasRoadOwnedBy(new Point_QR(q, r), player)) {
             if (debug) System.out.println("BOARD no connection!");
+            if (listener != null) {
+                listener.ToastMessage("You do not have any connecting roads to this location!");
+            }
             return false;
         }
         if (debug) System.out.printf("BOARD setting ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
@@ -220,10 +245,16 @@ public class Board {
         Shape s = getShape(q, r);
         if (s == null || isHex(q,r) || ((Vertex)s).getLevel() != 1) {  // is a Hexagon, or is not a settlement
             if (debug) System.out.println("BOARD cannot settle there!");
+            if (listener != null) {
+                listener.ToastMessage("You can only build a city on a settlement you posses!");
+            }
             return false;
         }
         if (((Vertex)s).getOwner() != player) { // settlement is not owned by building player
             if (debug) System.out.println("BOARD someone else has settled there!");
+            if (listener != null) {
+                listener.ToastMessage("Someone else has settled there!");
+            }
             return false;
         }
         if (debug) System.out.printf("BOARD upgrading ownership of (%1$2d,%2$2d) to player %3$d\n", q, r, player);
@@ -239,6 +270,9 @@ public class Board {
             return false;
         if (e.isOwned()) {
             if (debug) System.out.println("BOARD someone else already built a road there!");
+            if (listener != null) {
+                listener.ToastMessage("A road has already been built there!");
+            }
             return false;
         }
 
@@ -249,6 +283,12 @@ public class Board {
         // no settlement, and no road reaches source, and no road reaches destination
         if (!hasSettlement && !hasRoadOwnedBy(src, player) && !hasRoadOwnedBy(dst, player)) {
             if (debug) System.out.println("BOARD player does not own a settlement or road nearby!");
+
+            //listener stuff
+                if (listener != null) {
+                    listener.ToastMessage("You do not own an adjacent settlement, or road!");
+                }
+
             return false;
         }
         e.setOwner(player);
@@ -257,6 +297,9 @@ public class Board {
         return true;
     }
 
+    public void setListener(ToastListener listener) {
+        this.listener = listener;
+    }
 
     public boolean isValid(Point_QR hex) { return isValid(hex.q(), hex.r()); }
     public boolean isValid(int q, int r)
@@ -453,4 +496,6 @@ public class Board {
         // swap desert into middle hex
 
     }
+
+
 }

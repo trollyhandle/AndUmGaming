@@ -61,8 +61,8 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     }
 
-
-    /* initialize background music */
+/*
+    initialize background music
     private boolean mIsBound = false;
     private MusicService mServ;
     private ServiceConnection Scon =new ServiceConnection(){
@@ -100,7 +100,7 @@ public class FullscreenActivity extends AppCompatActivity {
         mServ.pauseMusic();
     }
 
-    /**
+
      * Some older devices needs a small delay between UI widget updates
      * and a change of the status and navigation bar.
      */
@@ -165,11 +165,11 @@ public class FullscreenActivity extends AppCompatActivity {
 
         /*initialize buttons*/
 
-
-        /*start the music*/
+     /* start the music
         Intent music = new Intent();
         music.setClass(this, MusicService.class);
         startService(music);
+    */
     }
 
     /* Login Activity */
@@ -216,7 +216,7 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-
+/*
     @Override
     protected void onPause() {
         super.onPause();
@@ -239,4 +239,5 @@ public class FullscreenActivity extends AppCompatActivity {
         MusicService.mPlayer.release();
         super.onDestroy();
     }
+*/
 }
