@@ -144,7 +144,7 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="@string/house"
+                android:text="@string/settlement"
                 android:id="@+id/buyhouse"
                 android:textAllCaps="false"
                 android:textSize="15sp"
