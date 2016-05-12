@@ -25,14 +25,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import Interface.ICallBackListener;
+
 public class SignupAsyncTask extends AsyncTask<String,Void,String> {
-    private TextView statusField;
-    private Context context;
+    private ICallBackListener listener;
 
     //flag 0 means get and 1 means post.(By default it is get.)
-    public SignupAsyncTask(Context context, TextView statusField) {
-        this.context = context;
-        this.statusField = statusField;
+    public SignupAsyncTask(ICallBackListener listener) {
+        this.listener = listener;
     }
 
     protected void onPreExecute(){
@@ -79,29 +79,10 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
-    private class SignupMsg {
-        int success;
-        String message;
 
-        public int getSuccess() {
-            return success;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    };
 
     @Override
     protected void onPostExecute(String result) {
-        int duration = Toast.LENGTH_SHORT;
-        Gson gson = new Gson();
-        SignupMsg signupMsg = gson.fromJson(result, SignupMsg.class);
-        Toast.makeText(context, signupMsg.getMessage(), duration).show();
-        if (signupMsg.getSuccess() == 1) {
-            Intent i = new Intent(context, FullscreenActivity.class);
-            context.startActivity(i);
-            ((Activity)context).finish();
-        }
+        listener.onCallBack(result);
     }
 }
