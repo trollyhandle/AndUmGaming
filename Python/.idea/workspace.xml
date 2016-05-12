@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c56aeba3-19ea-4a49-b1a2-06ec388d46a1" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/GsonRuntimeAdapter/ShapeAdapter.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Board.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Board.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/BoardView.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/BoardView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Edge.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Edge.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Game.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Game.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Hexagon.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Hexagon.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Player.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Vertex.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/Game/Vertex.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/java/com/example/andumgaming/g370/views/GameTest.java" afterPath="$PROJECT_DIR$/../G370/app/src/main/java/com/example/andumgaming/g370/views/GameTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../G370/app/src/main/res/raw/sample_game.json" afterPath="$PROJECT_DIR$/../G370/app/src/main/res/raw/sample_game.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Catan.py" afterPath="$PROJECT_DIR$/Catan.py" />
     </list>
     <ignored path="Catan.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,8 +36,8 @@
       <file leaf-file-name="Catan.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Catan.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="118" column="3" selection-start-line="118" selection-start-column="3" selection-end-line="118" selection-end-column="3" />
+            <state relative-caret-position="105">
+              <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
                 <element signature="e#6580#6687#0" expanded="false" />
@@ -291,7 +298,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298077" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.27599612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="635" y="933" width="639" height="202" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.27599612" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="635" y="932" width="639" height="202" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -344,6 +351,36 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Catan.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+            <element signature="e#6580#6687#0" expanded="false" />
+            <element signature="e#6734#6845#0" expanded="false" />
+            <element signature="e#6903#7222#0" expanded="false" />
+            <element signature="e#7280#7400#0" expanded="false" />
+            <element signature="e#7454#8679#0" expanded="false" />
+            <element signature="e#8721#8931#0" expanded="false" />
+            <element signature="e#13070#13158#0" expanded="false" />
+            <element signature="e#13207#13316#0" expanded="false" />
+            <element signature="e#13355#13402#0" expanded="false" />
+            <element signature="e#13943#13986#0" expanded="false" />
+            <element signature="e#15581#15660#0" expanded="false" />
+            <element signature="e#15964#16011#0" expanded="false" />
+            <element signature="e#17858#18066#0" expanded="false" />
+            <element signature="e#18114#18385#0" expanded="false" />
+            <element signature="e#18425#18729#0" expanded="false" />
+            <element signature="e#18774#18875#0" expanded="false" />
+            <element signature="e#19170#19329#0" expanded="false" />
+            <element signature="e#19371#19402#0" expanded="false" />
+            <element signature="e#19441#19488#0" expanded="false" />
+            <element signature="e#19520#19809#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Catan.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -868,8 +905,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Catan.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="118" column="3" selection-start-line="118" selection-start-column="3" selection-end-line="118" selection-end-column="3" />
+        <state relative-caret-position="105">
+          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
             <element signature="e#6580#6687#0" expanded="false" />
