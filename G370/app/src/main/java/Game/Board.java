@@ -297,6 +297,21 @@ public class Board {
         return true;
     }
 
+    public int countVictoryPoints(int player)
+    {
+        int points = 0;
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {
+                if (isValid(q, r) && !isHex(q, r)) {
+                    Vertex v = (Vertex)vertices[aib(q)][aib(r)];
+                    if (v.getOwner() == player)
+                        points += v.getLevel();
+                }
+            }
+        }
+        return points;
+    }
+
     public void setListener(ToastListener listener) {
         this.listener = listener;
     }
