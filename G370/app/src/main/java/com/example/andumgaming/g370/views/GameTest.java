@@ -294,7 +294,7 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                autoEnd(v, timeView);
+                turnEnd(v, timeView);
             }
         });
     }
@@ -305,20 +305,19 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         if (turnTimer !=null)
             turnTimer.cancel();
 
-        turnTimer = new CountDownTimer(11000, 1000){
+        turnTimer = new CountDownTimer(91000, 1000){
             public void onTick(long millisUntilFinshed){
-                //TODO Sometinh
-                textView.setText(""+millisUntilFinshed/1000);
+                //prints the time
+                textView.setText(""+((millisUntilFinshed/1000)-1));
 
             }
             public void onFinish() {
-            autoEnd(view, textView);
                 //TODO something else
             }
         }.start();
     }
 
-    private void autoEnd(View view, TextView textView){
+    private void turnEnd(View view, TextView textView){
 
 
 
