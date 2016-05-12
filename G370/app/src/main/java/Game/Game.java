@@ -109,6 +109,16 @@ public class Game {
     public Game(Activity parent, int width, int height)
     {
         board = new Board();
+        players = new Player[5];
+        // player 0 is the nobody player
+        players[1] = new Player();
+        players[2] = new Player();
+        players[3] = new Player();
+        players[4] = new Player();
+
+        turn = 0;
+        gamestate = GAMESTATE.FIRSTTURN;
+
         init(parent, width, height);
     }
     public void init(Activity parent, int width, int height)
@@ -130,16 +140,7 @@ public class Game {
         if(debug)System.out.println("GAME creating BoardView");
         view = new BoardView(parent, board);
 
-        players = new Player[5];
-        // player 0 is the nobody player
-        players[1] = new Player();
-        players[2] = new Player();
-        players[3] = new Player();
-        players[4] = new Player();
-
-        turn = 0;
         build = BUILD.NONE;
-        gamestate = GAMESTATE.FIRSTTURN;
 
         initResourceTabs(parent);
         setupTouchListener();
