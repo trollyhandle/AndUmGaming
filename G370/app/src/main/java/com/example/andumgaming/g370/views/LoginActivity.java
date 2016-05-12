@@ -65,19 +65,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
         LoginAsyncTask task = new LoginAsyncTask(listener);
         task.execute(username, password);
     }
-
     public void signupPost (View view) {
-
         Intent i = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(i);
         (LoginActivity.this).finish();
     }
-
-
 }
