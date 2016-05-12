@@ -491,20 +491,24 @@ public class Board {
                 Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP, Game.RESOURCES.SHEEP,  // 4 sheep
                 Game.RESOURCES.ORE, Game.RESOURCES.ORE, Game.RESOURCES.ORE,
                 Game.RESOURCES.BRICK, Game.RESOURCES.BRICK, Game.RESOURCES.BRICK};  // 3 ore and brick
-        int shufsize = shuffle.length;  // 4+4+4+3+3+1 = 19
+        int dies[] = {2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12};
+        int diesize = dies.length, shufsize = shuffle.length;  // 4+4+4+3+3+1 = 19
         Random rand = new Random();
         Shape s;
         for (int q = 0; q < arraySize; q++) {
             for (int r = 0; r < arraySize; r++) {
                 s = vertices[q][r];
                 if (isHex(q, r) && s != null) {
-                    int which = rand.nextInt(shufsize);
+                    int which = rand.nextInt(shufsize), whichdie = rand.nextInt(diesize);
                     ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
+                    shuffle[which] = shuffle[--shufsize];
+
                     if (((Hexagon)s).getResource() == 0) // desert
                         ((Hexagon)s).setDie(0);
-                    else
-                        ((Hexagon)s).setDie(rand.nextInt(9)+1);  // value interval [2, 12]  // todo
-                    shuffle[which] = shuffle[--shufsize];
+                    else {
+                        ((Hexagon)s).setDie(dies[whichdie]);
+                        dies[whichdie] = dies[--diesize];
+                    }
                 }
             }
         }
