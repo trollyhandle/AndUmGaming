@@ -261,7 +261,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text=""
-        android:id="@+id/playerid"
+        android:id="@+id/currentplayerid"
         android:layout_gravity="bottom|center_horizontal"
         android:gravity="bottom|center_horizontal"
         android:layout_alignBottom="@+id/currentplayer"

@@ -43,49 +43,29 @@
         // and more arrays of Shapes
       ]
       // and more arrays of arrays of Shapes
-    ],
-    "vertices": [
-      [
-        {  // a hexagon
-          "coord": {  // coordinate point
-            "q": 0,
-            "r": 0
-          },
-          "type": "hexagon",  // shape type
-          "resource": 1,  // kind of resource
-          "die": 6  // die roll for resource generation
-        },
-        {  // a vertex
-          "coord": {
-            "q": 0,
-            "r": 1
-          },
-          "type": "vertex",
-          "owner": 0,  // player who owns this vertex
-          "level": 0  // level of development (0-none, 1-settlement, 2-city)
-        },
-        {
-          "coord": {
-            "q": 0,
-            "r": 2
-          },
-          "type": "vertex",
-          "owner": 3,
-          "level": 1
-        }
-      ]
-      // and more arrays of shapes
     ]
   },
   "players": [  // array of player
     null,  // player 0 is the nobody player
     {  // player 1
-      "cards": [  // dev cards in their hand (not implemented)
+      "resources": [  // resources they possess
+        2,
+        0,
+        3,
+        1,
+        0
+      ]
+    },
+    {  // player 2
+      "resources": [  // resources they possess
+        0,
         0,
         0,
         0,
         0
-      ],
+      ]
+    },
+    {  // player 3
       "resources": [  // resources they possess
         0,
         0,
@@ -96,5 +76,5 @@
     }
     // more player objects
   ],
-  "turn": 4  // whose turn it currently is
+  "turn": 0  // whose turn it currently is
 }

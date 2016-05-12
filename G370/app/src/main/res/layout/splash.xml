@@ -16,15 +16,5 @@
         android:src="@mipmap/resource_wheel"
         android:layout_gravity="center" />
 
-    <TextView android:text="@string/loading"
-        android:paddingBottom="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="45sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView"
-        android:textColor="@color/black"
-        android:layout_gravity="center_horizontal|bottom" />
 
 </FrameLayout>

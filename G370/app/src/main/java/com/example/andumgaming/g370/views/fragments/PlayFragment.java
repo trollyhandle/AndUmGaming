@@ -46,7 +46,7 @@ public class PlayFragment extends Fragment {
         create_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),GameSelectActivity.class);
+                Intent intent = new Intent(getActivity(), GameSelectActivity.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -54,7 +54,7 @@ public class PlayFragment extends Fragment {
         join_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),GameSelectActivity.class);
+                Intent intent = new Intent(getActivity(), GameSelectActivity.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -62,7 +62,7 @@ public class PlayFragment extends Fragment {
         watch_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),GameSelectActivity.class);
+                Intent intent = new Intent(getActivity(), GameSelectActivity.class);
                 getActivity().startActivity(intent);
             }
         });

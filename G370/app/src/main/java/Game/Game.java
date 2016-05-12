@@ -89,6 +89,8 @@ public class Game {
 
     public void setListener(ToastListener listener) {
         this.listener = listener;
+        if (board != null)
+            board.setListener(listener);
     }
 
     public Board getBoard() {
@@ -99,6 +101,7 @@ public class Game {
     {
         void onNextTurn();
     }
+
 
     public Game(Activity parent, int width, int height)
     {
@@ -157,12 +160,12 @@ public class Game {
 
     public void nextTurn()
     {
-        if(gamestate==GAMESTATE.FIRSTTURN && turn==4 && !isFirstPlacementDone) {
+        if(gamestate == GAMESTATE.FIRSTTURN && turn == 4 && !isFirstPlacementDone) {
             turn = 4;
             players[turn].setFirstSettlementPlaced(false);
             isFirstPlacementDone = true;
         }
-        else if(gamestate==GAMESTATE.FIRSTTURN && isFirstPlacementDone) {
+        else if(gamestate == GAMESTATE.FIRSTTURN && isFirstPlacementDone) {
             turn--;
             if(turn<=0)
             {
@@ -182,7 +185,7 @@ public class Game {
         if(gamestate != GAMESTATE.FIRSTTURN)
             refreshResourceCounts();  // dont do this till players are implemented
 
-        if(iNextTurnable!=null) //hopefully avoid nullpointerexceptions
+        if(iNextTurnable!=null) // hopefully avoid nullpointerexceptions
             iNextTurnable.onNextTurn();
 
         // set cards too
@@ -192,7 +195,7 @@ public class Game {
     public int getTurn() { return turn; }
     public void setTurn(int turn) {
         this.turn = turn;
-        if(iNextTurnable!=null) //hopefully avoid nullpointerexceptions
+        if(iNextTurnable!=null) // hopefully avoid nullpointerexceptions
             iNextTurnable.onNextTurn();
     }
 
@@ -202,6 +205,7 @@ public class Game {
         firstRoadPt = null; // just to make sure
         if (selected != null)
             board.deselectSettlement(selected);
+        view.invalidate();
     }
 
     public BUILD getBuildState(){
@@ -239,13 +243,13 @@ public class Game {
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
-            if(gamestate ==GAMESTATE.FIRSTTURN)
+            if(gamestate == GAMESTATE.FIRSTTURN)
             {
-                if(listener !=null)
+                if(listener != null)
                     listener.ToastMessage("You cannot build a city during initial placement!");
             }
             else {
-                success= board.buildCity(hex.q(), hex.r(), turn);
+                success = board.buildCity(hex.q(), hex.r(), turn);
             }
         }
 

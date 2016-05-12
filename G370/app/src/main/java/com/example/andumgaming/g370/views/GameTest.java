@@ -1,24 +1,19 @@
 
 package com.example.andumgaming.g370.views;
 
-
-
 import com.example.andumgaming.g370.R;
 import com.google.gson.Gson;
 
-import android.content.ContentUris;
 import android.graphics.Point;
 
 //import android.app.FragmentTransaction;
 
 import android.graphics.PorterDuff;
-import android.media.Image;
 import android.os.CountDownTimer;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -28,28 +23,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import Game.Game;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import Game.Game;
 import Interface.ToastListener;
 
 public class GameTest extends AppCompatActivity implements ToastListener {
 
-
     private boolean debug = true;
 
     private Game game;
-   // private Board board;
 
-
-    private Button zoomIn, zoomOut;
-    private Button zoomLeft, zoomRight;
-    private Button zoomUp, zoomDown;
     private Button zoomReset;
     private TextView timeView;
     private Button BuyRoad;
@@ -72,6 +58,7 @@ public class GameTest extends AppCompatActivity implements ToastListener {
     private int width, height;
 
     private Toast toast;
+    private CountDownTimer turnTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +69,9 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         //loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
 
-//        game = new Game(this, width, height);
-        game = loadFromSampleJSON();
-        game.init(this, width, height, null);  // null for no pre-existing view
+        game = new Game(this, width, height);
+//        game = loadFromSampleJSON();
+//        game.init(this, width, height, null);  // null for no pre-existing view
         // todo or load from server
 
         init();
@@ -93,28 +80,11 @@ public class GameTest extends AppCompatActivity implements ToastListener {
 
     private void init()
     {
-        // add game - board and view - to layout
-        RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
-        if (layout != null)  // calms Android Studios: should not be null, I think...
-            layout.addView(game.getView());
-        else if(debug)System.out.println("VIEW ERROR dynamic add-to-layout failed");
-
-        // bring buttons to foreground
-        LinearLayout button_layout = (LinearLayout)findViewById(R.id.zoom_control_layout);
-        if (button_layout != null) // calms Android Studios: should not be null, I think...
-            button_layout.bringToFront();
-        else if(debug)System.out.println("VIEW ERROR buttons move to foreground failed");
-
-        // bring fragment to foreground
-        FrameLayout fragmentLayout = (FrameLayout)findViewById(R.id.fragmentlayout);
-        if (fragmentLayout != null) // calms Android Studios: should not be null, I think...
-            fragmentLayout.bringToFront();
-        else if(debug)System.out.println("VIEW ERROR fragment bring to foreground failed");
+        organizeLayers();
 
         game.getView().setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-        game.getBoard().setListener(this);
         game.setListener(this);
         game.setiNextTurnable(new Game.INextTurnable() {
             @Override
@@ -199,8 +169,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
 
     }
 
-
-
     private void findSize()
     {
         Point size = new Point();
@@ -209,7 +177,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         height = size.y;
         if(debug)System.out.println("TEST Window size: " + width + " by " + height);
     }
-
 
     public void ToastMessage(String message) {
         int duration = Toast.LENGTH_SHORT;
@@ -221,7 +188,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
     }
 
 
-
     private void loadButtons() {
         zoomReset = (Button) findViewById(R.id.zoomReset);
         BuyRoad = (Button) findViewById(R.id.buyroad);
@@ -230,16 +196,19 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         BuyCity = (Button) findViewById(R.id.buycity);
 
         CurrentPlayer = (TextView) findViewById(R.id.currentplayer);
-        playerid = (TextView) findViewById(R.id.playerid);
+        playerid = (TextView) findViewById(R.id.currentplayerid);
 
         timeView = (TextView) findViewById(R.id.timeint);
-
 
         zoomReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON reset zoom");
                 game.resetZoom();
+
+                // todo stolen functionality again
+                loadUpdatedGame();
+
             }
         });
 /*
@@ -261,7 +230,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
                     game.setBuildState(Game.BUILD.ROAD);
                     v.getBackground()
                             .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
-                    /*R.color.buy_highlight*/
                 }
                 //if build state IS road, unclick
                 else {
@@ -316,14 +284,14 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                turnEnd(v, timeView);
+                game.nextTurn();
+                turnEnd(v);
             }
         });
     }
 
-    private CountDownTimer turnTimer;
-    private void turnTimer(final View view, final TextView textView){
+    private void turnTimer(final View view, final TextView textView)
+    {
 
         if (turnTimer !=null)
             turnTimer.cancel();
@@ -340,40 +308,79 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         }.start();
     }
 
-    private void turnEnd(View view, TextView textView){
+    private void turnEnd(View view)
+    {
 
         BuyCity.getBackground().clearColorFilter();
         BuySettlement.getBackground().clearColorFilter();
         BuyRoad.getBackground().clearColorFilter();
 
-        game.nextTurn();
+        EndTurn.getBackground().setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
+        playerid.setTextColor(Game.PLAYERS.getColor(game.getTurn()));
+
         if (game.getTurn() == 0) {
-            EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-            playerid.setText("Player 1");
-            playerid.setTextColor(Game.PLAYERS.ONE.col);
+            playerid.setText("Player");
         }
         else if (game.getTurn() == 1) {
-            EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
             playerid.setText("Player 1");
-            playerid.setTextColor(Game.PLAYERS.ONE.col);
         }
         else if (game.getTurn() == 2) {
-            EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
             playerid.setText("Player 2");
-            playerid.setTextColor(Game.PLAYERS.TWO.col);
         }
         else if (game.getTurn() == 3) {
-            EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
             playerid.setText("Player 3");
-            playerid.setTextColor(Game.PLAYERS.THREE.col);
         }
         else if (game.getTurn() == 4) {
-            EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
             playerid.setText("Player 4");
-            playerid.setTextColor(Game.PLAYERS.FOUR.col);
         }
         view.invalidate();
         turnTimer(view, timeView);
+    }
+
+    private void organizeLayers()
+    {
+        // add game - board and view - to layout
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
+        if (layout != null) {  // calms Android Studios: should not be null, I think...
+            layout.addView(game.getView());
+        }
+        else if(debug)System.out.println("VIEW ERROR dynamic add-to-layout failed");
+
+        // bring buttons to foreground
+        LinearLayout button_layout = (LinearLayout)findViewById(R.id.zoom_control_layout);
+        if (button_layout != null) // calms Android Studios: should not be null, I think...
+            button_layout.bringToFront();
+        else if(debug)System.out.println("VIEW ERROR buttons move to foreground failed");
+
+        // bring fragment to foreground
+        FrameLayout fragmentLayout = (FrameLayout)findViewById(R.id.fragmentlayout);
+        if (fragmentLayout != null) // calms Android Studios: should not be null, I think...
+            fragmentLayout.bringToFront();
+        else if(debug)System.out.println("VIEW ERROR fragment bring to foreground failed");
+
+        // bring current player id to foreground
+        TextView currentPlayer = (TextView)findViewById(R.id.currentplayer);
+        TextView currentPlayerID = (TextView)findViewById(R.id.currentplayerid);
+        if (currentPlayer != null) // calms Android Studios: should not be null, I think...
+            currentPlayer.bringToFront();
+        if (currentPlayerID != null) // calms Android Studios: should not be null, I think...
+            currentPlayerID.bringToFront();
+    }
+
+    public void loadUpdatedGame()
+    {
+        Game newgame = loadFromSampleJSON();
+        View oldview = game.getView();
+        newgame.init(this, width, height, null);
+        game = newgame;
+        game.setListener(this);
+
+        RelativeLayout layout = (RelativeLayout)findViewById(R.id.game_layout);
+        if (layout != null) {  // calms Android Studios: should not be null, I think...
+            layout.removeView(oldview);
+        }
+        organizeLayers();
+        turnEnd(game.getView());
     }
 
     public Game loadFromSampleJSON()
@@ -383,12 +390,6 @@ public class GameTest extends AppCompatActivity implements ToastListener {
         String json = readJSONfile(is);
         if(debug) System.out.println("LOADing json:\n" + json);
         Gson gson = Game.getGson();
-//        View oldview = game.getView();
-//        game = gson.fromJson(json, Game.class);
-//        game.init(this, width, height, oldview);
-//        game.getView().invalidate();
-//        if(debug) { System.out.println("LOADed board:"); game.printBoard(); }
-//        if(debug) System.out.println("LOADed game's json:\n" + game.toJSON());
         return gson.fromJson(json, Game.class);
 
     }
