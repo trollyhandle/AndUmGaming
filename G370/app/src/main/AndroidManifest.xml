@@ -89,24 +89,10 @@
             android:name=".views.GameActivity"
             android:screenOrientation="portrait">
 
+            <!-- Recycler View -->
+        <activity android:name=".views.recycler.RecyclerActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName = ".views.FullscreenActivity">
         </activity>
-
-<!--
-
-        <activity
-            android:name=".views.asynctask.LoginAsyncTask"
-            android:label="@string/app_name" >
-
-
-        </activity>
-        <activity
-            android:name=".views.TutorialActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:parentActivityName=".views.FullscreenActivity">
-
-        </activity>
-    -->
-        </application>
-
 
 </manifest>
