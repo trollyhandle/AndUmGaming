@@ -83,6 +83,30 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         game.getBoard().setListener(this);
+        game.setListener(this);
+        game.setiNextTurnable(new Game.INextTurnable() {
+            @Override
+            public void onNextTurn()
+            {
+                BuyCity.getBackground().clearColorFilter();
+                BuySettlement.getBackground().clearColorFilter();
+                BuyRoad.getBackground().clearColorFilter();
+                if (game.getTurn() == 0)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 1)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 2)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 3)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 4)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+            }
+        });
 
         // TODO only if starting a new game
 //        setupGame();
@@ -237,7 +261,8 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                 if (game.getBuildState() != Game.BUILD.ROAD) {
                     game.setBuildState(Game.BUILD.ROAD);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
+                    /*R.color.buy_highlight*/
                 }
                 //if build state IS road, unclick
                 else {
@@ -257,7 +282,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                 if (game.getBuildState() != Game.BUILD.SETTLEMENT) {
                     game.setBuildState(Game.BUILD.SETTLEMENT);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS settlement, unclick
                 else {
@@ -278,7 +303,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                 if (game.getBuildState() != Game.BUILD.CITY) {
                     game.setBuildState(Game.BUILD.CITY);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS city, unclick
                 else {
@@ -292,11 +317,11 @@ public class GameTest extends AppCompatActivity implements ToastListener{
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuyCity.getBackground().clearColorFilter();
+                game.nextTurn();
+
+                /*BuyCity.getBackground().clearColorFilter();
                 BuySettlement.getBackground().clearColorFilter();
                 BuyRoad.getBackground().clearColorFilter();
-
-                game.nextTurn();
 
                 if (game.getTurn() == 0)
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
@@ -311,7 +336,7 @@ public class GameTest extends AppCompatActivity implements ToastListener{
                     EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
 
                 else if (game.getTurn() == 4)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP); */
                 v.invalidate();
             }
         });

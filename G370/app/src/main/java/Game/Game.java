@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.andumgaming.g370.R;
 import com.example.andumgaming.g370.views.GameTest;
+import com.example.andumgaming.g370.views.ToastListener;
 
 
 /**
@@ -38,7 +39,7 @@ public class Game {
         ONE     (0xff3AF2A9), TWO   (0xffD65466),
         THREE   (0xff9835F1), FOUR  (0xffFD6D27);
         public final int col; PLAYERS(int value) { col = value; }
-        static int getColor(int i) { switch(i) {
+        public static int getColor(int i) { switch(i) {
             case 1: return ONE.col; case 2: return TWO.col;
             case 3: return THREE.col; case 4: return FOUR.col;
         } return NONE.col; }
@@ -53,9 +54,18 @@ public class Game {
         NONE, ROAD, SETTLEMENT, CITY; //, KNIGHT;
     }
 
+    public enum GAMESTATE {
+        FIRSTTURN, REGULAR, GAMEEND;
+    }
+
+    private INextTurnable iNextTurnable;
+
+    private GAMESTATE gamestate;
     private BUILD build;
     private Point_QR firstRoadPt;
     private int turn;
+
+    private boolean isFirstPlacementDone;
 
     private Player[] players;
     private TextView wheat, wood, ore, brick, sheep;
@@ -75,15 +85,27 @@ public class Game {
     private boolean moving, zooming;
     private Point_QR selected;
 
+    private ToastListener listener;
+
+    public void setListener(ToastListener listener) {
+        this.listener = listener;
+    }
 
     public Board getBoard() {
         return board;
+    }
+
+    public interface INextTurnable
+    {
+        void onNextTurn();
     }
 
     public Game(Activity parent, int width, int height)
     {
         r = parent.getResources();
         this.width = width; this.height = height;
+
+        isFirstPlacementDone = false;
 
         // width/9 is a good initial hex size.
         // I determined this after multiple iterations of a complex modeling algorithm...
@@ -107,6 +129,7 @@ public class Game {
 
         turn = 0;
         build = BUILD.NONE;
+        gamestate = GAMESTATE.FIRSTTURN;
 
         initResourceTabs(parent);
         setupTouchListener();
@@ -116,30 +139,67 @@ public class Game {
     }
 
 
-
+    public void setiNextTurnable(INextTurnable i)
+    {
+        iNextTurnable = i;
+    }
 
     public void nextTurn()
     {
-        turn = turn == 4? 1: turn + 1;
+        if(gamestate==GAMESTATE.FIRSTTURN && turn==4 && !isFirstPlacementDone) {
+            turn = 4;
+            players[turn].setFirstSettlementPlaced(false);
+            isFirstPlacementDone = true;
+        }
+        else if(gamestate==GAMESTATE.FIRSTTURN && isFirstPlacementDone) {
+            turn--;
+            if(turn<=0)
+            {
+                listener.ToastMessage("All players are done with placement, good luck!");
+                setGameState(GAMESTATE.REGULAR);
+                nextTurn();
+            }
+            else
+                players[turn].setFirstSettlementPlaced(false);
+
+        }
+        else
+            turn = turn == 4? 1: turn + 1;
         build = BUILD.NONE;
 
         // set resources to the current player's stats
-        refreshResourceCounts();  // dont do this till players are implemented
+        if(gamestate != GAMESTATE.FIRSTTURN)
+            refreshResourceCounts();  // dont do this till players are implemented
+
+        if(iNextTurnable!=null) //hopefully avoid nullpointerexceptions
+            iNextTurnable.onNextTurn();
 
         // set cards too
 
     }
 
     public int getTurn() { return turn; }
-    public void setTurn(int turn) { this.turn = turn; }
+    public void setTurn(int turn) {
+        this.turn = turn;
+        if(iNextTurnable!=null) //hopefully avoid nullpointerexceptions
+            iNextTurnable.onNextTurn();
+    }
 
     public void setBuildState(BUILD type) {
         if (turn == 0) return;  // if no player currently ready
         build = type;
         firstRoadPt = null; // just to make sure
     }
+
     public BUILD getBuildState(){
         return build;
+    }
+
+    public GAMESTATE getGameState(){
+        return gamestate;
+    }
+    public void setGameState(GAMESTATE type) {
+        gamestate = type;
     }
 
     public void click(Point_QR hex) {
@@ -150,11 +210,30 @@ public class Game {
 
         // are we placing a settlement?
         if (build == BUILD.SETTLEMENT) {
-            success = board.placeSettlement(hex.q(), hex.r(), turn);
+            if(gamestate == GAMESTATE.FIRSTTURN) {
+                if(!players[turn].getFirstSettlementPlaced()) {
+                    success = board.placeSettlement(hex.q(), hex.r(), turn);
+                    if(success)
+                    {
+                        players[turn].setFirstSettlementPlaced(true);
+                    }
+                }
+                else
+                    listener.ToastMessage("You can only place one settlement right now!");
+            }
+            else
+                success = board.buildSettlement(hex.q(),hex.r(),turn);
         }
         // are we placing a city?
         else if (build == BUILD.CITY) {
-            board.buildCity(hex.q(), hex.r(), turn);
+            if(gamestate ==GAMESTATE.FIRSTTURN)
+            {
+                if(listener !=null)
+                    listener.ToastMessage("You cannot build a city during initial placement!");
+            }
+            else {
+                success= board.buildCity(hex.q(), hex.r(), turn);
+            }
         }
 
         // are we placing a road?
@@ -166,9 +245,16 @@ public class Game {
             }
             else {
                 if (debug) System.out.println("Road from " + firstRoadPt + " to " + hex);
-                success = board.buildRoad(firstRoadPt, hex, turn);
+                if(!players[turn].getFirstSettlementPlaced())
+                    listener.ToastMessage("Place a settlement first!");
+                else
+                    success = board.buildRoad(firstRoadPt, hex, turn);
                 firstRoadPt = null;  // reset for next road
                 board.deselectSettlement(selected);
+                if(success && gamestate == GAMESTATE.FIRSTTURN)
+                {
+                    nextTurn();
+                }
             }
         }
         // are we playing a card?

@@ -12,6 +12,18 @@ public class Player {
 
     private int cards[];
 
+    private boolean firstSettlementPlaced; //used exclusively when placing the first 2 settlements.
+
+    public boolean getFirstSettlementPlaced()
+    {
+        return firstSettlementPlaced;
+    }
+
+    public void setFirstSettlementPlaced(boolean b)
+    {
+        firstSettlementPlaced = b;
+    }
+
 	public static final int lookup[][] =
 	//	[BRICK, WOOD, SHEEP, WHEAT, ORE]
     {//	[0,1,2,3,4,5]
@@ -25,6 +37,7 @@ public class Player {
     {
         resources = new int[] {0, 0, 0, 0, 0};
         cards = new int[] {0, 0, 0, 0};
+        firstSettlementPlaced = false;
     }
 
     // TODO lots of things.. mostly coordinate with server status

@@ -19,6 +19,7 @@ import java.util.Random;
  * The board controller. Holds hexagons, vertices(, other things).
  */
 public class Board {
+
     private boolean debug = true;
     private boolean DEBUG = false;  // for serious debugging time
 
@@ -528,4 +529,7 @@ public class Board {
         // swap desert into middle hex
 
     }
+
+
 }
+
