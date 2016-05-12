@@ -2,6 +2,8 @@ package Game;
 
 import android.graphics.Path;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Vertex.java
  * Author: Tyler Holland
@@ -10,8 +12,12 @@ import android.graphics.Path;
 public class Vertex extends Shape {
 
     // TO SERIALIZE
+    @Expose
     private int owner;  // player who has built upon this Vertex
+    @Expose
     private int level;  // level of building upgrades: 0-none, 1-settlement, 2-city
+    @Expose
+    private String type;
 
     // NOT SERIALIZE
     private boolean selected;
@@ -19,11 +25,10 @@ public class Vertex extends Shape {
     public Vertex(int q, int r)
     {
         super(q, r);
+        type = "vertex";
         owner = level = 0;
         selected = false;
     }
-
-    public String type() { return "Vertex"; }
 
     public int getLevel() { return level; }
     public void setLevel(int level) { this.level = level; }
@@ -57,4 +62,10 @@ public class Vertex extends Shape {
         path.close();
     }
 
+    public String getType() { return type = "vertex"; }
+//    public String getType() { return "vertex"; }
+    public String toString()
+    {
+        return getType() + ":" + coord + "|" + owner + level;
+    }
 }

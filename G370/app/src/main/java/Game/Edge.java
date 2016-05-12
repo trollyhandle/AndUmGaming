@@ -2,6 +2,8 @@ package Game;
 
 import android.graphics.Path;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Edge.java
  * Author: Tyler Holland
@@ -10,9 +12,13 @@ import android.graphics.Path;
 public class Edge {
 
     // TO SERIALIZE
+    @Expose
     private Point_QR source;
+    @Expose
     private Point_QR destination;
+    @Expose
     private int direction;
+    @Expose
     private int owner;
 
     // NOT SERIALIZE
@@ -27,7 +33,7 @@ public class Edge {
         path = new Path();
     }
 
-    public String type() { return "Edge"; }
+    public String type() { return "edge"; }
 
     public Point_QR getSource() { return source; }
     public Point_QR getDestination() { return destination; }
@@ -69,6 +75,6 @@ public class Edge {
 
     public String toString()
     {
-        return "" + source + " -> " + destination;
+        return "" + source + "->" + destination + "|" + direction + owner;
     }
 }

@@ -2,6 +2,7 @@
 package com.example.andumgaming.g370.views;
 
 import com.example.andumgaming.g370.R;
+import com.google.gson.Gson;
 
 import android.graphics.Point;
 
@@ -196,6 +197,7 @@ public class GameTest extends AppCompatActivity {
             public void onClick(View v) {
                 if(debug)System.out.println("BUTTON reset zoom");
                 game.resetZoom();
+                game.testJSON();
             }
         });
 /*
@@ -299,4 +301,6 @@ public class GameTest extends AppCompatActivity {
 
 
     }
+
+
 }

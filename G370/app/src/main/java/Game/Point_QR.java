@@ -1,5 +1,7 @@
 package Game;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Point_QR.java
  * Author: Tyler Holland
@@ -8,7 +10,12 @@ package Game;
 public class Point_QR {
 
     // TO SERIALIZE
-    private int q, r;
+    @Expose
+    private int q;
+    @Expose
+    private int r;
+
+    public Point_QR() { q = r = 0; }
 
     public Point_QR(int q, int r)
     {

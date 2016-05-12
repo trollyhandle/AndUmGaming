@@ -2,6 +2,8 @@ package Game;
 
 import android.graphics.Path;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Hexagon.java
  * Author: Tyler Holland
@@ -10,17 +12,20 @@ import android.graphics.Path;
 public class Hexagon extends Shape {
 
     // TO SERIALIZE
+    @Expose
     private int resource;  // type of resource tile this is (brick vs ore vs etc.)
+    @Expose
     private int die;  // die-roll which causes this tile to generate its resource (2-12)
+    @Expose
+    private String type;
 
     public Hexagon(int q, int r)
     {
         super(q, r);
+        type = "hexagon";
         resource = 0;
         die = 0;
     }
-
-    public String type() { return "Hexagon"; }
 
     public int getResource() { return resource; }
     public void setResource(int resource) { this.resource = resource; }
@@ -54,4 +59,10 @@ public class Hexagon extends Shape {
         return (int)(hex_size/1.3);
     }
 
+    public String getType() { return type = "hexagon"; }
+//    public String getType() { return "hexagon"; }
+    public String toString()
+    {
+        return getType() + ":" + coord + "|" + resource + die;
+    }
 }

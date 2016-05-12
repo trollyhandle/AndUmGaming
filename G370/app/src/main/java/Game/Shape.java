@@ -2,6 +2,8 @@ package Game;
 
 import android.graphics.Path;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Shape.java
  * Author: Tyler Holland
@@ -10,7 +12,10 @@ import android.graphics.Path;
 public abstract class Shape {
 
     // TO SERIALIZE
+    @Expose
     protected Point_QR coord;
+//    @Expose
+//    protected String type;
 
     // NOT SERIALIZE
     protected Path path;
@@ -39,10 +44,11 @@ public abstract class Shape {
 
     public abstract void updatePath(int hex_size, Point_XY boardCenter);
 
-    public String type() { return "Shape"; }
+//    public String getType() { return type = "shape"; }
+    public String getType() { return "shape"; }
     public String toString()
     {
-        return type() + ":(" + coord + ")";
+        return getType() + ":" + coord + "";
     }
 
 

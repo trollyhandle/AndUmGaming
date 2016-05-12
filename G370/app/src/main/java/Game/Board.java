@@ -1,5 +1,7 @@
 package Game;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Random;
 
 /**
@@ -21,8 +23,10 @@ public class Board {
     private Point_XY center;
     private int hex_size;
 
-
+    // TO SERIALIZE
+    @Expose
     private Shape[][] vertices;
+    @Expose
     private Edge[][][] edges;
 
     private boolean update;

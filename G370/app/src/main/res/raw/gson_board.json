@@ -8,7 +8,7 @@
       [
         { "shape": {
           "type": "hexagon",
-          "coord": { "pointqr": { "q": 0, "r": 0 }},
+          "coord": { "q": 0, "r": 0 },
           "resource": 2,  // wood
           "die": 8
         }},
