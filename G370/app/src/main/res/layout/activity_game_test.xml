@@ -65,7 +65,7 @@
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:id="@+id/roll"
-                     android:text="#"/>
+                     android:text=""/>
 
                  <Button
 
@@ -105,13 +105,12 @@
                      android:layout_weight=".25" />
 
                  <Button  android:id="@+id/zoomReset"
-                    android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:text="@string/zoom_reset"
+                    android:text=""
                     android:textAllCaps="false"
                     android:textSize="13sp"
-                    android:layout_weight="20"
-                    android:layout_gravity="bottom" />
+                    android:layout_gravity="bottom"
+                     android:layout_width="wrap_content" />
 
              </LinearLayout>
 
