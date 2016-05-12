@@ -47,30 +47,30 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.settings_fragment, container, false);
         // Assigning layout file instances of these UI elements to their java counterparts
-        bgMusic = (CheckBox) view.findViewById(R.id.checkBox);
+    //   *bgMusic = (CheckBox) view.findViewById(R.id.checkBox);
         //if else statement to set the slider to on or off depending on mPlayer state
-        if (MusicService.mPlayer.isPlaying() == true)
-            bgMusic.setChecked(true);
-        else
-            bgMusic.setChecked(false);
+       // if (MusicService.mPlayer.isPlaying() == true)
+    //     bgMusic.setChecked(true);
+    //    else
+    //        bgMusic.setChecked(false);
 
         backButton = (Button)view.findViewById(R.id.back);
 
-        bgMusic.setOnClickListener(new View.OnClickListener() {
+    //    bgMusic.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
+    //        @Override
+    //        public void onClick(View v) {
                 //pauses music or resumes music onclick, also changes state of checkbox
-                if (MusicService.mPlayer.isPlaying() == true) {
-                    bgMusic.setChecked(false);
-                    MusicService.mPlayer.pause();
-                }
-                else {
-                    bgMusic.setChecked(true);
-                    MusicService.mPlayer.start();
-                }
-            }
-        });
+    //            if (MusicService.mPlayer.isPlaying() == true) {
+    //                bgMusic.setChecked(false);
+    //                MusicService.mPlayer.pause();
+    //            }
+    //            else {
+    //                bgMusic.setChecked(true);
+    //                MusicService.mPlayer.start();
+    //            }
+    //        }
+    //    });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

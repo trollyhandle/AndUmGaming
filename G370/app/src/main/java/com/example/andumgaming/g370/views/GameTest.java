@@ -1,41 +1,56 @@
 
 package com.example.andumgaming.g370.views;
 
+
+
 import com.example.andumgaming.g370.R;
 
+import android.content.ContentUris;
 import android.graphics.Point;
 
 //import android.app.FragmentTransaction;
 
 import android.graphics.PorterDuff;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import Game.Game;
+import Interface.ToastListener;
 
-public class GameTest extends AppCompatActivity {
+public class GameTest extends AppCompatActivity implements ToastListener {
+
 
     private boolean debug = true;
 
     private Game game;
+   // private Board board;
+
 
     private Button zoomIn, zoomOut;
     private Button zoomLeft, zoomRight;
     private Button zoomUp, zoomDown;
     private Button zoomReset;
-
+    private TextView timeView;
     private Button BuyRoad;
     private Button BuySettlement;
     private Button BuyCity;
     private Button EndTurn;
 
     private int width, height;
+
+    private Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +87,32 @@ public class GameTest extends AppCompatActivity {
     //    loadfragment();
         game.getView().setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        game.getBoard().setListener(this);
+        game.setListener(this);
+        game.setiNextTurnable(new Game.INextTurnable() {
+            @Override
+            public void onNextTurn()
+            {
+                BuyCity.getBackground().clearColorFilter();
+                BuySettlement.getBackground().clearColorFilter();
+                BuyRoad.getBackground().clearColorFilter();
+                if (game.getTurn() == 0)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 1)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 2)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 3)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
+
+                else if (game.getTurn() == 4)
+                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+            }
+        });
 
         // TODO only if starting a new game
 //        setupGame();
@@ -134,6 +175,18 @@ public class GameTest extends AppCompatActivity {
         if(debug)System.out.println("TEST Window size: " + width + " by " + height);
     }
 
+
+    public void ToastMessage(String message) {
+        int duration = Toast.LENGTH_SHORT;
+
+        if (toast != null)
+            toast.cancel();
+        toast = Toast.makeText(this, message, duration);
+        toast.show();
+    }
+
+
+
     private void loadButtons() {
         zoomIn = (Button) findViewById(R.id.zoomIn);
         zoomOut = (Button) findViewById(R.id.zoomOut);
@@ -146,8 +199,7 @@ public class GameTest extends AppCompatActivity {
         BuySettlement = (Button) findViewById(R.id.buyhouse);
         EndTurn = (Button) findViewById(R.id.endturn);
         BuyCity = (Button) findViewById(R.id.buycity);
-        //BackButton = (Button) findViewById(R.id.back);
-
+        timeView = (TextView) findViewById(R.id.timeint);
 
         zoomIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,7 +268,8 @@ public class GameTest extends AppCompatActivity {
                 if (game.getBuildState() != Game.BUILD.ROAD) {
                     game.setBuildState(Game.BUILD.ROAD);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
+                    /*R.color.buy_highlight*/
                 }
                 //if build state IS road, unclick
                 else {
@@ -224,7 +277,6 @@ public class GameTest extends AppCompatActivity {
                     v.getBackground().clearColorFilter();
                 }
                 v.invalidate();
-
             }
         });
         BuySettlement.setOnClickListener(new View.OnClickListener() {
@@ -237,7 +289,7 @@ public class GameTest extends AppCompatActivity {
                 if (game.getBuildState() != Game.BUILD.SETTLEMENT) {
                     game.setBuildState(Game.BUILD.SETTLEMENT);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS settlement, unclick
                 else {
@@ -258,7 +310,7 @@ public class GameTest extends AppCompatActivity {
                 if (game.getBuildState() != Game.BUILD.CITY) {
                     game.setBuildState(Game.BUILD.CITY);
                     v.getBackground()
-                            .setColorFilter(getResources().getColor(R.color.buy_highlight), PorterDuff.Mode.SRC_ATOP);
+                            .setColorFilter(Game.PLAYERS.getColor(game.getTurn()), PorterDuff.Mode.SRC_ATOP);
                 }
                 //if build state IS city, unclick
                 else {
@@ -272,31 +324,54 @@ public class GameTest extends AppCompatActivity {
         EndTurn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuyCity.getBackground().clearColorFilter();
-                BuySettlement.getBackground().clearColorFilter();
-                BuyRoad.getBackground().clearColorFilter();
 
-                game.nextTurn();
-
-                if (game.getTurn() == 0)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 1)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 2)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 3)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
-
-                else if (game.getTurn() == 4)
-                    EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
-                v.invalidate();
+                turnEnd(v, timeView);
             }
         });
+    }
 
+    private CountDownTimer turnTimer;
+    private void turnTimer(final View view, final TextView textView){
 
+        if (turnTimer !=null)
+            turnTimer.cancel();
+
+        turnTimer = new CountDownTimer(91000, 1000){
+            public void onTick(long millisUntilFinshed){
+                //prints the time
+                textView.setText(""+((millisUntilFinshed/1000)-1));
+
+            }
+            public void onFinish() {
+                //TODO something else
+            }
+        }.start();
+    }
+
+    private void turnEnd(View view, TextView textView){
+
+        BuyCity.getBackground().clearColorFilter();
+        BuySettlement.getBackground().clearColorFilter();
+        BuyRoad.getBackground().clearColorFilter();
+
+        game.nextTurn();
+        if (game.getTurn() == 0)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.NONE.col, PorterDuff.Mode.SRC_ATOP);
+
+        else if (game.getTurn() == 1)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.ONE.col, PorterDuff.Mode.SRC_ATOP);
+
+        else if (game.getTurn() == 2)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.TWO.col, PorterDuff.Mode.SRC_ATOP);
+
+        else if (game.getTurn() == 3)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.THREE.col, PorterDuff.Mode.SRC_ATOP);
+
+        else if (game.getTurn() == 4)
+            EndTurn.getBackground().setColorFilter(Game.PLAYERS.FOUR.col, PorterDuff.Mode.SRC_ATOP);
+        view.invalidate();
+        turnTimer(view, timeView);
 
     }
+
 }

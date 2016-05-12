@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.example.andumgaming.g370.R;
 
+import com.example.andumgaming.g370.views.LoginActivity;
 import com.example.andumgaming.g370.views.MusicService;
 
 import com.example.andumgaming.g370.views.TutorialActivity;
@@ -29,8 +30,9 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
     private Button playButton;
     private Button settingsButton;
     private Button tutorialButton;
-    private Button leaderButton;
     private Button aboutButton;
+    private Button signoutButton;
+
     static final int ZTIME = 1500;
     private long mBackedPressed;
 
@@ -59,7 +61,7 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
         settingsButton = (Button)view.findViewById(R.id.SettingsButton);
         tutorialButton = (Button)view.findViewById(R.id.TutorialButton);
         aboutButton = (Button)view.findViewById(R.id.AboutButton);
-        leaderButton = (Button)view.findViewById(R.id.Exit);
+        signoutButton = (Button)view.findViewById(R.id.SignOut);
 
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +97,7 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
             public void onClick(View v) {
                 TutorialActivity newFragment = new TutorialActivity();
                 Intent i = new Intent(getActivity().getApplicationContext(), TutorialActivity.class);
-                i.putExtra("isMusicPlaying", MusicService.mPlayer.isPlaying());
+//                i.putExtra("isMusicPlaying", MusicService.mPlayer.isPlaying());
                 getActivity().startActivity(i);
             }
         });
@@ -112,7 +114,13 @@ public class MenuFragment extends Fragment implements BackStackLisnter {
             }
         });
 
-
+        signoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),LoginActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
 
         return view;
         }
