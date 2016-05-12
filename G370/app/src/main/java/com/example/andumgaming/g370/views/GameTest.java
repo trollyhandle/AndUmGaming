@@ -327,7 +327,10 @@ public class GameTest extends AppCompatActivity implements ToastListener {
             public void onClick(View v) {
                 if(game.getGameState()==Game.GAMESTATE.GAMEEND)
                     returnToMenu();
-                turnEnd(v, timeView);
+                if(game.getTurn()!=0 && game.getGameState()==Game.GAMESTATE.FIRSTTURN)
+                    ToastMessage("Place your first settlement and road!");
+                else
+                    turnEnd(v, timeView);
             }
         });
     }
