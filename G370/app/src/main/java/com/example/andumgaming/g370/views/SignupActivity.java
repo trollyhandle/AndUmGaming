@@ -53,7 +53,7 @@ public class SignupActivity extends AppCompatActivity {
         String username = usernameField.getText().toString();
         String password = passwordField.getText().toString();
 
-        status = (TextView)findViewById(R.id.textView7);
+        status = (TextView) findViewById(R.id.textView7);
 
         ICallBackListener listener = new ICallBackListener() {
             @Override
@@ -61,15 +61,15 @@ public class SignupActivity extends AppCompatActivity {
                 int duration = Toast.LENGTH_SHORT;
                 Gson gson = new Gson();
                 SignupMsg signupMsg = gson.fromJson(result, SignupMsg.class);
-                Toast.makeText(getApplicationContext(), signupMsg.getMessage(), duration).show();
+                Toast.makeText(SignupActivity.this, signupMsg.getMessage(), duration).show();
                 if (signupMsg.getSuccess() == 1) {
-                    Intent i = new Intent(getApplicationContext(), FullscreenActivity.class);
-                    getApplicationContext().startActivity(i);
-                    ((Activity)getApplicationContext()).finish();
+                    Intent i = new Intent(SignupActivity.this, FullscreenActivity.class);
+                    startActivity(i);
+                    (SignupActivity.this).finish();
                 }
             }
         };
 
-        new SignupAsyncTask(listener).execute(email, username,password);
+        new SignupAsyncTask(listener).execute(email, username, password);
     }
 }

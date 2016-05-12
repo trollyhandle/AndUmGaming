@@ -25,7 +25,7 @@
             android:layout_gravity="center"/>
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
@@ -35,17 +35,16 @@
             android:ems="10" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/username"
-            android:inputType="textPassword"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/editText1"

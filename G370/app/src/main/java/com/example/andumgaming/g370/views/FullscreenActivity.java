@@ -176,46 +176,9 @@ public class FullscreenActivity extends AppCompatActivity {
     */
     }
 
-    /* Login Activity */
     private EditText usernameField,passwordField;
     private TextView status,method;
 
-
-    private class LoginMsg {
-        int success;
-        String message;
-
-        public int getSuccess() {
-            return success;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
-
-    public void loginPost(View view){
-        ICallBackListener listener = new ICallBackListener() {
-            @Override
-            public void onCallBack(String result) {
-                int duration = Toast.LENGTH_SHORT;
-                Gson gson = new Gson();
-                LoginMsg loginMsg = gson.fromJson(result, LoginMsg.class);
-                Toast.makeText(getApplicationContext(), loginMsg.getMessage(), duration).show();
-                if (loginMsg.getSuccess() == 1) {
-                    Intent i = new Intent(getApplicationContext(), FullscreenActivity.class);
-                    getApplicationContext().startActivity(i);
-                    ((Activity)getApplicationContext()).finish();
-                }
-            }
-        };
-
-        String username = usernameField.getText().toString();
-        String password = passwordField.getText().toString();
-        method.setText("Post Method");
-        LoginAsyncTask task = new LoginAsyncTask(listener);
-        task.execute(username, password);
-    }
 
 
     @Override
