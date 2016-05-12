@@ -6,7 +6,7 @@ USE testing;
 
 #SET FOREIGN_KEY_CHECKS=1;
 # Tables
-
+Select * from edge;
 
 CREATE TABLE user (
 	userID INT PRIMARY KEY AUTO_INCREMENT, 
@@ -27,16 +27,13 @@ CREATE TABLE playing_in_game (
 CREATE TABLE vertex (
 	vertexID INT PRIMARY KEY AUTO_INCREMENT,
 	q INT, r INT);
-    drop table edge;
 CREATE TABLE edge (
 	destQ INT,
     destR INT,
     sourceQ INT,
     sourceR INT,
-	destination INT,
     playerID INT,
-    direction INT,
-    FOREIGN KEY (playerID) REFERENCES user (userID));
+    direction INT);
 CREATE TABLE player_resources (
 	userID INT, 
     FOREIGN KEY (userID) REFERENCES user (userID), 

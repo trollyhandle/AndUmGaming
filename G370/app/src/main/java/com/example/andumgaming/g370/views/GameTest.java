@@ -4,6 +4,7 @@ package com.example.andumgaming.g370.views;
 
 
 import com.example.andumgaming.g370.R;
+import com.example.andumgaming.g370.views.asynctask.Ins2AwsGameInit;
 import com.google.gson.Gson;
 
 import android.content.ContentUris;
@@ -36,6 +37,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import Game.Game;
+import Interface.ICallBackListener;
 import Interface.ToastListener;
 
 public class GameTest extends AppCompatActivity implements ToastListener {
@@ -378,6 +380,16 @@ public class GameTest extends AppCompatActivity implements ToastListener {
 
     public Game loadFromSampleJSON()
     {
+        ICallBackListener listener = new ICallBackListener() {
+            @Override
+            public void onCallBack(String result) {
+
+
+            }
+        };
+        int destQ =1, destR = 4, sourceQ = 2, sourceR = 8, direction = 5, playerID = 7;
+        new Ins2AwsGameInit(listener).execute(destQ, destR, sourceQ, sourceR, direction, playerID);
+
         if(debug) System.out.println("GAMETEST loading from JSON");
         InputStream is = getResources().openRawResource(R.raw.sample_game);
         String json = readJSONfile(is);

@@ -27,10 +27,10 @@ import java.net.URLEncoder;
 
 import Interface.ICallBackListener;
 
-public class GameInitAsyncTask extends AsyncTask<Integer,Void,String> {
+public class Ins2AwsGameInit extends AsyncTask<Integer,Void,String> {
     private ICallBackListener listener;
 
-    public GameInitAsyncTask(ICallBackListener listener) {
+    public Ins2AwsGameInit(ICallBackListener listener) {
         this.listener = listener;
     }
 
