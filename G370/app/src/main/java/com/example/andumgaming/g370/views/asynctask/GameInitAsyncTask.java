@@ -27,10 +27,9 @@ import java.net.URLEncoder;
 
 import Interface.ICallBackListener;
 
-public class GameInitAsyncTask extends AsyncTask<String,Void,String> {
+public class GameInitAsyncTask extends AsyncTask<Integer,Void,String> {
     private ICallBackListener listener;
 
-    //flag 0 means get and 1 means post.(By default it is get.)
     public GameInitAsyncTask(ICallBackListener listener) {
         this.listener = listener;
     }
@@ -40,17 +39,22 @@ public class GameInitAsyncTask extends AsyncTask<String,Void,String> {
     }
 
     @Override
-    protected String doInBackground(String... arg0) {
+    protected String doInBackground(Integer ... args) {
 
+        int destQ = args[0];
+        int destR = args[1];
+        int sourceQ = args[2];
+        int sourceR = args[3];
+        int direction= args[4];
+        int playerID = args[5];
         try{
-            String email = (String)arg0[0];
-            String username = (String)arg0[1];
-            String password = (String)arg0[2];
-
             String link="http://g370.duckdns.org/gameinit.php";
-            String data  = URLEncoder.encode("email", "UTF-8") + "=" + URLEncoder.encode(email, "UTF-8");
-            data += "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username, "UTF-8");
-            data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
+            String data  = URLEncoder.encode("destQ", "UTF-8") + "=" + destQ;
+            data += "&" + URLEncoder.encode("destR", "UTF-8") + "=" + destR;
+            data += "&" + URLEncoder.encode("sourceQ", "UTF-8") + "=" + sourceQ;
+            data += "&" + URLEncoder.encode("sourceR", "UTF-8") + "=" + sourceR;
+            data += "&" + URLEncoder.encode("direction", "UTF-8") + "=" + direction;
+            data += "&" + URLEncoder.encode("playerID", "UTF-8") + "=" + playerID;
 
             URL url = new URL(link);
             URLConnection conn = url.openConnection();
@@ -78,31 +82,6 @@ public class GameInitAsyncTask extends AsyncTask<String,Void,String> {
             return new String("Exception: " + e.getMessage());
         }
     }
-
-    /******************************
-    // TODO do this wherever this asynctask is called from
-    private class GameInitMsg {
-        int success;
-        String message;
-
-        public int getSuccess() {
-            return success;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    };
-    int duration = Toast.LENGTH_SHORT;
-    Gson gson = new Gson();
-    GameInitMsg gameInitMsg = gson.fromJson(result, GameInitMsg.class);
-    Toast.makeText(context, gameInitMsg.getMessage(), duration).show();
-    if (gameInitMsg.getSuccess() == 1) {
-        Intent i = new Intent(context, FullscreenActivity.class);
-        context.startActivity(i);
-        ((Activity)context).finish();
-    }
-    ****************************** */
 
     @Override
     protected void onPostExecute(String result) {

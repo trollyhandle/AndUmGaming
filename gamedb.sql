@@ -27,12 +27,16 @@ CREATE TABLE playing_in_game (
 CREATE TABLE vertex (
 	vertexID INT PRIMARY KEY AUTO_INCREMENT,
 	q INT, r INT);
+    drop table edge;
 CREATE TABLE edge (
+	destQ INT,
+    destR INT,
+    sourceQ INT,
+    sourceR INT,
 	destination INT,
-    FOREIGN KEY (destination) REFERENCES vertex (vertexID), 
-	source INT,
-	direction INT,
-    owner INT);
+    playerID INT,
+    direction INT,
+    FOREIGN KEY (playerID) REFERENCES user (userID));
 CREATE TABLE player_resources (
 	userID INT, 
     FOREIGN KEY (userID) REFERENCES user (userID), 
