@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andumgaming.g370.views.FullscreenActivity;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,28 +79,29 @@ public class SignupAsyncTask extends AsyncTask<String,Void,String> {
         }
     }
 
+    private class SignupMsg {
+        int success;
+        String message;
+
+        public int getSuccess() {
+            return success;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    };
+
     @Override
     protected void onPostExecute(String result) {
         int duration = Toast.LENGTH_SHORT;
-        try {
-            JSONObject jObject = new JSONObject(result);
-            int aJsonInteger = jObject.getInt("success");
-
-            if (aJsonInteger == 1) {
-                Toast.makeText(context, "Successfully Signed Up!", duration).show();
-                Intent i = new Intent(context, FullscreenActivity.class);
-                context.startActivity(i);
-                ((Activity)context).finish();
-
-
-            } else
-                Toast.makeText(context, "Sign Up Unsuccessful", duration).show();
-            // uncomment to debug JSON
-            // this.statusField.setText(result);
-        }
-        catch (JSONException e) {
-            Log.i("error", "Error!");
-           return;
+        Gson gson = new Gson();
+        SignupMsg signupMsg = gson.fromJson(result, SignupMsg.class);
+        Toast.makeText(context, signupMsg.getMessage(), duration).show();
+        if (signupMsg.getSuccess() == 1) {
+            Intent i = new Intent(context, FullscreenActivity.class);
+            context.startActivity(i);
+            ((Activity)context).finish();
         }
     }
 }

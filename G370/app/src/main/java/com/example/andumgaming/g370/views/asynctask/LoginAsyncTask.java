@@ -84,28 +84,29 @@ public class LoginAsyncTask extends AsyncTask<String,Void,String> {
     }
 
 
+    private class LoginMsg {
+        int success;
+        String message;
+
+        public int getSuccess() {
+            return success;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    };
+
     @Override
     protected void onPostExecute(String result) {
         int duration = Toast.LENGTH_SHORT;
-        try {
-            JSONObject jObject = new JSONObject(result);
-            int aJsonInteger = jObject.getInt("success");
-
-            if (aJsonInteger == 1) {
-                Toast.makeText(context, "Successfully Logged In!", duration).show();
-                Intent i = new Intent(context, FullscreenActivity.class);
-                context.startActivity(i);
-                ((Activity)context).finish();
-
-
-            } else
-                Toast.makeText(context, "Invalid Username/Password", duration).show();
-            // uncomment to debug JSON
-            // this.statusField.setText(result);
-        }
-        catch (JSONException e) {
-            Log.i("error", "Error!");
-           return;
+        Gson gson = new Gson();
+        LoginMsg loginMsg = gson.fromJson(result, LoginMsg.class);
+        Toast.makeText(context, loginMsg.getMessage(), duration).show();
+        if (loginMsg.getSuccess() == 1) {
+            Intent i = new Intent(context, FullscreenActivity.class);
+            context.startActivity(i);
+            ((Activity)context).finish();
         }
     }
 }
