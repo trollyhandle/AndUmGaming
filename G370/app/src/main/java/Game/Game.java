@@ -65,6 +65,7 @@ public class Game {
 
     private INextTurnable iNextTurnable;
 
+    @Expose
     private GAMESTATE gamestate;
     private BUILD build;
     private Point_QR firstRoadPt;
@@ -193,6 +194,9 @@ public class Game {
 
     public void roll()
     {
+        if (debug)System.out.println("GAME rolling (state=" + gamestate + ")");
+        if(gamestate != GAMESTATE.REGULAR)
+                return;
         if (hasRolledThisTurn) {
             listener.ToastMessage("You've already rolled!");
             return;
@@ -202,9 +206,13 @@ public class Game {
 
         int die = rand.nextInt(6) + rand.nextInt(6) + 2;
         for (int i = 1; i < players.length; i++) {
-            int[] generatedRes = board.getGeneratedResForPlayer(i, die);
+            int[] generatedRes = board.getGeneratedResByHexForPlayer(i, die);
+            if(debug)System.out.println("Player " + i + " gained " + generatedRes[0]+generatedRes[1]+generatedRes[2]+generatedRes[3]+generatedRes[4]+generatedRes[5]);
             players[i].addResources(generatedRes);
         }
+        listener.ToastMessage("Rolled a " + die);
+        if(debug)System.out.println("Rolled a " + die);
+        if(debug)System.out.println("GAME roll refreshing resources");
         refreshResourceCounts();
 
     }
@@ -261,11 +269,15 @@ public class Game {
                     listener.ToastMessage("You can only place one settlement right now!");
             }
             else {
-                    success = (players[turn].canBuySettlement() && board.buildSettlement(hex.q(),hex.r(),turn));
+                if (players[turn].canBuySettlement()) {
+                    success = board.buildSettlement(hex.q(),hex.r(),turn);
                     if (success) {
                         players[turn].buySettlement();
                         refreshResourceCounts();
                     }
+                }
+                else
+                    listener.ToastMessage("Not enough resources!");
             }
 
         }
@@ -277,11 +289,15 @@ public class Game {
                     listener.ToastMessage("You cannot build a city during initial placement!");
             }
             else {
-                    success =(players[turn].canBuyCity() && board.buildCity(hex.q(),hex.r(),turn));
+                if (players[turn].canBuyCity()) {
+                    success = board.buildCity(hex.q(), hex.r(), turn);
                     if (success) {
                         players[turn].buyCity();
                         refreshResourceCounts();
                     }
+                }
+                else
+                    listener.ToastMessage("Not enough resources!");
             }
         }
 
@@ -296,11 +312,15 @@ public class Game {
                 if(!players[turn].getFirstSettlementPlaced())
                     listener.ToastMessage("Place a settlement first!");
                 else {
-                        success = (players[turn].canBuyRoad() && board.buildRoad(firstRoadPt, hex, turn));
+                    if (players[turn].canBuyRoad()) {
+                        success = board.buildRoad(firstRoadPt, hex, turn);
                         if (success && gamestate != GAMESTATE.FIRSTTURN) {
                             players[turn].buyRoad();
                             refreshResourceCounts();
                         }
+                    }
+                    else
+                        listener.ToastMessage("Not enough resources!");
                 }
 
                 firstRoadPt = null;  // reset for next road

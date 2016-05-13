@@ -49,8 +49,8 @@ public class Player {
     // TODO lots of things.. mostly coordinate with server status
 
     public void addResources(int[] newres) {
-        for (int i = 0; i < newres.length; i++) {
-            resources[i] += newres[i];
+        for (int i = 1; i < newres.length; i++) {
+            resources[i-1] += newres[i];
         }
     }
 

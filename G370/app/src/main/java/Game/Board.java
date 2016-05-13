@@ -301,16 +301,37 @@ public class Board {
     {
         int[] newres = {0, 0, 0, 0, 0};
         for (int q = 0; q < arraySize; q++) {
-            for (int r = 0; r < arraySize; r++) {
-                if (isValid(q, r) && !isHex(q, r)) {
-                    Vertex v = (Vertex)vertices[aib(q)][aib(r)];
-                    if (v.getOwner() == player) {
-                        for (int k = 0; k < 6; k++) {
+            for (int r = 0; r < arraySize; r++) {  // through all vertices
+                Shape s = vertices[aib(q)][aib(r)];
+                if (s != null && !isHex(q, r)) {  // isnt null and isnt a hex
+                    Vertex v = (Vertex)s;
+                    if (v.getOwner() == player) {  // this vertex is owned by the player
+                        for (int k = 0; k < 6; k++) {  // check neighboring hexes
                             if (isHex(q, r)) {
                                 Hexagon hx = (Hexagon) getShape(v.getNeighbor(k));
                                 if (hx != null && hx.getDie() == die) {
                                     newres[hx.getResource()] += v.getLevel();  // cites generate 2 res
                                 }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return newres;
+    }
+    public int[] getGeneratedResByHexForPlayer(int player, int die)
+    {
+        int[] newres = {0, 0, 0, 0, 0, 0};
+        for (int q = 0; q < arraySize; q++) {
+            for (int r = 0; r < arraySize; r++) {  // through all vertices
+                Shape s = vertices[aib(q)][aib(r)];
+                if (s != null && isHex(q, r) && ((Hexagon)s).getDie() == die) {
+                    for (int k = 0; k < 6; k++) {
+                        Shape n = getShape(s.getNeighbor(k));
+                        if (n != null && !isHex(s.getNeighbor(k))) {
+                            if (((Vertex)n).getOwner() == player) {
+                                newres[((Hexagon) s).getResource()] += ((Vertex) n).getLevel();
                             }
                         }
                     }
