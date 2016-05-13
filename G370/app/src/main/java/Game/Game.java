@@ -205,6 +205,7 @@ public class Game {
             int[] generatedRes = board.getGeneratedResForPlayer(i, die);
             players[i].addResources(generatedRes);
         }
+        refreshResourceCounts();
 
     }
 

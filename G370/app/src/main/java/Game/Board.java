@@ -305,10 +305,12 @@ public class Board {
                 if (isValid(q, r) && !isHex(q, r)) {
                     Vertex v = (Vertex)vertices[aib(q)][aib(r)];
                     if (v.getOwner() == player) {
-                        for (int k = 1; k < 6; k++) {
-                            Hexagon hx  = (Hexagon)getShape(v.getNeighbor(k));
-                            if (hx != null && hx.getDie() == die) {
-                                newres[hx.getResource()] += v.getLevel();  // cites generate 2 res
+                        for (int k = 0; k < 6; k++) {
+                            if (isHex(q, r)) {
+                                Hexagon hx = (Hexagon) getShape(v.getNeighbor(k));
+                                if (hx != null && hx.getDie() == die) {
+                                    newres[hx.getResource()] += v.getLevel();  // cites generate 2 res
+                                }
                             }
                         }
                     }

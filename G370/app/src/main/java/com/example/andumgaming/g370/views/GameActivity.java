@@ -80,7 +80,6 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
 
         //loadFragment();  // TRANSACTION FRAGMENT
         loadButtons();  // ZOOM BUTTONS
-        // todo or load from server
 
         init();
 
@@ -136,44 +135,6 @@ public class GameActivity extends AppCompatActivity implements ToastListener {
         player2.setBackgroundColor(Game.PLAYERS.TWO.col);
         player3.setBackgroundColor(Game.PLAYERS.THREE.col);
         player4.setBackgroundColor(Game.PLAYERS.FOUR.col);
-
-
-        // TODO only if starting a new game
-        setupGame();
-    }
-
-
-
-
-    private void setupGame()
-    {
-        // TODO add interactions so the user knows what's going on!!
-
-        for (int player = 1; player <= 4; player++) {
-            game.setTurn(player);
-            // if it's the phone owner's turn...
-                game.setBuildState(Game.BUILD.SETTLEMENT);
-
-                // place a settlement anywhere valid
-                // TODO user information interaction
-
-
-                // place a road anywhere next to that settlement
-
-                // post to server
-
-            // else
-                // wait for server
-
-        }
-        for (int player = 4; player >= 1; --player) {
-
-            // same as above
-
-        }
-
-        // generate resources for players based on second settlement
-
 
     }
 
