@@ -19,7 +19,7 @@ public class BoardView extends View {
     private Board board;
     private ShapeDrawable[] shapes;
 
-    private final boolean debug = true;
+    private final boolean debug = false;
 
     public BoardView(Context context) {
         super(context);

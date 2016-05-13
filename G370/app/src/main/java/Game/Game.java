@@ -116,7 +116,7 @@ public class Game {
         players[3] = new Player();
         players[4] = new Player();
 
-        turn = 0;
+        turn = 1;
         gamestate = GAMESTATE.FIRSTTURN;
 
         init(parent, width, height);
@@ -180,7 +180,7 @@ public class Game {
         build = BUILD.NONE;
 
         // set resources to the current player's stats
-        if(gamestate != GAMESTATE.FIRSTTURN)
+//        if(gamestate != GAMESTATE.FIRSTTURN)
             refreshResourceCounts();  // dont do this till players are implemented
 
         if(iNextTurnable!=null) // hopefully avoid nullpointerexceptions
@@ -260,9 +260,11 @@ public class Game {
                     listener.ToastMessage("You can only place one settlement right now!");
             }
             else {
-                    success =(players[turn].canBuySettlement() && board.buildSettlement(hex.q(),hex.r(),turn));
-                    if (success)
+                    success = (players[turn].canBuySettlement() && board.buildSettlement(hex.q(),hex.r(),turn));
+                    if (success) {
                         players[turn].buySettlement();
+                        refreshResourceCounts();
+                    }
             }
 
         }
@@ -275,8 +277,10 @@ public class Game {
             }
             else {
                     success =(players[turn].canBuyCity() && board.buildCity(hex.q(),hex.r(),turn));
-                    if (success)
+                    if (success) {
                         players[turn].buyCity();
+                        refreshResourceCounts();
+                    }
             }
         }
 
@@ -291,9 +295,11 @@ public class Game {
                 if(!players[turn].getFirstSettlementPlaced())
                     listener.ToastMessage("Place a settlement first!");
                 else {
-                        success =(players[turn].canBuyRoad() && board.buildRoad(firstRoadPt, hex, turn));
-                        if (success)
+                        success = (players[turn].canBuyRoad() && board.buildRoad(firstRoadPt, hex, turn));
+                        if (success && gamestate != GAMESTATE.FIRSTTURN) {
                             players[turn].buyRoad();
+                            refreshResourceCounts();
+                        }
                 }
 
                 firstRoadPt = null;  // reset for next road
@@ -366,6 +372,7 @@ public class Game {
 
     private void refreshResourceCounts()
     {
+        if(debug)System.out.println("GAME refreshing player resource counts");
         wheat.setText   (r.getString(R.string.res_format, players[turn].getWheat()));
         wood.setText    (r.getString(R.string.res_format, players[turn].getWood()));
         ore.setText     (r.getString(R.string.res_format, players[turn].getOre()));

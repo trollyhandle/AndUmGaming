@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class Board {
 
-    private boolean debug = true;
+    private boolean debug = false;
     private boolean DEBUG = false;  // for serious debugging time
 
     private static final int MIN_SIZE = 80;
@@ -526,13 +526,13 @@ public class Board {
                 s = vertices[q][r];
                 if (isHex(q, r) && s != null) {
                     int which = rand.nextInt(shufsize);
-                    int whichdie = rand.nextInt(diesize);
                     ((Hexagon)s).setResource(Game.RESOURCES.index(shuffle[which]));
                     shuffle[which] = shuffle[--shufsize];
 
                     if (((Hexagon)s).getResource() == 0) // desert
                         ((Hexagon)s).setDie(0);
                     else {
+                        int whichdie = rand.nextInt(diesize);
                         ((Hexagon)s).setDie(dies[whichdie]);
                         dies[whichdie] = dies[--diesize];
                     }
